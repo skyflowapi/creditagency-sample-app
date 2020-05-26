@@ -11,19 +11,20 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.04)",
     border: "#eaedf3",
     backgroundColor: "#eaedf3",
+    
   },
   text: {
    
     textAlign: "center",
-    fontFamily: "Roboto",
-    color: "#696969",
-    lineHeight:2.5,
-    fontSize:"17px"
+    ...theme.typography.h6,
+    lineHeight:2,
+    color: theme.palette.grey[1],
+    
     
   },
   infoIcon:{
 
-    marginTop:"10px"
+    marginTop:theme.spacing(2)
   }
 }));
 function Info({ information }) {

@@ -4,10 +4,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   item: {
-    fontFamily: "Roboto",
-    fontSize: "15px",
-    color: "#696969",
+    ...theme.h6,
+    color: theme.palette.grey[1],
   },
+  
 }));
 
 export default function ListItem({ img, text, bool }) {

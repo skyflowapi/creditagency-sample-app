@@ -1,13 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import FormLabel from "@material-ui/core/FormLabel";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import Radio from "@material-ui/core/Radio";
 import Paper from "@material-ui/core/Paper";
 import { Typography } from "@material-ui/core";
-import { Link } from "react-router-dom";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,37 +19,31 @@ const useStyles = makeStyles((theme) => ({
   text: {
     textAlign: "center",
     objectFit: "contain",
-    fontFamily: "Roboto",
-    lineHeight: 4,
-    fontSize: "18px",
-    color: "#1d1d1d",
+   ...theme.typography.h5,
+   lineHeight:5,
+    color: theme.palette.black,
   },
-  student: {
+  image: {
     lineHeight: 5,
-    marginTop: "20px",
-    marginLeft: "120px",
+    marginTop: theme.spacing(5),
+    marginLeft: theme.spacing(30),
     alignItems: "center",
   },
 }));
 
-export default function CardComp({ type, text }) {
-  const [spacing, setSpacing] = React.useState(2);
+export default function CardComp({ type, text,handlePage }) {
+  
   const classes = useStyles();
 
   return (
     <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>
         <Grid container justify="center" spacing="10">
-          {/* {[0, 1, 2].map((value) => (
-            <Grid key={value} item>
-              <Paper className={classes.paper} />
-            </Grid>
-          ))} */}
           <Grid item>
-            <Paper style={{ cursor: "pointer" }} className={classes.paper}>
-              <Link to="/personalInformation">
-                <img className={classes.student} src={type} alt="student"></img>
-              </Link>
+            <Paper style={{ cursor: "pointer" }} className={classes.paper} onClick={handlePage}>
+              
+                <img className={classes.image} src={type} alt="student"></img>
+              
               <Typography className={classes.text}>{text}</Typography>
             </Paper>
           </Grid>

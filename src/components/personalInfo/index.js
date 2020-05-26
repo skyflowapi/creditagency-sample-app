@@ -4,15 +4,12 @@ import logo from "../../assets/logo.png";
 import secure from "../../assets/secure.png";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import { TextField, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import one from "../../assets/1.png";
 import two from "../../assets/2.png";
 import three from "../../assets/3.png";
 import four from "../../assets/4.png";
-import arrow from "../../assets/arrow.png";
-import TextFieldMolecule from "../molecules/textField";
-import ListItem from "../molecules/listItem";
-import ButtonItem from "../atoms/buttonAtom";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -29,51 +26,48 @@ const useStyles = makeStyles((theme) => ({
     width: "25%",
     height: window.innerHeight,
 
-    backgroundColor: "#fbfbfd",
+    backgroundColor: theme.palette.grey[0],
   },
 
-  lets: {
-    marginTop: "45px",
-    fontFamily: "Roboto",
+  text: {
+    marginTop: theme.spacing(15),
     textAlign: "center",
-    fontSize: "40px",
+    ...theme.typography.h1,
   },
 
   help: {
-    marginTop: "35px",
-    fontFamily: "Roboto",
+    marginTop: theme.spacing(4),
+    ...theme.typography.h6,
     float: "right",
   },
 
   logo: {
-    marginTop: "30px",
-    marginLeft: "30px",
+    marginTop: theme.spacing(5),
+    marginLeft: theme.spacing(5),
   },
   logoText: {
-    fontFamily: "Roboto",
-    marginTop: "3px",
-    marginLeft: "55px",
-    fontSize: "15px",
+    marginTop: theme.spacing(0),
+    marginLeft: theme.spacing(10),
+    ...theme.typography.h6,
   },
   buttons: {
-    marginTop: "28%",
+    marginTop: theme.spacing(100),
   },
   b1: {
     float: "left",
-    marginLeft: "30px",
+    marginLeft: theme.spacing(20),
   },
   b2: {
     float: "right",
-    marginRight: "30px",
+    marginRight: theme.spacing(20),
   },
   infoList: {
     
     padding: "10px",
-    marginTop: "18%",
-    marginLeft:"20px"
+    marginTop: theme.spacing(10),
+    marginLeft:theme.spacing(10)
   },
   pInfo: {
-    
     padding: "10px",
   },
   cInfo: {
@@ -86,27 +80,24 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
   },
   fname:{
-      marginTop:"6%",
+      marginTop:theme.spacing(5),
     float: "left",
-    marginLeft: "20%",
+    marginLeft: theme.spacing(6),
   },
   lname:{
-    marginTop:"6%",
+    marginTop:theme.spacing(5),
     float: "right",
-    marginRight: "20%",
-  },
-  secureForm: {
-    marginTop: "%",
-    marginLeft: "105px",
+    marginRight:theme.spacing(6),
   },
   secure: {
-    fontSize: "14px",
-    marginLeft: "4px",
-    color: "#696969",
+    ...theme.typography.h6,
+    marginLeft: theme.spacing(1),
+    color: theme.palette.grey[1],
   },
   securee: {
-    marginTop: "60%",
+    marginTop: theme.spacing(100),
     float: "center",
+    marginLeft: theme.spacing(25),
   },
   names:{
       display:"flex",
@@ -115,13 +106,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Page1() {
+function namePage() {
   const classes = useStyles();
-
+  const TextFieldMolecule = React.lazy(() => import('../textField/textField'));
+  const ListItem=React.lazy(()=>import('../listItem/listItem'))
   return (
     <div className={classes.root}>
       <Grid container className={classes.paper}>
-        <Grid item className={classes.page1}>
+        <Grid item className={classes.namePage}>
           <div>
             <img className={classes.logo} src={logo} alt="logo"></img>
             <div className={classes.logoText}>
@@ -137,7 +129,7 @@ function Page1() {
             
           </div>
           <div className={classes.securee}>
-              <img className={classes.secureForm} src={secure} alt="card"></img>
+              <img src={secure} alt="card"></img>
               <span className={classes.secure}>Secure Form</span>
             </div>
         </Grid>
@@ -151,7 +143,7 @@ function Page1() {
             </Grid>
             <Grid item>
               <div>
-                <h1 className={classes.lets}>
+                <h1 className={classes.text}>
                   <b>My name is</b>
                 </h1>
               </div>
@@ -173,7 +165,7 @@ function Page1() {
               >
                 Next
               </Button>
-              {/* <ButtonItem name="prev" type="primary"></ButtonItem> */}
+              
             </Grid>
           </Grid>
         </Grid>
@@ -182,4 +174,4 @@ function Page1() {
   );
 }
 
-export default Page1;
+export default namePage;
