@@ -10,9 +10,10 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     fontFamily: "Roboto",
+    padding:theme.spacing(4)
   },
   field: {
-    width: "300px",
+    width: "350px",
   },
 }));
 
@@ -20,25 +21,11 @@ export default function TextFieldMolecule(props) {
   const classes = useStyles();
 
   return (
-    // <div className={classes.text}>
-    // <div>{props.name}</div>
-    //       <TextField className={classes.field} variant="outlined"></TextField>
-    //       </div>
+    <div className={classes.text}>
+    <div>{props.name}</div>
+          <TextField className={classes.field} variant="outlined"></TextField>
+          </div>
 
-    <Grid container className={classes.root} spacing={2}>
-      <Grid item xs={12}>
-        <Grid container justify="center" spacing="10">
-          <Grid item>
-            <div className={classes.text}>
-              <div>{props.name}</div>
-              <TextField
-                className={classes.field}
-                variant="outlined"
-              ></TextField>
-            </div>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
+   
   );
 }
