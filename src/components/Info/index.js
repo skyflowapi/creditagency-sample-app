@@ -1,30 +1,35 @@
-import React, { Component } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-// import InfoIcon from '@material-ui/icons/Info';
-import info from "../../assets/info.png";
+import React, { Component } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import info from '../../assets/info.png';
 
 const useStyles = makeStyles((theme) => ({
   rectangle: {
     width: 529,
-    height: 44,
+    height: "100%",
     borderRadius: "8px",
     boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.04)",
     border: "#eaedf3",
     backgroundColor: "#eaedf3",
+    position:"relative",
+    display:"flex"
     
   },
   text: {
-   
-    textAlign: "center",
-    ...theme.typography.h6,
-    lineHeight:2,
+   ...theme.typography.h6,
+    lineHeight:1.6,
+    marginLeft:theme.spacing(12),
+    marginTop:theme.spacing(1),
+    marginBottom:theme.spacing(1),
     color: theme.palette.grey[1],
-    
+    textAlign:"left",
+    ...theme.typography.h6
     
   },
   infoIcon:{
 
-    marginTop:theme.spacing(2)
+    top:theme.spacing(0),
+    left:"30px",
+    position:"absolute"
   }
 }));
 function Info({ information }) {

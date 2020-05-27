@@ -6,6 +6,9 @@ const useStyles = makeStyles((theme) => ({
   item: {
     ...theme.h6,
     color: theme.palette.grey[1],
+    display:"flex",
+    alignItems:"center",
+    padding:theme.spacing(1)
   },
   
 }));

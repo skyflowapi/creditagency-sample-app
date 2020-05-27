@@ -4,27 +4,23 @@ import { makeStyles } from "@material-ui/core/styles";
 export default function ButtonItem(props) {
   const useStyles = makeStyles((theme) => ({
     primary: {
-      backgroundColor: "blue",
+      backgroundColor: theme.palette.blue,
       border: "none",
-      color: "white",
-      padding: "20px",
+      color: theme.palette.white,
+      padding: theme.spacing(2),
       textAlign: "center",
       textDecoration: "none",
       display: "inline-block",
-      fontSize: "16px",
-      margin: "4px 2px",
       cursor: "pointer",
     },
     default: {
-      backgroundColor: "white",
+      backgroundColor: theme.palette.blue,
       border: "1px solid black",
-      color: "black",
-      padding: "20px",
+      color: theme.palette.black,
+      padding: theme.spacing(2),
       textAlign: "center",
       textDecoration: "none",
       display: "inline-block",
-      fontSize: "16px",
-      margin: "4px 2px",
       cursor: "pointer",
     },
   }));

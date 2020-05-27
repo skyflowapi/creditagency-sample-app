@@ -1,15 +1,14 @@
-import React, { Component } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import logo from "../../assets/logo.png";
-import secure from "../../assets/secure.png";
-import { Link } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
-import { Button } from "@material-ui/core";
-import one from "../../assets/1.png";
-import two from "../../assets/2.png";
-import three from "../../assets/3.png";
-import four from "../../assets/4.png";
-
+import React, { Component } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
+import { Button } from '@material-ui/core';
+import one from '../../../assets/1.png';
+import two from '../../../assets/2.png';
+import three from '../../../assets/3.png';
+import four from '../../../assets/4.png';
+import logo from '../../../assets/logo.png';
+import secure from '../../../assets/secure.png';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -63,21 +62,9 @@ const useStyles = makeStyles((theme) => ({
   },
   infoList: {
     
-    padding: "10px",
+    
     marginTop: theme.spacing(10),
     marginLeft:theme.spacing(10)
-  },
-  pInfo: {
-    padding: "10px",
-  },
-  cInfo: {
-    padding: "10px",
-  },
-  aInfo: {
-    padding: "10px",
-  },
-  fInfo: {
-    padding: "10px",
   },
   fname:{
       marginTop:theme.spacing(5),
@@ -102,14 +89,22 @@ const useStyles = makeStyles((theme) => ({
   names:{
       display:"flex",
       flexDirection:"row",
+      alignItems:"center",
+      justifyContent:"center",
       
   }
 }));
 
-function namePage() {
+function namePage(props) {
   const classes = useStyles();
-  const TextFieldMolecule = React.lazy(() => import('../textField/textField'));
-  const ListItem=React.lazy(()=>import('../listItem/listItem'))
+  const TextFieldMolecule = React.lazy(() => import('../../textField/textField'));
+  const ListItem=React.lazy(()=>import('../../listItem/listItem'));
+
+  function goToDOBPage(){
+    console.log("clicked");
+    props.history.push("/personalInformation/dob");
+    }
+
   return (
     <div className={classes.root}>
       <Grid container className={classes.paper}>
@@ -121,10 +116,10 @@ function namePage() {
             </div>
 
             <div className={classes.infoList}>
-            <ListItem className={classes.pInfo} img={one} text="PERSONAL INFORMATION" bool={true}/>
-            <ListItem className={classes.cInfo} img={two} text="CONTACT INFORMATION" bool={false}/>
-            <ListItem className={classes.aInfo} img={three} text="ACADEMIC INFORMATION" bool={false}/>
-            <ListItem className={classes.finfo} img={four} text="FINANCIAL INFORMATION" bool={false}/>
+            <ListItem img={one} text="PERSONAL INFORMATION" bool={true}/>
+            <ListItem img={two} text="CONTACT INFORMATION" bool={false}/>
+            <ListItem img={three} text="ACADEMIC INFORMATION" bool={false}/>
+            <ListItem img={four} text="FINANCIAL INFORMATION" bool={false}/>
             </div>
             
           </div>
@@ -148,12 +143,12 @@ function namePage() {
                 </h1>
               </div>
             </Grid>
-            <Grid item className={classes.names}>
+            <div  className={classes.names}>
                 
               <TextFieldMolecule  name="FIRST NAME"/>
               <TextFieldMolecule name="LAST NAME"/>
               
-            </Grid>
+            </div>
             <Grid className={classes.buttons} item>
               <Button className={classes.b1} variant="outlined">
                 Previous
@@ -162,6 +157,7 @@ function namePage() {
                 className={classes.b2}
                 variant="contained"
                 color="primary"
+                onClick={goToDOBPage}
               >
                 Next
               </Button>

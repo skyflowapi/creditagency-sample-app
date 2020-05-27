@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import creditCard from "../../assets/creditCard.png";
-import logo from "../../assets/logo.png";
-import student from "../../assets/student.png";
-import secure from "../../assets/secure.png";
-import professional from "../../assets/professional.png";
-import { Link, Route } from "react-router-dom";
+import React, { Component } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import creditCard from '../../assets/creditCard.png';
+import logo from '../../assets/logo.png';
+import student from '../../assets/student.png';
+import secure from '../../assets/secure.png';
+import professional from '../../assets/professional.png';
+import { Link, Route } from 'react-router-dom';
 import theme from '../../utils/theme';
 
 
@@ -18,12 +18,13 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: "100%",
     height: window.innerHeight,
+    position:"relative"
   },
 
-  page1: {
+  menu: {
     width: "25%",
     height: window.innerHeight,
-
+    position:"relative",
     backgroundColor: theme.palette.grey[0],
   },
   cardImg: {
@@ -34,21 +35,21 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: "100%",
   },
 
-  iamA: {
+  title: {
     
     marginTop: theme.spacing(18),
     textAlign: "center",
     
     ...theme.typography.h3,
   },
-  lets: {
+  heading: {
     marginTop: theme.spacing(15),
     
     textAlign: "center",
     
     ...theme.typography.h1,
   },
-  help: {
+  helpLink: {
     marginTop: theme.spacing(4),
     ...theme.typography.h6,
     float: "right",
@@ -57,6 +58,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(18),
     display: "flex",
     flexDirection: "row",
+    alignItems:"center",
+    justifyContent:"center",
   },
   logo: {
     marginTop: theme.spacing(5),
@@ -71,14 +74,15 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(20),
     marginLeft: theme.spacing(65),
     textAlign: "center",
+    justifyContent:"center"
   },
-  few: {
+  subHeading: {
     ...theme.typography.h3,
     marginLeft: theme.spacing(12),
     marginTop: theme.spacing(20),
     width: "70%",
   },
-  apply: {
+  subHeading2: {
     
     marginLeft: theme.spacing(12),
     marginTop: theme.spacing(12),
@@ -89,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
     color: theme.palette.grey[1],
   },
-  securee: {
+  secureForm: {
     marginTop: theme.spacing(20),
     float: "center",
     marginLeft: theme.spacing(30),
@@ -107,51 +111,51 @@ function Home(props) {
   return (
     <div className={classes.root}>
       <Grid container className={classes.paper}>
-        <Grid item className={classes.page1}>
+        <Grid item className={classes.menu}>
           <div>
             <img className={classes.logo} src={logo} alt="logo"></img>
             <div className={classes.logoText}>
               powered by <Link to="/">Skyflow</Link>
             </div>
-            <div className={classes.few}>
+            <div className={classes.subHeading}>
               <span> A few clicks away from getting your credit card. </span>
             </div>
-            <div className={classes.apply}>
+            <div className={classes.subHeading2}>
               <span> Apply for a new credit card in minutes.</span>
             </div>
             <img className={classes.cardImg} src={creditCard} alt="card"></img>
-            <div className={classes.securee}>
+            <div className={classes.secureForm}>
               <img src={secure} alt="card"></img>
               <span className={classes.secure}>Secure Form</span>
             </div>
           </div>
         </Grid>
 
-        <Grid item xs={12} md container>
+        <Grid item xs={12} md>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item>
-              <div className={classes.help}>
+              <div className={classes.helpLink}>
                 Having troubles? <Link to="/">Get Help</Link>
               </div>
             </Grid>
             <Grid item>
               <div>
-                <h1 className={classes.lets}>
+                <h1 className={classes.heading}>
                   <b>Let's see which card is right for you.</b>
                 </h1>
               </div>
               <div>
-                <div className={classes.iamA}>I am a </div>
+                <div className={classes.title}>I am a </div>
               </div>
             </Grid>
-            <Grid item className={classes.card}>
+            <div  className={classes.card}>
               <CardComp type={student} text="Student" handlePage={handlePage}/>
               <CardComp
                 type={professional}
                 text="Working Professional / Other"
                 handlePage={handlePage}
               />
-            </Grid>
+            </div>
             <Grid item className={classes.info}>
               <Info information="International students do not need a SSN to apply" />
             </Grid>
