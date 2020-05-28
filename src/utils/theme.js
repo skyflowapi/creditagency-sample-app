@@ -14,17 +14,36 @@ const theme = createMuiTheme({
       {
           0:"#1665d8"
       },
+      royalBlue:{
+        0:"#4169E1",
+        
+      },
       white:{
         0:"#ffffff"
-      }
-    // primary: {
-    // },
-    // secondary: {
-    // },
+      },
+      lightBlue:{
+        0:"#eaedf3"
+      },
+      skyBlue:{
+        0:"#549af0"
+      },
+      green:{
+        0:"#39b54a"
+      },
+    current: {
+      0:"#4169E1"
+    },
+    completed: {
+      0:"#1d1d1d"
+    },
+    pending:{
+      0:"#696969"
+    },
     // error: {
     // },
-    // background: {
-    // },
+    background: {
+      default:"#fff"
+    },
     // text : {
         //add primary secondary etc here
     // },
@@ -40,7 +59,7 @@ const theme = createMuiTheme({
       fontFamily : 'Roboto',
       //add variants here
       h1:{
-        fontSize: "38px",
+        fontSize: "36px",
         fontWeight: 'bold',
         fontStyle: 'normal',
         lineHeight: '1.39',
@@ -59,7 +78,7 @@ const theme = createMuiTheme({
         letterSpacing: 'normal'
       },
       h6:{
-        fontSize: "15px",
+        fontSize: "14px",
         fontStyle: 'normal',
         lineHeight: '1.39',
         letterSpacing: 'normal'

@@ -1,172 +1,74 @@
-import React, { Component } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
+import React, { Component, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import TextFieldMolecule from "../../textField/textField";
+import Header from "../../layout/header";
+import SideNavBar from "../../layout/sideNavBar";
+import Footer from "../../layout/footer";
 import { Button } from '@material-ui/core';
-import one from '../../../assets/1.png';
-import two from '../../../assets/2.png';
-import three from '../../../assets/3.png';
-import four from '../../../assets/4.png';
-import logo from '../../../assets/logo.png';
-import secure from '../../../assets/secure.png';
-import TextFieldMolecule from '../../textField/textField';
-import ListItem from '../../listItem/listItem';
+import theme from '../../../utils/theme';
+
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
+  names: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: theme.spacing(5),
+    ...theme.typography.h6,
   },
-
-  paper: {
-    width: "100%",
-    height: window.innerHeight,
-  },
-
-  page1: {
-    width: "25%",
-    height: window.innerHeight,
-
-    backgroundColor: theme.palette.grey[0],
-  },
-
   text: {
-    marginTop: theme.spacing(15),
+    marginTop: theme.spacing(35),
     textAlign: "center",
     ...theme.typography.h1,
   },
-
-  help: {
-    marginTop: theme.spacing(4),
-    ...theme.typography.h6,
-    float: "right",
+  page: {
+    width: "75%",
+    position:"relative"
   },
-
-  logo: {
-    marginTop: theme.spacing(5),
-    marginLeft: theme.spacing(5),
+  components: {
+    display: "flex",
   },
-  logoText: {
-    marginTop: theme.spacing(0),
-    marginLeft: theme.spacing(10),
-    ...theme.typography.h6,
+  footer: {
+    position: "absolute",
+    width: "100%",
+    bottom: theme.spacing(10),
   },
-  buttons: {
-    marginTop: theme.spacing(100),
-  },
-  b1: {
-    float: "left",
-    marginLeft: theme.spacing(20),
-  },
-  b2: {
-    float: "right",
-    marginRight: theme.spacing(20),
-  },
-  infoList: {
-    
-    
-    marginTop: theme.spacing(10),
-    marginLeft:theme.spacing(10)
-  },
-  fname:{
-      marginTop:theme.spacing(5),
-    float: "left",
-    marginLeft: theme.spacing(6),
-  },
-  lname:{
-    marginTop:theme.spacing(5),
-    float: "right",
-    marginRight:theme.spacing(6),
-  },
-  secure: {
-    ...theme.typography.h6,
-    marginLeft: theme.spacing(1),
-    color: theme.palette.grey[1],
-  },
-  securee: {
-    marginTop: theme.spacing(100),
-    float: "center",
-    marginLeft: theme.spacing(25),
-  },
-  names:{
-      display:"flex",
-      flexDirection:"row",
-      alignItems:"center",
-      justifyContent:"center",
-      
-  }
 }));
-
-function namePage(props) {
+export default function NamePage(props) {
   const classes = useStyles();
-
-  function goToDOBPage(){
-    console.log("clicked");
+  const list={
+    pInfo:{status:"current"},
+    cInfo:{status:"pending"},
+    aInfo:{status:"pending"},
+    fInfo:{status:"pending"}
+  };
+  const goBack = () => {
+    props.history.push("/");
+    
+  };
+  const goToDOBPage = () => {
     props.history.push("/personalInformation/dob");
-    }
-
+  };
   return (
     <div className={classes.root}>
-      <Grid container className={classes.paper}>
-        <Grid item className={classes.namePage}>
+      <Header />
+      <div className={classes.components}>
+        <SideNavBar list={list}/>
+        <div className={classes.page}>
           <div>
-            <img className={classes.logo} src={logo} alt="logo"></img>
-            <div className={classes.logoText}>
-              powered by <Link to="/">Skyflow</Link>
-            </div>
-
-            <div className={classes.infoList}>
-            <ListItem img={one} text="PERSONAL INFORMATION" bool={true}/>
-            <ListItem img={two} text="CONTACT INFORMATION" bool={false}/>
-            <ListItem img={three} text="ACADEMIC INFORMATION" bool={false}/>
-            <ListItem img={four} text="FINANCIAL INFORMATION" bool={false}/>
-            </div>
-            
+            <h1 className={classes.text}>
+              <b>My name is</b>
+            </h1>
           </div>
-          <div className={classes.securee}>
-              <img src={secure} alt="card"></img>
-              <span className={classes.secure}>Secure Form</span>
-            </div>
-        </Grid>
-
-        <Grid item xs={12} md container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item>
-              <div className={classes.help}>
-                Having troubles? <Link to="/">Get Help</Link>
-              </div>
-            </Grid>
-            <Grid item>
-              <div>
-                <h1 className={classes.text}>
-                  <b>My name is</b>
-                </h1>
-              </div>
-            </Grid>
-            <div  className={classes.names}>
-                
-              <TextFieldMolecule  name="FIRST NAME"/>
-              <TextFieldMolecule name="LAST NAME"/>
-              
-            </div>
-            <Grid className={classes.buttons} item>
-              <Button className={classes.b1} variant="outlined">
-                Previous
-              </Button>
-              <Button
-                className={classes.b2}
-                variant="contained"
-                color="primary"
-                onClick={goToDOBPage}
-              >
-                Next
-              </Button>
-              
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
+          <div className={classes.names}>
+            <TextFieldMolecule type="text" name="FIRST NAME" placeholder="Enter your First name"></TextFieldMolecule>
+            <TextFieldMolecule type="text" name="LAST NAME" placeholder="Enter your last name"></TextFieldMolecule>
+          </div>
+          {/* <div className={classes.footer}>
+            <Footer prev={goBack} next={goToDOBPage} />
+            </div> */}
+        </div>
+      </div>
     </div>
   );
 }
 
-export default namePage;
