@@ -8,9 +8,9 @@ const commonPaths = require("./paths");
 module.exports = {
   mode: "production",
   output: {
-    filename: `${commonPaths.jsFolder}/[name].[hash].js`,
+    filename: `[name].[hash].js`,
     path: commonPaths.outputPath,
-    chunkFilename: `${commonPaths.jsFolder}/[name].[chunkhash].js`
+    chunkFilename: `[name].[chunkhash].js`
   },
   optimization: {
     minimizer: [
@@ -70,8 +70,8 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: `${commonPaths.cssFolder}/[name].css`,
-      chunkFilename: `${commonPaths.cssFolder}/[name].css`
+      filename: `[name].css`,
+      chunkFilename: `[name].css`
     })
   ],
   devtool: "source-map"
