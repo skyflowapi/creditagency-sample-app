@@ -9,7 +9,8 @@ import three from '../../../assets/3.png';
 import four from '../../../assets/4.png';
 import logo from '../../../assets/logo.png';
 import secure from '../../../assets/secure.png';
-
+import TextFieldMolecule from '../../textField/textField';
+import ListItem from '../../listItem/listItem';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -97,8 +98,6 @@ const useStyles = makeStyles((theme) => ({
 
 function namePage(props) {
   const classes = useStyles();
-  const TextFieldMolecule = React.lazy(() => import('../../textField/textField'));
-  const ListItem=React.lazy(()=>import('../../listItem/listItem'));
 
   function goToDOBPage(){
     console.log("clicked");

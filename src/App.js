@@ -8,10 +8,10 @@ import Header from './components/layout/header';
 import sideBar from './components/layout/sidebar';
 import MainPage from './components/layout/mainContent';
 import PhoneNumberComponent from './components/contactInfo/phoneNumberComponent';
+import Home from './components/Home/index'
+import namePage from './components/personalInfo/namePage/index';
 
 const App = (props) => {
-  const Home = React.lazy(() => import('./components/Home/index'));
-  const namePage = React.lazy(() => import('./components/personalInfo/namePage/index'));
 
   return (
     <React.StrictMode>

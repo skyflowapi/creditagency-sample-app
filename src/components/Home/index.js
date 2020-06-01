@@ -8,7 +8,8 @@ import secure from '../../assets/secure.png';
 import professional from '../../assets/professional.png';
 import { Link, Route } from 'react-router-dom';
 import theme from '../../utils/theme';
-
+import CardComp from '../Card'
+import Info from '../Info'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -103,8 +104,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Home(props) {
   const classes = useStyles();
-  const CardComp = React.lazy(() => import('../Card/index'));
-  const Info = React.lazy(() => import('../Info/index'));
+
   function handlePage(){
   props.history.push("/personalInformation")
   }
