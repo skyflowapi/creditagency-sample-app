@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { TextField } from "@material-ui/core";
+import { TextField, Box } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import theme from '../../utils/theme';
+import theme from "../../utils/theme";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,32 +12,44 @@ const useStyles = makeStyles((theme) => ({
   text: {
     fontFamily: "Roboto",
     padding: theme.spacing(4),
-    fontWeight:"bold"
+    fontWeight: "bold",
   },
   field: {
     ...theme.typography.h6,
-    
-    height:"10px",
-    
+
+    height: "10px",
+  },
+  box: {
+    width: "300px",
+    height: "38px",
+    border: "1px solid #eae8ee",
+    borderRadius: "4px",
   },
 }));
 
-export default function TextFieldMolecule(props) {
+export default React.forwardRef((props, ref) => {
   const classes = useStyles();
 
   return (
     <div className={classes.text}>
-      <div style={{marginBottom:theme.spacing(2),color:theme.palette.pending[0],fontSize:"12px"}}>{props.name}</div>
-      <TextField
-        style={{ width: props.width || "350px" }}
-        placeholder={props.placeholder}
-        InputProps={{classes:{input:classes.field}  }}
-        inputProps={{ maxLength: props.maxLength}}
-        type={props.type}
-        onChange={props.handleChange}
-        className={classes.field}
-        variant="outlined"
-      ></TextField>
+      <div
+        style={{
+          marginBottom: theme.spacing(2),
+          color: theme.palette.pending[0],
+          fontSize: "12px",
+        }}
+      >
+        {props.name}
+      </div>
+      <Box
+        ref={ref}
+        width={"300px"}
+        height={"38px"}
+        padding="10px 16px"
+        border={"1px solid #eae8ee"}
+        borderRadius={"4px"}
+        {...props}
+      />
     </div>
   );
-}
+});

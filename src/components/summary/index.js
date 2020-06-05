@@ -7,13 +7,15 @@ import theme from "../../utils/theme";
 import assignment from "../../assets/assignment.png";
 import Information from "../information";
 import { useHistory } from 'react-router-dom';
+import { ELEMENTS_NAME } from "../../utils/constants";
+import { useSkyflow } from "../../services";
 
 const useStyles = makeStyles((theme) => ({
   footer: {
     position: "absolute",
     width: "100%",
     // bottom: 0,
-    marginTop:theme.spacing(15)
+    marginTop: theme.spacing(15),
   },
   content: {
     display: "inline-block",
@@ -53,9 +55,51 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(5),
   },
 }));
+
+const userInfo = {
+  "First Name": {
+    elementType: "firstName",
+    options: {},
+  },
+  "Last Name": {
+    elementType: "lastName",
+    options: {},
+  },
+  "Date Of Birth": {
+    elementType: "dob",
+    options: {},
+  },
+};
+
+const contactInfo = {
+  "Permanent Address": { elementType: "address", options: {} },
+  Street: { elementType: "street", options: {} },
+  "Zip Code": { elementType: "zipCode", options: {} },
+  City: { elementType: "city", options: {} },
+  State: { elementType: "state", options: {} },
+  "Phone Number": {
+    elementType: "mobileNumber",
+    options: {},
+  },
+};
+
+const academicInfo = {};
+
+const financialInfo = {
+  SSN: {
+    elementType: "ssn",
+    options: {},
+  },
+  "Annual Income": {
+    elementType: "income",
+    options: { name: ELEMENTS_NAME.ANNUAL_INCOME },
+  },
+};
+
 export default function Summary(props) {
   const classes = useStyles();
   const history=useHistory();
+  const { elements } = useSkyflow();
   const data = {
     FirstName: "Kandy",
     LastName: "WilliamSon",
@@ -65,6 +109,7 @@ export default function Summary(props) {
 
   const submitPage = () => {
     props.history.push("/submit");
+    elements.tokenize();
   };
 
   const editDetailsPage=()=>{
@@ -78,7 +123,9 @@ export default function Summary(props) {
         <div style={{ display: "flex" }}>
           {" "}
           <img style={{ objectFit: "contain" }} src={assignment} />{" "}
-          <Typography variant="h1" style={{marginLeft:theme.spacing(1)}}>Review Your Information</Typography>
+          <Typography variant="h1" style={{ marginLeft: theme.spacing(1) }}>
+            Review Your Information
+          </Typography>
         </div>
         <Typography
           variant="h5"
@@ -97,10 +144,10 @@ export default function Summary(props) {
             justifyContent: "space-between",
           }}
         >
-          <Information title="YOUR INFORMATION" data={data} />
-          <Information title="CONTACT INFORMATION" data={data} />
-          <Information title="ACADEMIC INFORMATION" data={data} />
-          <Information title="FINANCIAL INFORMATION" data={data} />
+          <Information title="YOUR INFORMATION" data={userInfo} />
+          <Information title="CONTACT INFORMATION" data={contactInfo} />
+          {/* <Information title="ACADEMIC INFORMATION" data={data} /> */}
+          <Information title="FINANCIAL INFORMATION" data={financialInfo} />
         </div>
       </div>
       <div className={classes.footer}>

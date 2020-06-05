@@ -15,13 +15,13 @@ module.exports = {
         loader: "eslint-loader",
         exclude: /(node_modules)/,
         options: {
-          emitWarning: true
-        }
+          emitWarning: true,
+        },
       },
       {
         test: /\.(js|jsx)$/,
         loader: "babel-loader",
-        exclude: /(node_modules)/
+        exclude: /(node_modules)/,
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -29,10 +29,10 @@ module.exports = {
           {
             loader: "file-loader",
             options: {
-              outputPath: commonPaths.imagesFolder
-            }
-          }
-        ]
+              outputPath: commonPaths.imagesFolder,
+            },
+          },
+        ],
       },
       {
         test: /\.(woff2|ttf|woff|eot)$/,
@@ -40,35 +40,34 @@ module.exports = {
           {
             loader: "file-loader",
             options: {
-              outputPath: commonPaths.fontsFolder
-            }
-          }
-        ]
-      }
-    ]
+              outputPath: commonPaths.fontsFolder,
+            },
+          },
+        ],
+      },
+    ],
   },
   serve: {
-    add: app => {
+    add: (app) => {
       app.use(convert(history()));
     },
     content: commonPaths.entryPath,
     dev: {
-      publicPath: commonPaths.outputPath
+      publicPath: commonPaths.outputPath,
     },
-    open: true
+    open: true,
   },
   resolve: {
     modules: ["src", "node_modules"],
-    extensions: ["*", ".js", ".jsx", ".css"]
+    extensions: ["*", ".js", ".jsx", ".css"],
   },
   plugins: [
     new webpack.ProgressPlugin(),
     new HtmlWebpackPlugin({
-      template: commonPaths.templatePath
+      template: commonPaths.templatePath,
     }),
-
     new ScriptExtHtmlWebpackPlugin({
-      defaultAttribute: "async"
-    })
-  ]
+      defaultAttribute: "async",
+    }),
+  ],
 };

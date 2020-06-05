@@ -16,6 +16,9 @@ import {
   FormControlLabel,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { useNextHook } from "../../../App";
+import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
+import { ELEMENT_STYLES, ELEMENTS_NAME } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   income: {
@@ -54,6 +57,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function IncomeInfo(props) {
   const classes = useStyles();
+  const { next, setNext } = useNextHook();
+  const { elements, isValid } = useMultipleSkyflowElements(
+    [
+      {
+        elementType: "income",
+        options: { ...ELEMENT_STYLES, name: ELEMENTS_NAME.ANNUAL_INCOME },
+      },
+    ],
+    setNext
+  );
+
   const list = {
     pInfo: { status: "done" },
     cInfo: { status: "done" },
@@ -95,7 +109,12 @@ export default function IncomeInfo(props) {
             </h1>
           </div>
           <div className={classes.income}>
-            <TextFieldMolecule type="number" name="ANNUAL INCOME" placeholder="Enter your income"/>
+            <TextFieldMolecule
+              type="number"
+              name="ANNUAL INCOME"
+              placeholder="Enter your income"
+              ref={elements[0].elementRef}
+            />
           </div>
           <div className={classes.info}>
             <Info information={msg} />

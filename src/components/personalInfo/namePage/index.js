@@ -4,8 +4,12 @@ import TextFieldMolecule from "../../textField/textField";
 import Header from "../../layout/header";
 import SideNavBar from "../../layout/sideNavBar";
 import Footer from "../../layout/footer";
-import { Button } from '@material-ui/core';
-import theme from '../../../utils/theme';
+import { Button, setRef } from "@material-ui/core";
+import theme from "../../../utils/theme";
+import { useSkyflow } from "../../../services";
+import { ELEMENT_STYLES } from "../../../utils/constants";
+import { useNextHook } from "../../../App";
+import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   page: {
     width: "75%",
-    position:"relative"
+    position: "relative",
   },
   components: {
     display: "flex",
@@ -35,15 +39,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function NamePage(props) {
   const classes = useStyles();
-  const list={
-    pInfo:{status:"current"},
-    cInfo:{status:"pending"},
-    aInfo:{status:"pending"},
-    fInfo:{status:"pending"}
+
+  const { next, setNext } = useNextHook();
+
+  const { elements, isValid } = useMultipleSkyflowElements(
+    [
+      { elementType: "firstName", options: { ...ELEMENT_STYLES } },
+      { elementType: "lastName", options: { ...ELEMENT_STYLES } },
+    ],
+    setNext
+  );
+
+  const list = {
+    pInfo: { status: "current" },
+    cInfo: { status: "pending" },
+    aInfo: { status: "pending" },
+    fInfo: { status: "pending" },
   };
   const goBack = () => {
     props.history.push("/");
-    
   };
   const goToDOBPage = () => {
     props.history.push("/personalInformation/dob");
@@ -52,7 +66,7 @@ export default function NamePage(props) {
     <div className={classes.root}>
       <Header />
       <div className={classes.components}>
-        <SideNavBar list={list}/>
+        <SideNavBar list={list} />
         <div className={classes.page}>
           <div>
             <h1 className={classes.text}>
@@ -60,8 +74,16 @@ export default function NamePage(props) {
             </h1>
           </div>
           <div className={classes.names}>
-            <TextFieldMolecule type="text" name="FIRST NAME" placeholder="Enter your First name"></TextFieldMolecule>
-            <TextFieldMolecule type="text" name="LAST NAME" placeholder="Enter your last name"></TextFieldMolecule>
+            <TextFieldMolecule
+              id="firstName"
+              name="FIRST NAME"
+              ref={elements[0].elementRef}
+            />
+            <TextFieldMolecule
+              id="lastName"
+              name="LAST NAME"
+              ref={elements[1].elementRef}
+            />
           </div>
           {/* <div className={classes.footer}>
             <Footer prev={goBack} next={goToDOBPage} />
@@ -71,4 +93,3 @@ export default function NamePage(props) {
     </div>
   );
 }
-

@@ -7,6 +7,9 @@ import SideNavBar from "../../layout/sideNavBar";
 import TextFieldMolecule from "../../textField/textField";
 import Footer from "../../layout/footer";
 import theme from "../../../utils/theme";
+import { useNextHook } from "../../../App";
+import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
+import { ELEMENT_STYLES } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   ssn: {
@@ -41,6 +44,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function SSNInfo(props) {
   const classes = useStyles();
+  const { next, setNext } = useNextHook();
+  const { elements, isValid } = useMultipleSkyflowElements(
+    [
+      {
+        elementType: "ssn",
+        options: { ...ELEMENT_STYLES },
+      },
+    ],
+    setNext
+  );
+
   const list = {
     pInfo: { status: "done" },
     cInfo: { status: "done" },
@@ -93,6 +107,7 @@ export default function SSNInfo(props) {
               handleChange={handleSSN}
               placeholder="XXXX XX XXXX"
               maxLength="10"
+              ref={elements[0].elementRef}
             />
           </div>
           {/* <div style={{marginTop:theme.spacing(15),display:"flex",justifyContent:"center"}}>

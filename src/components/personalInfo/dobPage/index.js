@@ -4,7 +4,10 @@ import TextFieldMolecule from "../../textField/textField";
 import Header from "../../layout/header";
 import SideNavBar from "../../layout/sideNavBar";
 import Footer from "../../layout/footer";
-import theme from '../../../utils/theme';
+import theme from "../../../utils/theme";
+import { useNextHook } from "../../../App";
+import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
+import { ELEMENT_STYLES } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   dob: {
@@ -20,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   page: {
     width: "75%",
-    position:"relative"
+    position: "relative",
   },
   components: {
     display: "flex",
@@ -33,11 +36,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function DobPage(props) {
   const classes = useStyles();
-  const list={
-    pInfo:{status:"current"},
-    cInfo:{status:"pending"},
-    aInfo:{status:"pending"},
-    fInfo:{status:"pending"}
+  const { next, setNext } = useNextHook();
+
+  const { elements, isValid } = useMultipleSkyflowElements(
+    [{ elementType: "dob", options: { ...ELEMENT_STYLES } }],
+    setNext
+  );
+
+  const list = {
+    pInfo: { status: "current" },
+    cInfo: { status: "pending" },
+    aInfo: { status: "pending" },
+    fInfo: { status: "pending" },
   };
   const goBack = () => {
     props.history.push("/personalInformation");
@@ -49,7 +59,7 @@ export default function DobPage(props) {
     <div className={classes.root}>
       <Header />
       <div className={classes.components}>
-        <SideNavBar list={list}/>
+        <SideNavBar list={list} />
         <div className={classes.page}>
           <div>
             <h1 className={classes.text}>
@@ -57,7 +67,11 @@ export default function DobPage(props) {
             </h1>
           </div>
           <div className={classes.dob}>
-            <TextFieldMolecule name="DATE OF BIRTH (MM/DD/YYYY)" placeholder="MM/DD/YYYY"></TextFieldMolecule>
+            <TextFieldMolecule
+              id="dob"
+              name="DATE OF BIRTH (MM/DD/YYYY)"
+              ref={elements[0].elementRef}
+            />
           </div>
           {/* <div className={classes.footer}>
             <Footer prev={goBack} next={goToContactPage} />
