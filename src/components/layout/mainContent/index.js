@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../header';
-import SideBar from '../sidebar';
 import DobPage from '../../personalInfo/dobPage';
+import SideNavBar from '../sideNavBar';
 
 
 
@@ -13,7 +13,11 @@ const useStyles = makeStyles((theme) => ({
         
     },
     components:{
+        
         display:"flex"
+    },
+    sideBar:{
+        width:"25%"
     }
 }));
 export default function MainPage()
@@ -24,10 +28,10 @@ export default function MainPage()
             <div className={classes.components}>
 
             
-            <SideBar/>
+            <div className={classes.sideBar}><SideNavBar/></div>
             <DobPage/>
             </div>
             
         </div>
-    )
+    );
 }

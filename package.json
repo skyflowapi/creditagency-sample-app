@@ -43,9 +43,12 @@
     "babel-plugin-transform-react-pure-class-to-function": "1.0.1",
     "babel-plugin-transform-react-remove-prop-types": "0.4.24",
     "eslint-config-zemoso": "^1.0.1",
+    "font-awesome": "^4.7.0",
     "react": "16.8.6",
+    "react-albus": "^2.0.0",
     "react-dom": "16.8.6",
     "react-hot-loader": "4.11.0",
+    "react-input-mask": "^2.0.4",
     "react-router-dom": "^5.2.0"
   },
   "resolutions": {

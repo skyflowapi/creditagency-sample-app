@@ -1,19 +1,17 @@
 import React, { Component, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextFieldMolecule from "../../textField/textField";
+import Info from "../../Info";
 import Header from "../../layout/header";
 import SideNavBar from "../../layout/sideNavBar";
 import Footer from "../../layout/footer";
-import { Button, setRef } from "@material-ui/core";
 import theme from "../../../utils/theme";
-import { useSkyflow } from "../../../services";
-import { ELEMENT_STYLES } from "../../../utils/constants";
 import { useNextHook } from "../../../App";
 import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
-
+import { ELEMENT_STYLES, ELEMENTS_NAME } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
-  names: {
+  income: {
     display: "flex",
     justifyContent: "center",
     marginTop: theme.spacing(5),
@@ -31,36 +29,44 @@ const useStyles = makeStyles((theme) => ({
   components: {
     display: "flex",
   },
+  info: {
+    justifyContent: "center",
+    display: "flex",
+    marginTop: theme.spacing(20),
+  },
   footer: {
     position: "absolute",
     width: "100%",
     bottom: theme.spacing(10),
   },
 }));
-export default function NamePage(props) {
+
+export default function IncomeInfo(props) {
   const classes = useStyles();
-
   const { next, setNext } = useNextHook();
-
   const { elements, isValid } = useMultipleSkyflowElements(
     [
-      { elementType: "firstName", options: { ...ELEMENT_STYLES } },
-      { elementType: "lastName", options: { ...ELEMENT_STYLES } },
+      {
+        elementType: "income",
+        options: { ...ELEMENT_STYLES, name: ELEMENTS_NAME.ANNUAL_INCOME },
+      },
     ],
     setNext
   );
 
   const list = {
-    pInfo: { status: "current" },
-    cInfo: { status: "pending" },
-    aInfo: { status: "pending" },
-    fInfo: { status: "pending" },
+    pInfo: { status: "done" },
+    cInfo: { status: "done" },
+    aInfo: { status: "done" },
+    fInfo: { status: "current" },
   };
+  const msg =
+    <p>You may include personal income,which is income you have earned,including full-time,part-time,or seasonal jobs,self-employment,interests or dividends,retirement and public assistance.</p>;
   const goBack = () => {
-    props.history.push("/");
+    props.history.push("/academicInformation");
   };
-  const goToDOBPage = () => {
-    props.history.push("/personalInformation/dob");
+  const goToResidencePage = () => {
+    props.history.push("/financialInformation/residence");
   };
   return (
     <div className={classes.root}>
@@ -70,24 +76,23 @@ export default function NamePage(props) {
         <div className={classes.page}>
           <div>
             <h1 className={classes.text}>
-              <b>My name is</b>
+              <b>My yearly income is</b>
             </h1>
           </div>
-          <div className={classes.names}>
+          <div className={classes.income}>
             <TextFieldMolecule
-              id="firstName"
-              name="FIRST NAME"
+              type="number"
+              name="ANNUAL INCOME"
+              placeholder="Enter your income"
               ref={elements[0].elementRef}
             />
-            <TextFieldMolecule
-              id="lastName"
-              name="LAST NAME"
-              ref={elements[1].elementRef}
-            />
+          </div>
+          <div className={classes.info}>
+            <Info information={msg} />
           </div>
           {/* <div className={classes.footer}>
-            <Footer prev={goBack} next={goToDOBPage} />
-            </div> */}
+            <Footer prev={goBack} next={goToResidencePage} />
+          </div> */}
         </div>
       </div>
     </div>
