@@ -6,6 +6,9 @@ import TextFieldMolecule from "../../textField/textField";
 import Footer from "../../layout/footer";
 import SideNavBar from "../../layout/sideNavBar";
 import theme from "../../../utils/theme";
+import { useNextHook } from "../../../App";
+import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
+import { ELEMENT_STYLES } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   address: {
@@ -48,14 +51,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function AddressComponent(props) {
   const classes = useStyles();
-  const list={
-    pInfo:{status:"done"},
-    cInfo:{status:"current"},
-    aInfo:{status:"pending"},
-    fInfo:{status:"pending"}
+  const { next, setNext } = useNextHook();
+  const { elements, isValid } = useMultipleSkyflowElements(
+    [
+      { elementType: "address", options: { ...ELEMENT_STYLES } },
+      { elementType: "street", options: { ...ELEMENT_STYLES } },
+      { elementType: "zipCode", options: { ...ELEMENT_STYLES } },
+      { elementType: "city", options: { ...ELEMENT_STYLES } },
+      { elementType: "state", options: { ...ELEMENT_STYLES } },
+    ],
+    setNext
+  );
+
+  const list = {
+    pInfo: { status: "done" },
+    cInfo: { status: "current" },
+    aInfo: { status: "pending" },
+    fInfo: { status: "pending" },
   };
-  const msg =
-    <p>PO Box,PMB,business,temporary,and non-US based addresses are not accepted</p>;
+  const msg = (
+    <p>
+      PO Box,PMB,business,temporary,and non-US based addresses are not accepted
+    </p>
+  );
   const goBack = () => {
     props.history.push("/contactInformation");
   };
@@ -66,7 +84,7 @@ export default function AddressComponent(props) {
     <div>
       <Header />
       <div className={classes.components}>
-        <SideNavBar list={list}/>
+        <SideNavBar list={list} />
         <div className={classes.page}>
           <div className={classes.content}>
             <div>
@@ -81,12 +99,14 @@ export default function AddressComponent(props) {
                   width="550px"
                   name="PERMANENT ADDRESS"
                   placeholder="Permanent address"
+                  ref={elements[0].elementRef}
                 ></TextFieldMolecule>
                 <TextFieldMolecule
                   type="text"
                   name="APT/STREET"
                   width="300px"
                   placeholder="Apartment / Street"
+                  ref={elements[1].elementRef}
                 ></TextFieldMolecule>
               </div>
               <div className={classes.address}>
@@ -96,19 +116,21 @@ export default function AddressComponent(props) {
                   name="ZIP CODE"
                   width="230px"
                   placeholder="ZIP code"
+                  ref={elements[2].elementRef}
                 ></TextFieldMolecule>
                 <TextFieldMolecule
                   type="text"
                   width="350px"
                   name="CITY"
-                  
                   placeholder="City"
+                  ref={elements[3].elementRef}
                 ></TextFieldMolecule>
                 <TextFieldMolecule
                   type="text"
                   width="220px"
                   name="STATE"
                   placeholder="State"
+                  ref={elements[4].elementRef}
                 ></TextFieldMolecule>
               </div>
             </div>

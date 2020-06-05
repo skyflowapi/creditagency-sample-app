@@ -7,6 +7,9 @@ import SideNavBar from "../../layout/sideNavBar";
 import TextFieldMolecule from "../../textField/textField";
 import Footer from "../../layout/footer";
 import theme from "../../../utils/theme";
+import { useNextHook } from "../../../App";
+import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
+import { ELEMENT_STYLES } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   ssn: {
@@ -36,19 +39,36 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: "100%",
     bottom: theme.spacing(10),
-    justifyContent:"flex-end"
+    justifyContent: "flex-end",
   },
 }));
 export default function SSNInfo(props) {
   const classes = useStyles();
+  const { next, setNext } = useNextHook();
+  const { elements, isValid } = useMultipleSkyflowElements(
+    [
+      {
+        elementType: "ssn",
+        options: { ...ELEMENT_STYLES },
+      },
+    ],
+    setNext
+  );
+
   const list = {
-    pInfo: {status: "done" },
-    cInfo: {status: "done" },
-    aInfo: {status: "done" },
-    fInfo: {status: "current" },
+    pInfo: { status: "done" },
+    cInfo: { status: "done" },
+    aInfo: { status: "done" },
+    fInfo: { status: "current" },
   };
-  const msg =
-    <p>By clicking next button,I am providing written instructions under the Fair Credit Reporting Act authorizing Skyflow to obtain information solely to conduct a prequalification for credit and acknowledge that my credit will not be impacted as a result.</p>;
+  const msg = (
+    <p>
+      By clicking next button,I am providing written instructions under the Fair
+      Credit Reporting Act authorizing Skyflow to obtain information solely to
+      conduct a prequalification for credit and acknowledge that my credit will
+      not be impacted as a result.
+    </p>
+  );
   const handleSSN = (event) => {
     const val = event.target.value;
 
@@ -65,7 +85,7 @@ export default function SSNInfo(props) {
     props.history.push("/");
   };
 
-  const goToSubmitPage=()=>{
+  const goToSubmitPage = () => {
     props.history.push("/summary");
   };
 
@@ -87,6 +107,7 @@ export default function SSNInfo(props) {
               handleChange={handleSSN}
               placeholder="XXXX XX XXXX"
               maxLength="10"
+              ref={elements[0].elementRef}
             />
           </div>
           <div className={classes.info}>

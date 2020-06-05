@@ -8,6 +8,9 @@ import SideNavBar from "../../layout/sideNavBar";
 import theme from "../../../utils/theme";
 import InputMask from "react-input-mask";
 import { TextField } from "@material-ui/core";
+import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
+import { useNextHook } from "../../../App";
+import { ELEMENT_STYLES } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   number: {
@@ -41,6 +44,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function PhoneNumberComponent(props) {
   const classes = useStyles();
+  const { next, setNext } = useNextHook();
+  const { elements, isValid } = useMultipleSkyflowElements(
+    [{ elementType: "mobileNumber", options: { ...ELEMENT_STYLES } }],
+    setNext
+  );
+
   const list = {
     pInfo: { status: "done" },
     cInfo: { status: "current" },
@@ -83,6 +92,7 @@ export default function PhoneNumberComponent(props) {
               type="number"
               name="PHONE NUMBER"
               placeholder="Enter your phone number"
+              ref={elements[0].elementRef}
             ></TextFieldMolecule>
             {/* <TextField style={{width:"350px"}} placeholder="Enter your phone number" type="number" variant="outlined"><InputMask mask="(+1)999-999-99-99" maskChar=" " /></TextField> */}
           </div>

@@ -28,12 +28,17 @@ import Summary from "./components/summary";
 import FinalPage from "./components/finalPage";
 import Information from "./components/information";
 
-const App = (props) => {
-  const Home = React.lazy(() => import("./components/Home/index"));
-  const NamePage = React.lazy(() =>
-    import("./components/personalInfo/namePage/index")
-  );
+const Home = React.lazy(() => import("./components/Home/index"));
+const NamePage = React.lazy(() =>
+  import("./components/personalInfo/namePage/index")
+);
 
+const Next = React.createContext();
+
+export const useNextHook = () => React.useContext(Next);
+
+const App = (props) => {
+  const [next, setNext] = React.useState(false);
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
@@ -55,36 +60,38 @@ const App = (props) => {
               <Route
                 render={({ history }) => (
                   <Wizard history={history}>
-                    <Steps>
-                      {/* <Step id="Home">
+                    <Next.Provider value={{ next, setNext }}>
+                      <Steps>
+                        {/* <Step id="Home">
             <Home/>
           </Step> */}
-                      <Step id="personalInformation">
-                        <NamePage />
-                      </Step>
-                      <Step id="personalInformation/dob">
-                        <DobPage />
-                      </Step>
-                      <Step id="contactInformation">
-                        <PhoneNumberComponent />
-                      </Step>
-                      <Step id="contactInformation/address">
-                        <AddressComponent />
-                      </Step>
-                      <Step id="academicInformation">
-                        <EmpComponent />
-                      </Step>
-                      <Step id="financialInformation">
-                        <IncomeInfo />
-                      </Step>
-                      <Step id="financialInformation/residence">
-                        <ResidenceInfo />
-                      </Step>
-                      <Step id="SSNInfo">
-                        <SSNInfo />
-                      </Step>
-                    </Steps>
-                    <Navigation />
+                        <Step id="personalInformation">
+                          <NamePage />
+                        </Step>
+                        <Step id="personalInformation/dob">
+                          <DobPage />
+                        </Step>
+                        <Step id="contactInformation">
+                          <PhoneNumberComponent />
+                        </Step>
+                        <Step id="contactInformation/address">
+                          <AddressComponent />
+                        </Step>
+                        <Step id="academicInformation">
+                          <EmpComponent />
+                        </Step>
+                        <Step id="financialInformation">
+                          <IncomeInfo />
+                        </Step>
+                        <Step id="financialInformation/residence">
+                          <ResidenceInfo />
+                        </Step>
+                        <Step id="SSNInfo">
+                          <SSNInfo />
+                        </Step>
+                      </Steps>
+                      <Navigation />
+                    </Next.Provider>
                   </Wizard>
                 )}
               />
