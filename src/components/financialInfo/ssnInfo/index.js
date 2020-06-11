@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button, FormControlLabel, Radio } from "@material-ui/core";
 import Info from "../../Info";
 import Header from "../../layout/header";
 import SideNavBar from "../../layout/sideNavBar";
@@ -36,19 +36,25 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: "100%",
     bottom: theme.spacing(10),
-    justifyContent:"flex-end"
+    justifyContent: "flex-end",
   },
 }));
 export default function SSNInfo(props) {
   const classes = useStyles();
   const list = {
-    pInfo: {status: "done" },
-    cInfo: {status: "done" },
-    aInfo: {status: "done" },
-    fInfo: {status: "current" },
+    pInfo: { status: "done" },
+    cInfo: { status: "done" },
+    aInfo: { status: "done" },
+    fInfo: { status: "current" },
   };
-  const msg =
-    <p>By clicking next button,I am providing written instructions under the Fair Credit Reporting Act authorizing Skyflow to obtain information solely to conduct a prequalification for credit and acknowledge that my credit will not be impacted as a result.</p>;
+  const msg = (
+    <p>
+      By clicking next button,I am providing written instructions under the Fair
+      Credit Reporting Act authorizing Skyflow to obtain information solely to
+      conduct a prequalification for credit and acknowledge that my credit will
+      not be impacted as a result.
+    </p>
+  );
   const handleSSN = (event) => {
     const val = event.target.value;
 
@@ -65,7 +71,7 @@ export default function SSNInfo(props) {
     props.history.push("/");
   };
 
-  const goToSubmitPage=()=>{
+  const goToSubmitPage = () => {
     props.history.push("/summary");
   };
 
@@ -89,6 +95,14 @@ export default function SSNInfo(props) {
               maxLength="10"
             />
           </div>
+          {/* <div style={{marginTop:theme.spacing(15),display:"flex",justifyContent:"center"}}>
+              <FormControlLabel
+              style={{border:"2px solid #eaedf3",width:"300px",borderRadius:"4px",background:theme.palette.grey[0]}}
+                value="I don't have SSN"
+                control={<Radio color="primary"/>}
+                label="I don't have SSN"
+              />
+              </div> */}
           <div className={classes.info}>
             <Info information={msg} />
           </div>

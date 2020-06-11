@@ -6,6 +6,7 @@ import TextFieldMolecule from "../../textField/textField";
 import Footer from "../../layout/footer";
 import SideNavBar from "../../layout/sideNavBar";
 import theme from "../../../utils/theme";
+import { Radio, FormControlLabel } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   address: {
@@ -48,14 +49,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function AddressComponent(props) {
   const classes = useStyles();
-  const list={
-    pInfo:{status:"done"},
-    cInfo:{status:"current"},
-    aInfo:{status:"pending"},
-    fInfo:{status:"pending"}
+  const list = {
+    pInfo: { status: "done" },
+    cInfo: { status: "current" },
+    aInfo: { status: "pending" },
+    fInfo: { status: "pending" },
   };
-  const msg =
-    <p>PO Box,PMB,business,temporary,and non-US based addresses are not accepted</p>;
+  const msg = (
+    <p>
+      PO Box,PMB,business,temporary,and non-US based addresses are not accepted
+    </p>
+  );
   const goBack = () => {
     props.history.push("/contactInformation");
   };
@@ -66,7 +70,7 @@ export default function AddressComponent(props) {
     <div>
       <Header />
       <div className={classes.components}>
-        <SideNavBar list={list}/>
+        <SideNavBar list={list} />
         <div className={classes.page}>
           <div className={classes.content}>
             <div>
@@ -101,7 +105,6 @@ export default function AddressComponent(props) {
                   type="text"
                   width="350px"
                   name="CITY"
-                  
                   placeholder="City"
                 ></TextFieldMolecule>
                 <TextFieldMolecule
@@ -111,7 +114,16 @@ export default function AddressComponent(props) {
                   placeholder="State"
                 ></TextFieldMolecule>
               </div>
+             
             </div>
+            {/* <div style={{marginTop:theme.spacing(15),display:"flex",justifyContent:"center"}}>
+              <FormControlLabel
+              style={{border:"2px solid #eaedf3",width:"300px",borderRadius:"4px"}}
+                value="I haven't arrived U.S yet"
+                control={<Radio color="primary"/>}
+                label="I haven't arrived U.S yet"
+              />
+              </div> */}
             <div className={classes.info}>
               <Info information={msg} />
             </div>

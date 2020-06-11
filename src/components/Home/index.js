@@ -28,13 +28,14 @@ const useStyles = makeStyles((theme) => ({
     ...theme.typography.h1,
   },
   page: {
+    width: "65%",
     position: "relative",
     // textAlign:"center"
   },
   info: {
     marginTop: theme.spacing(20),
-    marginLeft: theme.spacing(65),
-    textAlign: "center",
+    justifyContent: "center",
+    display: "flex",
     justifyContent: "center",
   },
   components: {
@@ -75,11 +76,11 @@ export default function Home(props) {
           </div>
           <div className={classes.card}>
             <CardComp type={student} text="Student" handlePage={handlePage} />
-            <CardComp
+            {/* <CardComp
               type={professional}
               text="Working Professional / Other"
               handlePage={handlePage}
-            />
+            /> */}
           </div>
           <div className={classes.info}>
             <Info information= {msg}/>

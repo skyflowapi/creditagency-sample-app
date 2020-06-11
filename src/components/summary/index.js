@@ -6,6 +6,7 @@ import lock from "../../assets/lock.png";
 import theme from "../../utils/theme";
 import assignment from "../../assets/assignment.png";
 import Information from "../information";
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   footer: {
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function Summary(props) {
   const classes = useStyles();
-
+  const history=useHistory();
   const data = {
     FirstName: "Kandy",
     LastName: "WilliamSon",
@@ -63,11 +64,11 @@ export default function Summary(props) {
   };
 
   const submitPage = () => {
-    props.history.push("/done");
+    props.history.push("/submit");
   };
 
   const editDetailsPage=()=>{
-    props.history.push("/SSNInfo");
+    history.goBack();
   };
   return (
     <div className={classes.root}>
