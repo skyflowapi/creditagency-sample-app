@@ -13,6 +13,8 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Roboto",
     padding: theme.spacing(4),
     fontWeight: "bold",
+    textAlign: "left",
+    // width: "max-content",
   },
   field: {
     ...theme.typography.h6,
@@ -32,15 +34,17 @@ export default React.forwardRef((props, ref) => {
 
   return (
     <div className={classes.text}>
-      <div
-        style={{
-          marginBottom: theme.spacing(2),
-          color: theme.palette.pending[0],
-          fontSize: "12px",
-        }}
-      >
-        {props.name}
-      </div>
+      {props.name && (
+        <div
+          style={{
+            marginBottom: theme.spacing(2),
+            color: theme.palette.pending[0],
+            fontSize: "12px",
+          }}
+        >
+          {props.name}
+        </div>
+      )}
       <Box
         ref={ref}
         width={"300px"}

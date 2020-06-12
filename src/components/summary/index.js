@@ -6,8 +6,14 @@ import lock from "../../assets/lock.png";
 import theme from "../../utils/theme";
 import assignment from "../../assets/assignment.png";
 import Information from "../information";
-import { ELEMENTS_NAME } from "../../utils/constants";
+import { useHistory } from "react-router-dom";
 import { useSkyflow } from "../../services";
+import {
+  YOUR_INFO,
+  CONTACT_INFO,
+  ACADEMIC_INFO,
+  FINANCIAL_INFO,
+} from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   footer: {
@@ -55,64 +61,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const userInfo = {
-  "First Name": {
-    elementType: "firstName",
-    options: {},
-  },
-  "Last Name": {
-    elementType: "lastName",
-    options: {},
-  },
-  "Date Of Birth": {
-    elementType: "dob",
-    options: {},
-  },
-};
-
-const contactInfo = {
-  "Permanent Address": { elementType: "address", options: {} },
-  Street: { elementType: "street", options: {} },
-  "Zip Code": { elementType: "zipCode", options: {} },
-  City: { elementType: "city", options: {} },
-  State: { elementType: "state", options: {} },
-  "Phone Number": {
-    elementType: "mobileNumber",
-    options: {},
-  },
-};
-
-const academicInfo = {};
-
-const financialInfo = {
-  SSN: {
-    elementType: "ssn",
-    options: {},
-  },
-  "Annual Income": {
-    elementType: "income",
-    options: { name: ELEMENTS_NAME.ANNUAL_INCOME },
-  },
-};
-
 export default function Summary(props) {
   const classes = useStyles();
+  const history = useHistory();
   const { elements } = useSkyflow();
 
-  const data = {
-    FirstName: "Kandy",
-    LastName: "WilliamSon",
-    EmailAddress: "kandy.williamson@prekari.com",
-    DateOfBirth: "September 19,1995",
-  };
-
   const submitPage = () => {
+    history.push("/submit");
+    props.setEmail(
+      elements
+        .getElement(YOUR_INFO.EMAIL.elementType, YOUR_INFO.EMAIL.options.name)
+        .getState().value
+    );
     elements.tokenize();
-    props.history.push("/done");
   };
 
   const editDetailsPage = () => {
-    props.history.push("/SSNInfo");
+    history.goBack();
   };
   return (
     <div className={classes.root}>
@@ -143,10 +108,10 @@ export default function Summary(props) {
             justifyContent: "space-between",
           }}
         >
-          <Information title="YOUR INFORMATION" data={userInfo} />
-          <Information title="CONTACT INFORMATION" data={contactInfo} />
-          {/* <Information title="ACADEMIC INFORMATION" data={data} /> */}
-          <Information title="FINANCIAL INFORMATION" data={financialInfo} />
+          <Information title="YOUR INFORMATION" data={YOUR_INFO} />
+          <Information title="CONTACT INFORMATION" data={CONTACT_INFO} />
+          <Information title="ACADEMIC INFORMATION" data={ACADEMIC_INFO} />
+          <Information title="FINANCIAL INFORMATION" data={FINANCIAL_INFO} />
         </div>
       </div>
       <div className={classes.footer}>

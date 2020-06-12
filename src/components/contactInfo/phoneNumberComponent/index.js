@@ -10,7 +10,7 @@ import InputMask from "react-input-mask";
 import { TextField } from "@material-ui/core";
 import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
 import { useNextHook } from "../../../App";
-import { ELEMENT_STYLES } from "../../../utils/constants";
+import { ELEMENT_STYLES, CONTACT_INFO } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   number: {
@@ -46,7 +46,12 @@ export default function PhoneNumberComponent(props) {
   const classes = useStyles();
   const { next, setNext } = useNextHook();
   const { elements, isValid } = useMultipleSkyflowElements(
-    [{ elementType: "mobileNumber", options: { ...ELEMENT_STYLES } }],
+    [
+      {
+        elementType: "mobileNumber",
+        options: CONTACT_INFO.PHONE_NUMBER.options
+      },
+    ],
     setNext
   );
 

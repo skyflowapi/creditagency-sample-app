@@ -4,7 +4,7 @@ import { useSkyflow } from ".";
 export const useSkyflowElement = (elementType, options) => {
   const { elements } = useSkyflow();
   const [element, setElement] = React.useState(
-    elements.getElement(elementType, options.name || elementType)
+    elements.getElement(elementType, options.name, options.value)
   );
   const elementRef = React.useRef(null);
 

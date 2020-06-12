@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button, FormControlLabel, Radio } from "@material-ui/core";
 import Info from "../../Info";
 import Header from "../../layout/header";
 import SideNavBar from "../../layout/sideNavBar";
@@ -9,7 +9,7 @@ import Footer from "../../layout/footer";
 import theme from "../../../utils/theme";
 import { useNextHook } from "../../../App";
 import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
-import { ELEMENT_STYLES } from "../../../utils/constants";
+import { ELEMENT_STYLES, FINANCIAL_INFO } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   ssn: {
@@ -49,7 +49,7 @@ export default function SSNInfo(props) {
     [
       {
         elementType: "ssn",
-        options: { ...ELEMENT_STYLES },
+        options: FINANCIAL_INFO.SSN.options,
       },
     ],
     setNext
@@ -110,6 +110,14 @@ export default function SSNInfo(props) {
               ref={elements[0].elementRef}
             />
           </div>
+          {/* <div style={{marginTop:theme.spacing(15),display:"flex",justifyContent:"center"}}>
+              <FormControlLabel
+              style={{border:"2px solid #eaedf3",width:"300px",borderRadius:"4px",background:theme.palette.grey[0]}}
+                value="I don't have SSN"
+                control={<Radio color="primary"/>}
+                label="I don't have SSN"
+              />
+              </div> */}
           <div className={classes.info}>
             <Info information={msg} />
           </div>

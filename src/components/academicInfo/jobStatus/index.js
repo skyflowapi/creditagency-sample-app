@@ -5,29 +5,41 @@ import Header from "../../layout/header";
 import TextFieldMolecule from "../../textField/textField";
 import Footer from "../../layout/footer";
 import SideNavBar from "../../layout/sideNavBar";
-import { RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
+import {
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
+  Typography,
+} from "@material-ui/core";
 import theme from "../../../utils/theme";
+import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
+import { useNextHook } from "../../../App";
+import { ELEMENT_STYLES, ACADEMIC_INFO } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
-    root:{
-        // height:window.innerHeight
-    },
+  root: {
+    // height:window.innerHeight
+  },
   radio: {
     display: "flex",
     justifyContent: "center",
-    marginTop: theme.spacing(5),
-    ...theme.typography.h6,
-    flexDirection:"row"
-    
+    // marginTop: theme.spacing(5),
+    // ...theme.typography.h6,
+    // flexDirection: "row",
   },
   text: {
     marginTop: theme.spacing(35),
     textAlign: "center",
-    ...theme.typography.h1,
+    ...theme.typography.h4,
   },
   page: {
     width: "75%",
-    position:"relative"
+    position: "relative",
+    height: 200,
   },
   components: {
     display: "flex",
@@ -38,110 +50,98 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(20),
   },
   footer: {
-    position:"absolute",
-    width:"100%",
-    bottom:theme.spacing(10)
-    
+    position: "absolute",
+    width: "100%",
+    bottom: theme.spacing(10),
   },
   card: {
-    border:"1px solid #eaedf3",
-    width:"280px",
-    height:"80px",
-    
+    border: "1px solid #eaedf3",
+    width: "280px",
+    height: "80px",
   },
   status: {
-    display:"flex",
-    flexDirection:"row",
+    display: "flex",
+    flexDirection: "row",
     justifyContent: "center",
   },
-  
 }));
 export default function EmpComponent(props) {
   const classes = useStyles();
-  const [value, setValue] = useState("");
-  
-  const list={
-    pInfo:{status:"done"},
-    cInfo:{status:"done"},
-    aInfo:{status:"current"},
-    fInfo:{status:"pending"}
-  };
-  const goBack=()=>{
-    props.history.push("/contactInformation/address");
-  };
-  const goToFinance=()=>{
-    props.history.push("/financialInformation");
-  };
-  const handleRadioChange = (event) => {
-    console.log(event.target.value);
-    setValue(event.target.value);
-    
+  const { next, setNext } = useNextHook();
+  const { elements, isValid } = useMultipleSkyflowElements(
+    [
+      {
+        elementType: "dropdown",
+        options: ACADEMIC_INFO.LEVEL_OF_STUDY.options,
+      },
+      {
+        elementType: "dropdown",
+        options: ACADEMIC_INFO.SCHOOL_STATE.options,
+      },
+      {
+        elementType: "dropdown",
+        options: ACADEMIC_INFO.SCHOOL_NAME.options,
+      },
+      {
+        elementType: "dropdown",
+        options: ACADEMIC_INFO.MAJOR.options,
+      },
+    ],
+    setNext
+  );
+  const list = {
+    pInfo: { status: "done" },
+    cInfo: { status: "done" },
+    aInfo: { status: "current" },
+    fInfo: { status: "pending" },
   };
   return (
     <div className={classes.root}>
       <Header />
       <div className={classes.components}>
-        <SideNavBar list={list}/>
+        <SideNavBar list={list} />
         <div className={classes.page}>
           <div>
-            <h1 className={classes.text}>
-              <b>Do you have a job?</b>
-            </h1>
+            <h3 className={classes.text}>
+              <b>Please enter your academic details</b>
+            </h3>
           </div>
           <div className={classes.radio}>
-            <RadioGroup
-              value={value}
-              onChange={handleRadioChange}
-              className={classes.radio}
-            >
-              <FormControlLabel
-                value="Yes"
-                control={<Radio color="primary" />}
-                label="Yes"
-                className={classes.card}
-              />
-              <FormControlLabel
-                value="No"
-                control={<Radio color="primary"/>}
-                label="No"
-                className={classes.card}
-              />
-            </RadioGroup>
-            {/* <Radio color="primary" className={classes.card} label="No" value="No"/> */}
+            <TextFieldMolecule
+              width="500px"
+              name="Level Of Study"
+              ref={elements[0].elementRef}
+            />
           </div>
-          
-          {value==="Yes" &&
-          <div>
-              <h1 className={classes.text}>
-                <b>My employment status is</b>
-              </h1>
-              <div className={classes.status}>
-              <RadioGroup className={classes.status}>
-                <FormControlLabel
-                  value="Employed Full-Time"
-                  control={<Radio color="primary"/>}
-                  label="Employed Full-Time"
-                  className={classes.card}
-                />
-                <FormControlLabel
-                  value="Employed Part-Time"
-                  control={<Radio color="primary"/>}
-                  label="Employed Part-Time"
-                  className={classes.card}
-                />
-                <FormControlLabel
-                  value="Self-Employed"
-                  control={<Radio color="primary"/>}
-                  label="Self-Employed"
-                  className={classes.card}
-                />
-              </RadioGroup>
-            </div>
-  </div> }
+          <Typography
+            style={{ fontWeight: "bold", marginTop: theme.spacing(5) }}
+            className={classes.radio}
+            variant="h5"
+          >
+            where are you currently studying or planning to study in U.S?
+          </Typography>
 
-          {/* <div className={classes.footer}>
-            <Footer prev={goBack} next={goToFinance}/>
-          </div> */}
+          <div className={classes.radio}>
+            <TextFieldMolecule
+              width="500px"
+              name="School State/Territory"
+              ref={elements[1].elementRef}
+            />
+          </div>
+          <div className={classes.radio}>
+            <TextFieldMolecule
+              width="500px"
+              name="School Name"
+              ref={elements[2].elementRef}
+            />
+          </div>
+          <div className={classes.radio}>
+            <TextFieldMolecule
+              width="500px"
+              name="Major"
+              ref={elements[3].elementRef}
+            />
+          </div>
         </div>
       </div>
     </div>

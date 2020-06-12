@@ -27,6 +27,9 @@ import NumberIcon from "./components/numberIcon";
 import Summary from "./components/summary";
 import FinalPage from "./components/finalPage";
 import Information from "./components/information";
+import UploadPage from "./components/uploadDocs";
+import MailPage from "./components/personalInfo/emailPage/index";
+import ThankYouPage from "./components/thankyouPage";
 
 const Home = React.lazy(() => import("./components/Home/index"));
 const NamePage = React.lazy(() =>
@@ -39,6 +42,7 @@ export const useNextHook = () => React.useContext(Next);
 
 const App = (props) => {
   const [next, setNext] = React.useState(false);
+  const [email, setEmail] = React.useState("");
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
@@ -49,7 +53,13 @@ const App = (props) => {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/done" exact component={FinalPage} />
-              <Route path="/summary" exact component={Summary} />
+              <Route path="/summary" exact>
+                <Summary setEmail={setEmail} />
+              </Route>
+              <Route path="/upload" exact component={UploadPage} />
+              <Route path="/submit" exact>
+                <ThankYouPage email={email} />
+              </Route>
               <Route
                 path="/skyflow"
                 component={() => {
@@ -63,9 +73,12 @@ const App = (props) => {
                     <Next.Provider value={{ next, setNext }}>
                       <Steps>
                         {/* <Step id="Home">
-            <Home/>
-          </Step> */}
+                        <Home/>
+                        </Step> */}
                         <Step id="personalInformation">
+                          <MailPage />
+                        </Step>
+                        <Step id="personalInformation/names">
                           <NamePage />
                         </Step>
                         <Step id="personalInformation/dob">
@@ -83,9 +96,9 @@ const App = (props) => {
                         <Step id="financialInformation">
                           <IncomeInfo />
                         </Step>
-                        <Step id="financialInformation/residence">
-                          <ResidenceInfo />
-                        </Step>
+                        {/* <Step id="financialInformation/residence">
+                        <ResidenceInfo />
+                      </Step> */}
                         <Step id="SSNInfo">
                           <SSNInfo />
                         </Step>

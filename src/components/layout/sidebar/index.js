@@ -62,6 +62,6 @@ export default function SideBar() {
           <span className={classes.secure}>Secure Form</span>
         </div>
       </div>
-    </div>
+     </div>
   );
 }
