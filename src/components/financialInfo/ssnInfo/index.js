@@ -9,7 +9,7 @@ import Footer from "../../layout/footer";
 import theme from "../../../utils/theme";
 import { useNextHook } from "../../../App";
 import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
-import { ELEMENT_STYLES } from "../../../utils/constants";
+import { ELEMENT_STYLES, FINANCIAL_INFO } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   ssn: {
@@ -49,7 +49,7 @@ export default function SSNInfo(props) {
     [
       {
         elementType: "ssn",
-        options: { ...ELEMENT_STYLES },
+        options: FINANCIAL_INFO.SSN.options,
       },
     ],
     setNext

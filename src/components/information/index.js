@@ -27,11 +27,11 @@ export default function Information(props) {
         {props.title}
       </Typography>
       <div style={{ marginTop: theme.spacing(5) }}>
-        {Object.keys(props.data).map((key, index) => {
+        {Object.values(props.data).map((obj, index) => {
           return (
             <div>
               <Typography className={classes.key} variant="h6">
-                {key}
+                {obj.title}
               </Typography>
               <Box
                 p={1}

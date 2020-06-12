@@ -7,10 +7,9 @@ import Footer from "../../layout/footer";
 import { Button, setRef } from "@material-ui/core";
 import theme from "../../../utils/theme";
 import { useSkyflow } from "../../../services";
-import { ELEMENT_STYLES } from "../../../utils/constants";
+import { ELEMENT_STYLES, YOUR_INFO } from "../../../utils/constants";
 import { useNextHook } from "../../../App";
 import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
-
 
 const useStyles = makeStyles((theme) => ({
   names: {
@@ -44,8 +43,14 @@ export default function NamePage(props) {
 
   const { elements, isValid } = useMultipleSkyflowElements(
     [
-      { elementType: "firstName", options: { ...ELEMENT_STYLES } },
-      { elementType: "lastName", options: { ...ELEMENT_STYLES } },
+      {
+        elementType: "firstName",
+        options: YOUR_INFO.FIRST_NAME.options
+      },
+      {
+        elementType: "lastName",
+        options: YOUR_INFO.LAST_NAME.options
+      },
     ],
     setNext
   );

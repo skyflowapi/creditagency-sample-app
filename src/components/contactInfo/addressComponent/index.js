@@ -9,7 +9,7 @@ import theme from "../../../utils/theme";
 import { Radio, FormControlLabel } from "@material-ui/core";
 import { useNextHook } from "../../../App";
 import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
-import { ELEMENT_STYLES } from "../../../utils/constants";
+import { ELEMENT_STYLES, CONTACT_INFO } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   address: {
@@ -55,11 +55,26 @@ export default function AddressComponent(props) {
   const { next, setNext } = useNextHook();
   const { elements, isValid } = useMultipleSkyflowElements(
     [
-      { elementType: "address", options: { ...ELEMENT_STYLES } },
-      { elementType: "street", options: { ...ELEMENT_STYLES } },
-      { elementType: "zipCode", options: { ...ELEMENT_STYLES } },
-      { elementType: "city", options: { ...ELEMENT_STYLES } },
-      { elementType: "state", options: { ...ELEMENT_STYLES } },
+      {
+        elementType: "address",
+        options: CONTACT_INFO.ADDRESS.options,
+      },
+      {
+        elementType: "street",
+        options: CONTACT_INFO.STREET.options,
+      },
+      {
+        elementType: "zipCode",
+        options: CONTACT_INFO.ZIP_CODE.options,
+      },
+      {
+        elementType: "city",
+        options: CONTACT_INFO.CITY.options,
+      },
+      {
+        elementType: "state",
+        options: CONTACT_INFO.STATE.options,
+      },
     ],
     setNext
   );
@@ -134,7 +149,6 @@ export default function AddressComponent(props) {
                   ref={elements[4].elementRef}
                 ></TextFieldMolecule>
               </div>
-             
             </div>
             {/* <div style={{marginTop:theme.spacing(15),display:"flex",justifyContent:"center"}}>
               <FormControlLabel

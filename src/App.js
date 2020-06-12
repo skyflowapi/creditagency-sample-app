@@ -42,6 +42,7 @@ export const useNextHook = () => React.useContext(Next);
 
 const App = (props) => {
   const [next, setNext] = React.useState(false);
+  const [email, setEmail] = React.useState("");
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
@@ -52,9 +53,13 @@ const App = (props) => {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/done" exact component={FinalPage} />
-              <Route path="/summary" exact component={Summary} />
+              <Route path="/summary" exact>
+                <Summary setEmail={setEmail} />
+              </Route>
               <Route path="/upload" exact component={UploadPage} />
-              <Route path="/submit" exact component={ThankYouPage} />
+              <Route path="/submit" exact>
+                <ThankYouPage email={email} />
+              </Route>
               <Route
                 path="/skyflow"
                 component={() => {

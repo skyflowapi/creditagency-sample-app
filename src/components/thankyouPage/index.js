@@ -19,17 +19,17 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
 }));
-export default function ThankYouPage() {
-  let date = new Date();
+export default function ThankYouPage(props) {
+  const date = new Date();
   date.setDate(date.getDate() + 5);
   const [loading, setLoading] = useState(true);
-  const classes=useStyles();
+  const classes = useStyles();
   useEffect(() => {
     setTimeout(function() {
       setLoading(false);
     }, 2000);
   });
-  if (loading) {
+  if (loading || !props.email) {
     return <Loader />;
   }
   return (
@@ -54,7 +54,7 @@ export default function ThankYouPage() {
               Application via{" "}
             </p>
             <p>an email that will be sent to:</p>
-            <p style={{ color: theme.palette.royalBlue[0] }}>abcd@gmail.com</p>
+            <p style={{ color: theme.palette.royalBlue[0] }}>{props.email}</p>
             <h3>Estimated Date of Response</h3>
             <p>
               We are usually able to provide you with a response within 5

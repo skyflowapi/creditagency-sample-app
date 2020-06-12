@@ -7,7 +7,7 @@ import Footer from "../../layout/footer";
 import theme from "../../../utils/theme";
 import { useNextHook } from "../../../App";
 import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
-import { ELEMENT_STYLES } from "../../../utils/constants";
+import { ELEMENT_STYLES, YOUR_INFO } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   dob: {
@@ -39,7 +39,12 @@ export default function DobPage(props) {
   const { next, setNext } = useNextHook();
 
   const { elements, isValid } = useMultipleSkyflowElements(
-    [{ elementType: "dob", options: { ...ELEMENT_STYLES } }],
+    [
+      {
+        elementType: "dob",
+        options: YOUR_INFO.DOB.options
+      },
+    ],
     setNext
   );
 
