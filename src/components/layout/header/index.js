@@ -53,7 +53,7 @@ export default function Header(props) {
           </Link>
         </div>
       </div>
-      <div style={{ fontSize: "12px" }} className={classes.helpContent}>
+      {/* <div style={{ fontSize: "12px" }} className={classes.helpContent}>
         <a
           style={{
             color: theme.palette.royalBlue[0],
@@ -66,7 +66,7 @@ export default function Header(props) {
         >
           View On GitHub
         </a>
-      </div>
+      </div> */}
     </div>
   );
 }
