@@ -35,8 +35,8 @@ export default function MailPage() {
   const { elements, isValid } = useMultipleSkyflowElements(
     [
       {
-        elementType: "email",
-        options: YOUR_INFO.EMAIL.options
+        elementType: YOUR_INFO.EMAIL.elementType,
+        options: YOUR_INFO.EMAIL.options,
       },
     ],
     setNext

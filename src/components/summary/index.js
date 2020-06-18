@@ -73,7 +73,6 @@ export default function Summary(props) {
         .getElement(YOUR_INFO.EMAIL.elementType, YOUR_INFO.EMAIL.options.name)
         .getState().value
     );
-    elements.tokenize();
   };
 
   const editDetailsPage = () => {

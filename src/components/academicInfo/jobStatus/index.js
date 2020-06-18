@@ -71,19 +71,19 @@ export default function EmpComponent(props) {
   const { elements, isValid } = useMultipleSkyflowElements(
     [
       {
-        elementType: "dropdown",
+        elementType: ACADEMIC_INFO.LEVEL_OF_STUDY.elementType,
         options: ACADEMIC_INFO.LEVEL_OF_STUDY.options,
       },
       {
-        elementType: "dropdown",
+        elementType: ACADEMIC_INFO.SCHOOL_STATE.elementType,
         options: ACADEMIC_INFO.SCHOOL_STATE.options,
       },
       {
-        elementType: "dropdown",
+        elementType: ACADEMIC_INFO.SCHOOL_NAME.elementType,
         options: ACADEMIC_INFO.SCHOOL_NAME.options,
       },
       {
-        elementType: "dropdown",
+        elementType: ACADEMIC_INFO.MAJOR.elementType,
         options: ACADEMIC_INFO.MAJOR.options,
       },
     ],

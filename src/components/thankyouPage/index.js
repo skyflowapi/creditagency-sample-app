@@ -4,6 +4,7 @@ import Header from "../layout/header";
 import theme from "../../utils/theme";
 import thank from "../../assets/thank.png";
 import Loader from "../loader";
+import { useSkyflow } from "../../services";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,14 +23,24 @@ const useStyles = makeStyles((theme) => ({
 export default function ThankYouPage(props) {
   const date = new Date();
   date.setDate(date.getDate() + 5);
+
+  const { elements } = useSkyflow();
   const [loading, setLoading] = useState(true);
+  const [requestLoading, setRequestLoading] = useState(true);
   const classes = useStyles();
+
   useEffect(() => {
+    elements.tokenize().then((data) => {
+      console.log(data);
+      setRequestLoading(false);
+    });
+
     setTimeout(function() {
       setLoading(false);
     }, 2000);
-  });
-  if (loading || !props.email) {
+  }, []);
+
+  if (requestLoading || loading || !props.email) {
     return <Loader />;
   }
   return (

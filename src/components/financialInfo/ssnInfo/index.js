@@ -48,7 +48,7 @@ export default function SSNInfo(props) {
   const { elements, isValid } = useMultipleSkyflowElements(
     [
       {
-        elementType: "ssn",
+        elementType: FINANCIAL_INFO.SSN.elementType,
         options: FINANCIAL_INFO.SSN.options,
       },
     ],

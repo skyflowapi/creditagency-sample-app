@@ -41,8 +41,8 @@ export default function DobPage(props) {
   const { elements, isValid } = useMultipleSkyflowElements(
     [
       {
-        elementType: "dob",
-        options: YOUR_INFO.DOB.options
+        elementType: YOUR_INFO.DOB.elementType,
+        options: YOUR_INFO.DOB.options,
       },
     ],
     setNext

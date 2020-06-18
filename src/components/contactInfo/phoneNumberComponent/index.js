@@ -48,8 +48,8 @@ export default function PhoneNumberComponent(props) {
   const { elements, isValid } = useMultipleSkyflowElements(
     [
       {
-        elementType: "mobileNumber",
-        options: CONTACT_INFO.PHONE_NUMBER.options
+        elementType: CONTACT_INFO.PHONE_NUMBER.elementType,
+        options: CONTACT_INFO.PHONE_NUMBER.options,
       },
     ],
     setNext

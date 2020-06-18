@@ -20,7 +20,11 @@ import {
 import { Link } from "react-router-dom";
 import { useNextHook } from "../../../App";
 import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
-import { ELEMENT_STYLES, FINANCIAL_INFO } from "../../../utils/constants";
+import {
+  ELEMENT_STYLES,
+  FINANCIAL_INFO,
+  OTHER_INFO,
+} from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   income: {
@@ -63,34 +67,24 @@ export default function IncomeInfo(props) {
   const { elements, isValid } = useMultipleSkyflowElements(
     [
       {
-        elementType: "income",
+        elementType: FINANCIAL_INFO.EDUCATION_LIVING_EXPENSES.elementType,
         options: FINANCIAL_INFO.EDUCATION_LIVING_EXPENSES.options,
       },
       {
-        elementType: "dropdown",
+        elementType: FINANCIAL_INFO.SOURCE_FUNDS.elementType,
         options: FINANCIAL_INFO.SOURCE_FUNDS.options,
       },
       {
-        elementType: "income",
+        elementType: FINANCIAL_INFO.AVAILABLE_ASSETS.elementType,
         options: FINANCIAL_INFO.AVAILABLE_ASSETS.options,
       },
       {
-        elementType: "checkbox",
-        options: {
-          // ...ELEMENT_STYLES,
-          name: "authorized",
-          validation: ["required", "default"],
-          value: "yes",
-        },
+        elementType: OTHER_INFO.AUTHORIZATION.elementType,
+        options: OTHER_INFO.AUTHORIZATION.options,
       },
       {
-        elementType: "checkbox",
-        options: {
-          // ...ELEMENT_STYLES,
-          name: "concent",
-          validation: ["required", "default"],
-          value: "received",
-        },
+        elementType: OTHER_INFO.CONCENT.elementType,
+        options: OTHER_INFO.CONCENT.options,
       },
     ],
     setNext

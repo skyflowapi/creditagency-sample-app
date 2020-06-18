@@ -56,23 +56,23 @@ export default function AddressComponent(props) {
   const { elements, isValid } = useMultipleSkyflowElements(
     [
       {
-        elementType: "address",
+        elementType: CONTACT_INFO.ADDRESS.elementType,
         options: CONTACT_INFO.ADDRESS.options,
       },
       {
-        elementType: "street",
+        elementType: CONTACT_INFO.STREET.elementType,
         options: CONTACT_INFO.STREET.options,
       },
       {
-        elementType: "zipCode",
+        elementType: CONTACT_INFO.ZIP_CODE.elementType,
         options: CONTACT_INFO.ZIP_CODE.options,
       },
       {
-        elementType: "city",
+        elementType: CONTACT_INFO.CITY.elementType,
         options: CONTACT_INFO.CITY.options,
       },
       {
-        elementType: "state",
+        elementType: CONTACT_INFO.STATE.elementType,
         options: CONTACT_INFO.STATE.options,
       },
     ],

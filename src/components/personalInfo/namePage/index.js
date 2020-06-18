@@ -44,12 +44,12 @@ export default function NamePage(props) {
   const { elements, isValid } = useMultipleSkyflowElements(
     [
       {
-        elementType: "firstName",
-        options: YOUR_INFO.FIRST_NAME.options
+        elementType: YOUR_INFO.FIRST_NAME.elementType,
+        options: YOUR_INFO.FIRST_NAME.options,
       },
       {
-        elementType: "lastName",
-        options: YOUR_INFO.LAST_NAME.options
+        elementType: YOUR_INFO.LAST_NAME.elementType,
+        options: YOUR_INFO.LAST_NAME.options,
       },
     ],
     setNext

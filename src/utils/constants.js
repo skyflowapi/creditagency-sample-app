@@ -52,7 +52,7 @@ export const YOUR_INFO = {
   DOB: {
     title: "Date Of Birth",
     options: {
-      name: "data_of_birth",
+      name: "date_of_birth",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
     },
@@ -110,7 +110,9 @@ export const CONTACT_INFO = {
     title: "Phone Number",
     options: {
       name: "phone_number",
-      validation: ["required", "default"],
+      placeholder: "+1 (XXX) XXX-XX-XX",
+      mask: ["+1 (XXX) XXX-XX-XX", { X: "[0-9]" }],
+      validation: ["required"],
       ...ELEMENT_STYLES,
     },
     elementType: "mobileNumber",
@@ -235,8 +237,31 @@ export const FINANCIAL_INFO = {
     options: {
       ...ELEMENT_STYLES,
       name: "ssn",
-      validation: ["required", "default"],
+      placeholder: "XXX-XX-XXXX",
+      mask: ["XXX-XX-XXXX", { X: "[0-9]" }],
+      validation: ["required"],
     },
     elementType: "ssn",
+  },
+};
+
+export const OTHER_INFO = {
+  AUTHORIZATION: {
+    title: "Authorization",
+    options: {
+      name: "authorized",
+      validation: ["required", "default"],
+      value: "yes",
+    },
+    elementType: "checkbox",
+  },
+  CONCENT: {
+    title: "Concent",
+    options: {
+      name: "concent",
+      validation: ["required", "default"],
+      value: "received",
+    },
+    elementType: "checkbox",
   },
 };
