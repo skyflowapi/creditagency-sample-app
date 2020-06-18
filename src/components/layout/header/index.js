@@ -54,7 +54,7 @@ export default function Header(props) {
         </div>
       </div>
       <div style={{ fontSize: "12px" }} className={classes.helpContent}>
-        <Link
+        <a
           style={{
             color: theme.palette.royalBlue[0],
             textDecoration: "none",
@@ -62,10 +62,10 @@ export default function Header(props) {
             background: `url(${githubLogo}) left center no-repeat`,
             backgroundSize: "contain",
           }}
-          to={properties.GITHUB_REPO_URL}
+          href={properties.GITHUB_REPO_URL}
         >
           View On GitHub
-        </Link>
+        </a>
       </div>
     </div>
   );
