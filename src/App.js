@@ -37,24 +37,6 @@ const App = (props) => {
         <Fragment>
           <Suspense fallback={<div>Loading...</div>}>
             {/* <BrowserRouter> */}
-            {/* <a
-              href={properties.GITHUB_REPO_URL}
-              target="_blank"
-              style={{
-                position: "absolute",
-                right: 0,
-                top: 0,
-                zIndex: 2,
-              }}
-            >
-              <img
-                width="149"
-                height="149"
-                src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149"
-                alt="Fork me on GitHub"
-                data-recalc-dims="1"
-              />
-            </a> */}
               <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/done" exact component={FinalPage} />
