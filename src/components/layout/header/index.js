@@ -5,7 +5,7 @@ import logo from "../../../assets/logo.png";
 import theme from "../../../utils/theme";
 import githubLogo from "../../../assets/github.svg";
 import properties from "../../../utils/properties";
-import { Typography, Popover, Box } from "@material-ui/core";
+import { Typography, Popover, Box, Tooltip } from "@material-ui/core";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import Check from "@material-ui/icons/Check";
 import { useHistory } from "react-router-dom";
@@ -73,7 +73,20 @@ export default function Header(props) {
           </Link>
         </div>
       </div>
-      <Box display="flex" alignItems="center">
+      <Box display="flex" alignItems="center" mr={6}>
+        <Tooltip title="View on GitHub">
+          <a
+            style={{
+              textDecoration: "none",
+              marginRight: "18px",
+              textDecoration: "none",
+            }}
+            href={properties.GITHUB_REPO_URL}
+            target="_blank"
+          >
+            <img src={githubLogo} height="30px" width="30px" />
+          </a>
+        </Tooltip>
         <Typography variant="caption">Are you an analyst?</Typography>
         <Box
           display="flex"
@@ -81,6 +94,7 @@ export default function Header(props) {
           pl={2}
           onClick={handleOpen}
           style={{ cursor: "pointer" }}
+          width="85px"
         >
           <Typography variant="caption" color="primary">
             {isCustomer ? "Customer" : "Analyst"}
@@ -100,7 +114,7 @@ export default function Header(props) {
             horizontal: "right",
           }}
         >
-          <Box p={2}>
+          <Box py={2}>
             <Box
               display="flex"
               color={
@@ -108,7 +122,7 @@ export default function Header(props) {
                   ? theme.palette.text.primary
                   : theme.palette.text.secondary
               }
-              p={1}
+              px={2}
               alignItems="center"
               style={{ cursor: "pointer" }}
               onClick={() => history.push("/")}
@@ -125,7 +139,8 @@ export default function Header(props) {
                   ? theme.palette.text.primary
                   : theme.palette.text.secondary
               }
-              p={1}
+              py={2}
+              px={2}
               alignItems="center"
               style={{ cursor: "pointer" }}
               onClick={() => history.push("/analytics")}
@@ -135,7 +150,7 @@ export default function Header(props) {
                 <Check style={{ marginLeft: "12px", fontSize: "14px" }} />
               )}
             </Box>
-            <Box p={1} borderTop="1px solid #eaedf3">
+            <Box pt={2} px={2} borderTop="1px solid #eaedf3">
               <Typography variant="caption">Get help</Typography>
             </Box>
           </Box>
