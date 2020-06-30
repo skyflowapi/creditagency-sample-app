@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Box } from "@material-ui/core";
 import theme from "../../utils/theme";
-import { useMultipleSkyflowElements } from "../../services/skyflowHooks";
+import {
+  useMultipleSkyflowElements,
+  useMultipleSkyflowElementsCustom,
+} from "../../services/skyflowHooks";
+import Element from "../Element";
+import { INTERNAL_FORM_LABEL_STYLES } from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   heading: {
@@ -19,7 +24,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function Information(props) {
   const classes = useStyles();
-  const { elements } = useMultipleSkyflowElements(Object.values(props.data));
+  const { elementRef } = useMultipleSkyflowElements({
+    name: props.title,
+    spacing: "6px",
+    rows: Object.values(props.data).map((obj) => {
+      return {
+        elements: [
+          {
+            elementType: obj.elementType,
+            ...obj.options,
+            disabled: true,
+            label: obj.title,
+            styles: {
+              ...obj.options.styles,
+              base: {
+                ...obj.options.styles.base,
+                border: "none",
+                padding: "10px 0px",
+              },
+            },
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+        ],
+      };
+    }),
+  });
 
   return (
     <div>
@@ -27,7 +56,8 @@ export default function Information(props) {
         {props.title}
       </Typography>
       <div style={{ marginTop: theme.spacing(5) }}>
-        {Object.values(props.data).map((obj, index) => {
+        <Element width="204px" height="443px" ref={elementRef} />
+        {/* {Object.values(props.data).map((obj, index) => {
           return (
             <div>
               <Typography className={classes.key} variant="h6">
@@ -36,12 +66,12 @@ export default function Information(props) {
               <Box
                 p={1}
                 width="204px"
-                height="28px"
+                height="37px"
                 ref={elements[index].elementRef}
               />
             </div>
           );
-        })}
+        })} */}
       </div>
     </div>
   );

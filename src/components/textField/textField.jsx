@@ -49,9 +49,9 @@ export default React.forwardRef((props, ref) => {
         ref={ref}
         width={"300px"}
         height={"38px"}
-        padding="10px 16px"
-        border={"1px solid #eae8ee"}
-        borderRadius={"4px"}
+        // padding="10px 16px"
+        // border={"1px solid #eae8ee"}
+        // borderRadius={"4px"}
         {...props}
       />
     </div>

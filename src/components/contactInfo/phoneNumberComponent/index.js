@@ -8,7 +8,7 @@ import SideNavBar from "../../layout/sideNavBar";
 import theme from "../../../utils/theme";
 import InputMask from "react-input-mask";
 import { TextField } from "@material-ui/core";
-import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
+import { useMultipleSkyflowElements, useMultipleSkyflowElementsCustom } from "../../../services/skyflowHooks";
 import { useNextHook } from "../../../App";
 import { ELEMENT_STYLES, CONTACT_INFO } from "../../../utils/constants";
 
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 export default function PhoneNumberComponent(props) {
   const classes = useStyles();
   const { next, setNext } = useNextHook();
-  const { elements, isValid } = useMultipleSkyflowElements(
+  const { elements, isValid } = useMultipleSkyflowElementsCustom(
     [
       {
         elementType: CONTACT_INFO.PHONE_NUMBER.elementType,

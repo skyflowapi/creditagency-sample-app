@@ -1,15 +1,15 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextFieldMolecule from "../../textField/textField";
 import Header from "../../layout/header";
 import SideNavBar from "../../layout/sideNavBar";
-import Footer from "../../layout/footer";
-import { Button, setRef } from "@material-ui/core";
-import theme from "../../../utils/theme";
-import { useSkyflow } from "../../../services";
-import { ELEMENT_STYLES, YOUR_INFO } from "../../../utils/constants";
-import { useNextHook } from "../../../App";
+import {
+  YOUR_INFO,
+  INTERNAL_FORM_LABEL_STYLES,
+} from "../../../utils/constants";
 import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
+import { useNext } from "../../../services/next";
+import Element from "../../Element";
 
 const useStyles = makeStyles((theme) => ({
   names: {
@@ -39,21 +39,30 @@ const useStyles = makeStyles((theme) => ({
 export default function NamePage(props) {
   const classes = useStyles();
 
-  const { next, setNext } = useNextHook();
-
-  const { elements, isValid } = useMultipleSkyflowElements(
-    [
+  const { elementRef, state } = useMultipleSkyflowElements({
+    name: "name-group",
+    rows: [
       {
-        elementType: YOUR_INFO.FIRST_NAME.elementType,
-        options: YOUR_INFO.FIRST_NAME.options,
-      },
-      {
-        elementType: YOUR_INFO.LAST_NAME.elementType,
-        options: YOUR_INFO.LAST_NAME.options,
+        spacing: "16px",
+        elements: [
+          {
+            elementType: YOUR_INFO.FIRST_NAME.elementType,
+            ...YOUR_INFO.FIRST_NAME.options,
+            label: "FIRST NAME",
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+          {
+            elementType: YOUR_INFO.LAST_NAME.elementType,
+            ...YOUR_INFO.LAST_NAME.options,
+            label: "LAST NAME",
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+        ],
       },
     ],
-    setNext
-  );
+  });
+
+  useNext(state.isValid);
 
   const list = {
     pInfo: { status: "current" },
@@ -78,8 +87,15 @@ export default function NamePage(props) {
               <b>My name is</b>
             </h1>
           </div>
+
           <div className={classes.names}>
-            <TextFieldMolecule
+            <Element
+              ref={elementRef}
+              width="632px"
+              height="62px"
+              marginTop="16px"
+            />
+            {/* <TextFieldMolecule
               id="firstName"
               name="FIRST NAME"
               ref={elements[0].elementRef}
@@ -88,7 +104,7 @@ export default function NamePage(props) {
               id="lastName"
               name="LAST NAME"
               ref={elements[1].elementRef}
-            />
+            /> */}
           </div>
           {/* <div className={classes.footer}>
             <Footer prev={goBack} next={goToDOBPage} />

@@ -19,7 +19,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { useNextHook } from "../../../App";
-import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
+import { useMultipleSkyflowElements, useMultipleSkyflowElementsCustom } from "../../../services/skyflowHooks";
 import {
   ELEMENT_STYLES,
   FINANCIAL_INFO,
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
 export default function IncomeInfo(props) {
   const classes = useStyles();
   const { next, setNext } = useNextHook();
-  const { elements, isValid } = useMultipleSkyflowElements(
+  const { elements, isValid } = useMultipleSkyflowElementsCustom(
     [
       {
         elementType: FINANCIAL_INFO.EDUCATION_LIVING_EXPENSES.elementType,
