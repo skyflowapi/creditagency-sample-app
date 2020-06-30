@@ -8,7 +8,7 @@ import TextFieldMolecule from "../../textField/textField";
 import Footer from "../../layout/footer";
 import theme from "../../../utils/theme";
 import { useNextHook } from "../../../App";
-import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
+import { useMultipleSkyflowElements, useMultipleSkyflowElementsCustom } from "../../../services/skyflowHooks";
 import { ELEMENT_STYLES, FINANCIAL_INFO } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SSNInfo(props) {
   const classes = useStyles();
   const { next, setNext } = useNextHook();
-  const { elements, isValid } = useMultipleSkyflowElements(
+  const { elements, isValid } = useMultipleSkyflowElementsCustom(
     [
       {
         elementType: FINANCIAL_INFO.SSN.elementType,

@@ -8,7 +8,7 @@ import SideNavBar from "../../layout/sideNavBar";
 import theme from "../../../utils/theme";
 import { Radio, FormControlLabel } from "@material-ui/core";
 import { useNextHook } from "../../../App";
-import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
+import { useMultipleSkyflowElements, useMultipleSkyflowElementsCustom } from "../../../services/skyflowHooks";
 import { ELEMENT_STYLES, CONTACT_INFO } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 export default function AddressComponent(props) {
   const classes = useStyles();
   const { next, setNext } = useNextHook();
-  const { elements, isValid } = useMultipleSkyflowElements(
+  const { elements, isValid } = useMultipleSkyflowElementsCustom(
     [
       {
         elementType: CONTACT_INFO.ADDRESS.elementType,

@@ -16,7 +16,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import theme from "../../../utils/theme";
-import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
+import { useMultipleSkyflowElements, useMultipleSkyflowElementsCustom } from "../../../services/skyflowHooks";
 import { useNextHook } from "../../../App";
 import { ELEMENT_STYLES, ACADEMIC_INFO } from "../../../utils/constants";
 
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 export default function EmpComponent(props) {
   const classes = useStyles();
   const { next, setNext } = useNextHook();
-  const { elements, isValid } = useMultipleSkyflowElements(
+  const { elements, isValid } = useMultipleSkyflowElementsCustom(
     [
       {
         elementType: ACADEMIC_INFO.LEVEL_OF_STUDY.elementType,

@@ -1,3 +1,5 @@
+import theme from "../utils/theme";
+
 export const STATUS = {
   DONE: "done",
   CURRENT: "current",
@@ -5,19 +7,28 @@ export const STATUS = {
 };
 
 export const ELEMENT_STYLES = {
-  classes: {
-    base: ".base", // default
-    complete: ".complete",
-    empty: ".empty",
-    // focus: ".focus",
-    invalid: ".invalid",
-  },
+  // classes: {
+  //   base: ".base", // default
+  //   complete: ".complete",
+  //   empty: ".empty",
+  //   // focus: ".focus",
+  //   invalid: ".invalid",
+  // },
   styles: {
-    base: {}, // default
-    complete: {},
+    base: {
+      border: "1px solid #eae8ee",
+      padding: "10px 16px",
+      "border-radius": "4px",
+      color: "#1d1d1d",
+    },
+    complete: {
+      color: "#4caf50",
+    },
     empty: {},
     focus: {},
-    invalid: {},
+    invalid: {
+      color: "#f44336",
+    },
   },
 };
 
@@ -45,6 +56,7 @@ export const YOUR_INFO = {
     options: {
       name: "email",
       validation: ["required", "default"],
+      placeholder: "your@email.com",
       ...ELEMENT_STYLES,
     },
     elementType: "email",
@@ -263,5 +275,21 @@ export const OTHER_INFO = {
       value: "received",
     },
     elementType: "checkbox",
+  },
+};
+
+export const INTERNAL_FORM_LABEL_STYLES = {
+  styles: {
+    base: {
+      margin: "0 0 8px",
+      color: theme.palette.pending[0],
+      "font-size": "12px",
+      "font-family":
+        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+      // padding: "8px",
+      "font-weight": "bold",
+      "text-align": "left",
+      "line-height": "17.16px",
+    },
   },
 };

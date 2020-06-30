@@ -6,7 +6,7 @@ import SideNavBar from "../../layout/sideNavBar";
 import Footer from "../../layout/footer";
 import theme from "../../../utils/theme";
 import { useNextHook } from "../../../App";
-import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
+import { useMultipleSkyflowElements, useMultipleSkyflowElementsCustom } from "../../../services/skyflowHooks";
 import { ELEMENT_STYLES, YOUR_INFO } from "../../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +38,7 @@ export default function DobPage(props) {
   const classes = useStyles();
   const { next, setNext } = useNextHook();
 
-  const { elements, isValid } = useMultipleSkyflowElements(
+  const { elements, isValid } = useMultipleSkyflowElementsCustom(
     [
       {
         elementType: YOUR_INFO.DOB.elementType,
@@ -76,6 +76,7 @@ export default function DobPage(props) {
               id="dob"
               name="DATE OF BIRTH (MM/DD/YYYY)"
               ref={elements[0].elementRef}
+              height="42px"
             />
           </div>
           {/* <div className={classes.footer}>

@@ -46,7 +46,6 @@ export default function CardComp({ type, text, handlePage }) {
   // const [value,setValue]=useState("");
   const history = useHistory();
   const handle = () => {
-    console.log("clicked");
     setShow(true);
   };
   const handleRadioChange = (e) => {

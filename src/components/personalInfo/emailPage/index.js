@@ -3,9 +3,10 @@ import { makeStyles } from "@material-ui/core";
 import Header from "../../layout/header";
 import SideNavBar from "../../layout/sideNavBar";
 import TextFieldMolecule from "../../textField/textField";
-import { useNextHook } from "../../../App";
-import { useMultipleSkyflowElements } from "../../../services/skyflowHooks";
-import { ELEMENT_STYLES, YOUR_INFO } from "../../../utils/constants";
+import { useSkyflowElement } from "../../../services/skyflowHooks";
+import { YOUR_INFO } from "../../../utils/constants";
+import { useNext } from "../../../services/next";
+import Element from "../../Element";
 
 const useStyles = makeStyles((theme) => ({
   mailBox: {
@@ -30,17 +31,12 @@ const useStyles = makeStyles((theme) => ({
 export default function MailPage() {
   const classes = useStyles();
 
-  const { next, setNext } = useNextHook();
-
-  const { elements, isValid } = useMultipleSkyflowElements(
-    [
-      {
-        elementType: YOUR_INFO.EMAIL.elementType,
-        options: YOUR_INFO.EMAIL.options,
-      },
-    ],
-    setNext
+  const { elementRef, state } = useSkyflowElement(
+    YOUR_INFO.EMAIL.elementType,
+    YOUR_INFO.EMAIL.options
   );
+
+  useNext(state.isValid);
 
   const list = {
     pInfo: { status: "current" },
@@ -60,11 +56,17 @@ export default function MailPage() {
             </h1>
           </div>
           <div className={classes.mailBox}>
+            {/* <Element
+              ref={elementRef}
+              width="332px"
+              height="38px"
+              marginTop="16px"
+            /> */}
             <TextFieldMolecule
               type="email"
               name="EMAIL"
               placeholder="Enter your email address"
-              ref={elements[0].elementRef}
+              ref={elementRef}
             />
           </div>
         </div>
