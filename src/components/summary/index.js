@@ -67,12 +67,12 @@ export default function Summary(props) {
   const { elements } = useSkyflow();
 
   const submitPage = () => {
-    history.push("/submit");
     props.setEmail(
       elements
         .getElement(YOUR_INFO.EMAIL.elementType, YOUR_INFO.EMAIL.options.name)
         .getState().value
     );
+    history.push("/submit");
   };
 
   const editDetailsPage = () => {

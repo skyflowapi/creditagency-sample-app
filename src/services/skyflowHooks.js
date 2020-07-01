@@ -4,7 +4,7 @@ import { useSkyflow } from ".";
 export const useSkyflowElement = (elementType, options) => {
   const { elements } = useSkyflow();
   const [element, setElement] = React.useState(
-    elements.getElement(elementType, options.name, options.value)
+    elements.create(elementType, options)
   );
   const elementRef = React.useRef(null);
 
@@ -26,15 +26,15 @@ export const useSkyflowElement = (elementType, options) => {
     }
   }, [element]);
 
-  React.useEffect(() => {
-    if (elementRef.current) {
-      if (!element) {
-        const element = elements.create(elementType, options);
-        element.mount(elementRef.current);
-        setElement(element);
-      }
-    }
-  }, [elementRef]);
+  // React.useEffect(() => {
+  //   if (elementRef.current) {
+  //     if (!element) {
+  //       const element = elements.create(elementType, options);
+  //       element.mount(elementRef.current);
+  //       setElement(element);
+  //     }
+  //   }
+  // }, [elementRef]);
 
   return {
     element,
@@ -46,7 +46,7 @@ export const useSkyflowElement = (elementType, options) => {
 export const useMultipleSkyflowElements = (groupOptions) => {
   const { elements } = useSkyflow();
   const [element, setElement] = React.useState(
-    elements.getElement("group", groupOptions.name)
+    elements.createMultipleElement(groupOptions)
   );
   const elementRef = React.useRef(null);
 
@@ -68,15 +68,15 @@ export const useMultipleSkyflowElements = (groupOptions) => {
     }
   }, [element]);
 
-  React.useEffect(() => {
-    if (elementRef.current) {
-      if (!element) {
-        const element = elements.createMultipleElement(groupOptions);
-        element.mount(elementRef.current);
-        setElement(element);
-      }
-    }
-  }, [elementRef]);
+  // React.useEffect(() => {
+  //   if (elementRef.current) {
+  //     if (!element) {
+  //       const element = elements.createMultipleElement(groupOptions);
+  //       element.mount(elementRef.current);
+  //       setElement(element);
+  //     }
+  //   }
+  // }, [elementRef]);
 
   return {
     element,

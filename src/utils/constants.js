@@ -30,6 +30,9 @@ export const ELEMENT_STYLES = {
       color: "#f44336",
     },
   },
+  label: "",
+  labelStyles: {},
+  disabled: "",
 };
 
 export const YOUR_INFO = {
