@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import { makeStyles, Divider } from "@material-ui/core";
 import Header from "../layout/header";
 import theme from "../../utils/theme";
-import thank from "../../assets/thank.png";
+import SkyflowLogo from "../../assets/skyflow-blue.svg";
 import Loader from "../loader";
 import { useSkyflow } from "../../services";
 
@@ -52,7 +52,7 @@ export default function ThankYouPage(props) {
       <div className={classes.body}>
         <div style={{ textAlign: "center" }}>
           <h2 style={{ color: theme.palette.grey[1] }}>THANK YOU !</h2>
-          <img src={thank} />
+          <img src={SkyflowLogo} alt="skyflow-logo"/>
           <h2 style={{ color: theme.palette.royalBlue[0] }}>
             Your Application is complete.
           </h2>
