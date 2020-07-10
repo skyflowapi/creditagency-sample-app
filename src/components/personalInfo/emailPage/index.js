@@ -31,10 +31,10 @@ const useStyles = makeStyles((theme) => ({
 export default function MailPage() {
   const classes = useStyles();
 
-  const { elementRef, state } = useSkyflowElement(
-    YOUR_INFO.EMAIL.elementType,
-    YOUR_INFO.EMAIL.options
-  );
+  const { elementRef, state } = useSkyflowElement(YOUR_INFO.EMAIL.elementType, {
+    ...YOUR_INFO.EMAIL.options,
+    sensitive: false,
+  });
 
   useNext(state.isValid);
 

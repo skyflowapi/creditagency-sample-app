@@ -1,5 +1,7 @@
 import theme from "../utils/theme";
 
+export const localStorageKey = "records";
+
 export const STATUS = {
   DONE: "done",
   CURRENT: "current",
@@ -54,12 +56,13 @@ export const YOUR_INFO = {
   EMAIL: {
     title: "Email",
     options: {
-      name: "email",
+      name: "email_address",
       validation: ["required", "default"],
       placeholder: "your@email.com",
       ...ELEMENT_STYLES,
     },
     elementType: "email",
+    hide: true,
   },
   DOB: {
     title: "Date Of Birth",
@@ -76,7 +79,7 @@ export const CONTACT_INFO = {
   ADDRESS: {
     title: "Address",
     options: {
-      name: "address",
+      name: "address_line",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
     },
@@ -85,7 +88,7 @@ export const CONTACT_INFO = {
   STREET: {
     title: "Street",
     options: {
-      name: "street",
+      name: "address_street",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
     },
@@ -94,7 +97,7 @@ export const CONTACT_INFO = {
   ZIP_CODE: {
     title: "Zip Code",
     options: {
-      name: "zip_code",
+      name: "address_zip_code",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
     },
@@ -103,7 +106,7 @@ export const CONTACT_INFO = {
   CITY: {
     title: "City",
     options: {
-      name: "city",
+      name: "address_city",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
     },
@@ -112,7 +115,7 @@ export const CONTACT_INFO = {
   STATE: {
     title: "State",
     options: {
-      name: "state",
+      name: "address_state",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
     },
@@ -126,8 +129,10 @@ export const CONTACT_INFO = {
       mask: ["+1 (XXX) XXX-XX-XX", { X: "[0-9]" }],
       validation: ["required"],
       ...ELEMENT_STYLES,
+      sensitive: true,
     },
     elementType: "mobileNumber",
+    hide: true,
   },
 };
 
@@ -190,7 +195,7 @@ export const ACADEMIC_INFO = {
   MAJOR: {
     title: "Major",
     options: {
-      name: "major",
+      name: "school_major",
       validation: ["required", "default"],
       options: [
         { text: "None", value: "None" },
@@ -215,8 +220,10 @@ export const FINANCIAL_INFO = {
       name: "education_living_expenses",
       validation: ["required", "default"],
       // placeholder: "Education and Living Expenses",
+      sensitive: true,
     },
     elementType: "income",
+    hide: true,
   },
   SOURCE_FUNDS: {
     title: "Source Of Funds",
@@ -248,12 +255,14 @@ export const FINANCIAL_INFO = {
     title: "SSN",
     options: {
       ...ELEMENT_STYLES,
-      name: "ssn",
+      name: "social_security_number",
       placeholder: "XXX-XX-XXXX",
       mask: ["XXX-XX-XXXX", { X: "[0-9]" }],
       validation: ["required"],
+      sensitive: true,
     },
     elementType: "ssn",
+    hide: true,
   },
 };
 
@@ -267,10 +276,10 @@ export const OTHER_INFO = {
     },
     elementType: "checkbox",
   },
-  CONCENT: {
-    title: "Concent",
+  CONSENT: {
+    title: "Consent",
     options: {
-      name: "concent",
+      name: "consent",
       validation: ["required", "default"],
       value: "received",
     },
@@ -291,5 +300,13 @@ export const INTERNAL_FORM_LABEL_STYLES = {
       "text-align": "left",
       "line-height": "17.16px",
     },
+  },
+};
+
+export const REVEL_ELEMENT_OPTIONS = {
+  styles: {
+    "font-family":
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+    "font-size": "14px",
   },
 };

@@ -1,6 +1,7 @@
 {
-    "extends": "eslint-config-zemoso",
-    "rules": {
-        "linebreak-style": ["warn","unix"]
-    }
+  "extends": "eslint-config-zemoso",
+  "rules": {
+    "linebreak-style": ["warn", "unix"],
+    "max-nested-callbacks": 0
+  }
 }
