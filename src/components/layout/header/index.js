@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
-import logo from "../../../assets/logo.png";
+import SkyflowLogo from "../../../assets/skyflow-blue.svg";
 import theme from "../../../utils/theme";
 import githubLogo from "../../../assets/github.svg";
 import properties from "../../../utils/properties";
@@ -21,12 +20,8 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     zIndex: "1",
   },
-  logoText: {
-    ...theme.typography.h6,
-    marginLeft: theme.spacing(8),
-  },
   logo: {
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(3),
     marginLeft: theme.spacing(4),
   },
   logoWithText: {
@@ -58,20 +53,7 @@ export default function Header(props) {
   return (
     <div className={classes.root} style={{ position: props.pos || "absolute" }}>
       <div className={classes.logoWithText}>
-        <img className={classes.logo} src={logo} alt="logo"></img>
-        <div className={classes.logoText}>
-          <span style={{ fontSize: "12px" }}>powered by </span>
-          <Link
-            style={{
-              color: theme.palette.skyBlue[0],
-              textDecoration: "none",
-              fontFamily: "Montserrat",
-            }}
-            to="/skyflow"
-          >
-            Skyflow
-          </Link>
-        </div>
+        <img className={classes.logo} src={SkyflowLogo} alt="logo"></img>
       </div>
       <Box display="flex" alignItems="center" mr={6}>
         <Tooltip title="View on GitHub">
