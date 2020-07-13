@@ -18,10 +18,9 @@ jobs:
           node-version: 12
       - run: npm install
       - run: npm run build
-      - run: export orgId=${{orgId}}
-      - run: export vaultId=${{vaultId}}
-      - run: export appId=${{appId}}
-      - run: export orgId=${{orgId}}
+      - run: export orgId=${{secrets.orgId}}
+      - run: export vaultId=${{secrets.vaultId}}
+      - run: export appId=${{secrets.appId}}
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:
@@ -33,9 +32,9 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           SOURCE_DIR: "build"
           GITHUB_REPO_URL: "https://github.com/skyflowtech/creditagency-sample-app"
-          orgId: ${{orgId}}
-          vaultId: ${{vaultId}}
-          appId: ${{appId}}
+          orgId: ${{secrets.orgId}}
+          vaultId: ${{secrets.vaultId}}
+          appId: ${{secrets.appId}}
 
  
 
