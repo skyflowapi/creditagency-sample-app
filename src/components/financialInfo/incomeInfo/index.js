@@ -83,8 +83,8 @@ export default function IncomeInfo(props) {
         options: OTHER_INFO.AUTHORIZATION.options,
       },
       {
-        elementType: OTHER_INFO.CONCENT.elementType,
-        options: OTHER_INFO.CONCENT.options,
+        elementType: OTHER_INFO.CONSENT.elementType,
+        options: OTHER_INFO.CONSENT.options,
       },
     ],
     setNext

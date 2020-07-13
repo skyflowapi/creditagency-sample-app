@@ -5,6 +5,7 @@ import theme from "../../utils/theme";
 import thank from "../../assets/thank.png";
 import Loader from "../loader";
 import { useSkyflow } from "../../services";
+import { localStorageKey } from "../../utils/constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +32,18 @@ export default function ThankYouPage(props) {
 
   useEffect(() => {
     elements.tokenize().then((data) => {
-      console.log(data);
+      try {
+        if (data[1].skyflow_vault_response.responses[0].ID) {
+          localStorage.setItem(
+            "records",
+            JSON.stringify([
+              ...(JSON.parse(localStorage.getItem(localStorageKey)) || []),
+              data,
+            ])
+          );
+        }
+      } catch (e) {}
+
       setRequestLoading(false);
     });
 
@@ -61,20 +73,19 @@ export default function ThankYouPage(props) {
           <div>
             <h3>Review Process</h3>
             <p>
-              We will review your information and provide the status of your
-              Application via{" "}
+              We will review your information and provide the status of your Application
+              via{" "}
             </p>
             <p>an email that will be sent to:</p>
             <p style={{ color: theme.palette.royalBlue[0] }}>{props.email}</p>
             <h3>Estimated Date of Response</h3>
             <p>
-              We are usually able to provide you with a response within 5
-              business days.
+              We are usually able to provide you with a response within 5 business days.
             </p>
             <p>Estimated response date is:</p>
             <h4>
-              {date.toLocaleString("default", { month: "long" })}{" "}
-              {date.getDate()}th {date.getFullYear()}
+              {date.toLocaleString("default", { month: "long" })} {date.getDate()}th{" "}
+              {date.getFullYear()}
             </h4>
           </div>
         </div>

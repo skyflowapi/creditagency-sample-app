@@ -68,7 +68,6 @@ export default function ResidenceInfo(props) {
   };
 
   const handleRadioChange = (event) => {
-    console.log(event.target.value);
     setValue(event.target.value);
     
   };

@@ -2,6 +2,8 @@ export default {
   GITHUB_REPO_URL:
     process.env.GITHUB_REPO_URL ||
     "https://github.com/skyflowtech/creditagency-sample-app",
-  SKYFLOW_APP_ID:
-    process.env.SKYFLOW_APP_ID || "bfa831cab06e11ea81abc6d2cc16794f",
+  orgId: process.env.orgId || "c117973f904011ea95ba2e321592fd49",
+  vaultId: process.env.vaultId || "dcc8c9f0c1c111ea8b6656f20d016af2",
+  appId: process.env.appId || "tc348cbec1c211ea8b6656f20d016af2",
+  workflowURL: process.env.workflowURL || "https://api-js.skyflow.dev",
 };

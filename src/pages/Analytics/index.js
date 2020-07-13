@@ -10,11 +10,14 @@ import {
   TableHead,
   TableRow,
   Link,
+  CircularProgress,
 } from "@material-ui/core";
 import Modal from "../../components/Modal";
 import Header from "../../components/layout/header";
 import AnalyticsCard from "../../components/AnalyticsCard";
 import SummaryData from "../../components/SummaryData";
+import { localStorageKey } from "../../utils/constants";
+import { useSkyflow } from "../../services";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -27,6 +30,18 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiTableCell-root:first-child": {
       paddingLeft: "30px",
     },
+  },
+  loader: {
+    position: "fixed",
+    top: "0",
+    left: "0",
+    right: "0",
+    bottom: "0",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#13182021",
+    zIndex: "2",
   },
 }));
 
@@ -88,24 +103,67 @@ const data = {
 
 export default function Analytics(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [records, setRecords] = React.useState(getRecords());
+  const { skyflow } = useSkyflow();
+  const [notebook] = React.useState(skyflow.notebook());
 
-  const handleModalOpen = (event) => {
+  const [record, setRecord] = React.useState("");
+
+  const [loading, setLoading] = React.useState(false);
+
+  const handleModalOpen = (event, row) => {
     event.preventDefault();
-    setOpen(true);
+    setRecord(row);
   };
 
   const handleModalClose = () => {
-    setOpen(false);
+    setRecord("");
+  };
+
+  const handleOnAcceptOrReject = (record, accept, event) => {
+    event.preventDefault();
+    const recordId = record.ID;
+    setLoading(true);
+    handleModalClose();
+    notebook
+      .updateRecord(recordId, [
+        {
+          name: "credit_card_number",
+          value: accept === true ? "4141414141414141" : "DECLINED",
+        },
+      ])
+      .then((data) => {
+        removeRecordFromDB(recordId);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const removeRecordFromDB = (recordId) => {
+    try {
+      let records = JSON.parse(localStorage.getItem(localStorageKey)) || [];
+      records = records.filter(
+        (record) => record[1].skyflow_vault_response.responses[0].ID !== recordId
+      );
+      localStorage.setItem(localStorageKey, JSON.stringify(records));
+      setRecords(getRecords());
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
     <Box bgcolor="#fbfbfd" height={window.innerHeight}>
-      <Box
-        height="112px"
-        component={Paper}
-        boxShadow="0 1px 0 0 rgba(0, 0, 0, 0.06)"
-      >
+      {loading && (
+        <Box className={classes.loader}>
+          <CircularProgress />
+        </Box>
+      )}
+      <Box height="112px" component={Paper} boxShadow="0 1px 0 0 rgba(0, 0, 0, 0.06)">
         <Header />
       </Box>
       <Box width="1110px" mt={7.5} mx="auto">
@@ -147,9 +205,7 @@ export default function Analytics(props) {
             </Box>
             <Box width="1px" height="38px" bgcolor="#eaedf3" mr={7.5}></Box>
             <Box color="#696969">
-              <Typography variant="h6">
-                {data.newRequests} New requests
-              </Typography>
+              <Typography variant="h6">{data.length} New requests</Typography>
             </Box>
           </Box>
           <Box>
@@ -189,24 +245,24 @@ export default function Analytics(props) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.pendingList.map((row) => (
-                  <TableRow key={row.name}>
+                {records.data.map((row) => (
+                  <TableRow key={row.ID}>
                     <TableCell component="th" scope="row">
                       <Link
                         variant="h6"
                         style={{ cursor: "pointer" }}
-                        onClick={handleModalOpen}
+                        onClick={(e) => {
+                          handleModalOpen(e, row);
+                        }}
                       >
-                        {row.name}
+                        {row.fields.first_name.dlp}
                       </Link>
                     </TableCell>
                     <TableCell>
                       <Typography variant="h6">{row.age}</Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography variant="h6">
-                        {row.employementStatus}
-                      </Typography>
+                      <Typography variant="h6">{row.employementStatus}</Typography>
                     </TableCell>
                     <TableCell>
                       <Typography variant="h6">{row.creditScore}</Typography>
@@ -224,12 +280,17 @@ export default function Analytics(props) {
                       </Box>
                     </TableCell>
                     <TableCell>
-                      <Link variant="h6" style={{ cursor: "pointer" }}>
+                      <Link
+                        variant="h6"
+                        style={{ cursor: "pointer" }}
+                        onClick={handleOnAcceptOrReject.bind(null, row, true)}
+                      >
                         Accept
                       </Link>
                       <Link
                         variant="h6"
                         style={{ cursor: "pointer", marginLeft: "30px" }}
+                        onClick={handleOnAcceptOrReject.bind(null, row, false)}
                       >
                         Decline
                       </Link>
@@ -241,9 +302,49 @@ export default function Analytics(props) {
           </Box>
         </Box>
       </Box>
-      <Modal open={open} onClose={handleModalClose}>
-        <SummaryData handleClose={handleModalClose} />
+      <Modal open={!!record}>
+        <SummaryData
+          handleClose={handleModalClose}
+          record={record}
+          notebook={notebook}
+          handleOnAcceptOrReject={handleOnAcceptOrReject}
+          loading={loading}
+        />
       </Modal>
     </Box>
   );
 }
+
+const getRecords = () => {
+  try {
+    let records = (JSON.parse(localStorage.getItem(localStorageKey)) || []).reverse();
+    const ages = [24, 45, 36, 52];
+    const creditScore = [
+      { value: 36, risk: "High" },
+      { value: 95, risk: "Low" },
+      { value: 60, risk: "Medium" },
+      { value: 71, risk: "Medium" },
+    ];
+    // console.log(records);
+    records = records.map((record) => {
+      const fields = {};
+      record[1].skyflow_vault_response.responses[0].fields.forEach((row) => {
+        fields[row.name] = row;
+      });
+      const riskObj = creditScore[Math.floor(Math.random() * creditScore.length)];
+
+      return {
+        ID: record[1].skyflow_vault_response.responses[0].ID,
+        fields: fields,
+        creditScore: riskObj.value || record[0].credit_score || "0608",
+        risk: riskObj.risk,
+        employementStatus: "Student",
+        age: ages[Math.floor(Math.random() * ages.length)],
+      };
+    });
+    return { data: records };
+  } catch (e) {
+    console.log(e);
+    return { error: e, data: [] };
+  }
+};
