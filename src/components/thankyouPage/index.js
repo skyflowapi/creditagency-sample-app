@@ -31,21 +31,27 @@ export default function ThankYouPage(props) {
   const classes = useStyles();
 
   useEffect(() => {
-    elements.tokenize().then((data) => {
-      try {
-        if (data[1].skyflow_vault_response.responses[0].ID) {
-          localStorage.setItem(
-            "records",
-            JSON.stringify([
-              ...(JSON.parse(localStorage.getItem(localStorageKey)) || []),
-              data,
-            ])
-          );
-        }
-      } catch (e) {}
-
-      setRequestLoading(false);
-    });
+    elements
+      .tokenize()
+      .then((data) => {
+        try {
+          if (data.skyflow_vault_response.ID) {
+            localStorage.setItem(
+              "records",
+              JSON.stringify([
+                ...(JSON.parse(localStorage.getItem(localStorageKey)) || []),
+                data,
+              ])
+            );
+          }
+        } catch (e) {}
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setRequestLoading(false);
+      });
 
     setTimeout(function() {
       setLoading(false);
@@ -64,7 +70,7 @@ export default function ThankYouPage(props) {
       <div className={classes.body}>
         <div style={{ textAlign: "center" }}>
           <h2 style={{ color: theme.palette.grey[1] }}>THANK YOU !</h2>
-          <img src={SkyflowLogo} alt="skyflow-logo"/>
+          <img src={SkyflowLogo} alt="skyflow-logo" />
           <h2 style={{ color: theme.palette.royalBlue[0] }}>
             Your Application is complete.
           </h2>
