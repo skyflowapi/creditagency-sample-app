@@ -253,6 +253,7 @@ export const FINANCIAL_INFO = {
       validation: ["required", "default"],
     },
     elementType: "income",
+    hide: true,
   },
   SSN: {
     title: "SSN",
@@ -306,7 +307,7 @@ export const INTERNAL_FORM_LABEL_STYLES = {
   },
 };
 
-export const REVEL_ELEMENT_OPTIONS = {
+export const REVEAL_ELEMENT_OPTIONS = {
   styles: {
     "font-family":
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
