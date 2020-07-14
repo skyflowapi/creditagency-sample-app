@@ -205,7 +205,7 @@ export default function IncomeInfo(props) {
                 mr={4}
               />
               <Typography>
-                I authorize Deserve to review my credit history.
+                I authorize Skyflow to review my credit history.
               </Typography>
             </div>
 
@@ -214,7 +214,7 @@ export default function IncomeInfo(props) {
                 width: "630px",
                 color: theme.palette.grey[1],
                 marginTop: theme.spacing(2),
-                // marginLeft: theme.spacing(70),
+                marginLeft: theme.spacing(18.5),
               }}
             >
               <span>
@@ -250,15 +250,12 @@ export default function IncomeInfo(props) {
               >
                 I have read ,understand and agree to{" "}
                 <Link className={classes.link}>
-                  Deserve's Electronic consent Policy
+                  Skyflow's Electronic consent Policy
                 </Link>
                 ,<Link className={classes.link}>Privacy Policy</Link> ,{" "}
                 <Link className={classes.link}>USA Patriot Act Notice </Link>,
                 and
-                <Link className={classes.link}>Terms of use </Link>. I
-                acknowledge receipt of Celtic's Bank and Deserve's
-                <Link className={classes.link}>Privacy Notice</Link>,and agree
-                to receive notices at Deserve's website
+                <Link className={classes.link}>Terms of use </Link>
               </Typography>
             </div>
           </div>

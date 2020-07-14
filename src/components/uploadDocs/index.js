@@ -255,7 +255,7 @@ export default function UploadPage() {
               </span>
 
               <p>
-                Deserve uses security measures and encryption to keep your
+                Skyflow uses security measures and encryption to keep your
                 information safe.
               </p>
             </div>
@@ -265,7 +265,7 @@ export default function UploadPage() {
                 <LibraryBooksIcon style={{ fill: theme.palette.skyBlue[0] }} />
               </span>
               <p>
-                Deserve only uses this information in the credit decision making
+                Skyflow only uses this information in the credit decision making
                 process.
               </p>
             </div>
