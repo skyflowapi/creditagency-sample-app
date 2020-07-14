@@ -30,8 +30,21 @@ export const useNextHook = () => React.useContext(Next);
 const App = (props) => {
   const [next, setNext] = React.useState(false);
   const [email, setEmail] = React.useState("");
-  if (!localStorage.getItem(localStorageKey)) {
-    localStorage.setItem(localStorageKey, JSON.stringify(defaultData));
+  if (localStorage.getItem("set") !== "true") {
+    if (!localStorage.getItem(localStorageKey)) {
+      localStorage.setItem(localStorageKey, JSON.stringify(defaultData));
+      localStorage.setItem("set", true);
+    } else {
+      const localData = JSON.parse(localStorage.getItem(localStorageKey));
+      if (localData && localData[0]) {
+        try {
+          const test = localData[0].experian_response.credit_score;
+        } catch (e) {
+          localStorage.setItem(localStorageKey, JSON.stringify(defaultData));
+          localStorage.setItem("set", true);
+        }
+      }
+    }
   }
   return (
     <React.StrictMode>

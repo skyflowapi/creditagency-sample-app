@@ -68,37 +68,6 @@ const data = {
     score: 92,
     rate: [60, 25, 15],
   },
-  newRequests: 4,
-  pendingList: [
-    {
-      name: "John Doe",
-      age: "24",
-      employementStatus: "Employeed",
-      creditScore: "36",
-      risk: "High",
-    },
-    {
-      name: "Kathleen Philips",
-      age: "45",
-      employementStatus: "Employeed",
-      creditScore: "95",
-      risk: "Low",
-    },
-    {
-      name: "Carl Herrera",
-      age: "36",
-      employementStatus: "Student",
-      creditScore: "60",
-      risk: "Medium",
-    },
-    {
-      name: "Dorothy Ferguson",
-      age: "52",
-      employementStatus: "Employeed",
-      creditScore: "71",
-      risk: "Medium",
-    },
-  ],
 };
 
 export default function Analytics(props) {
@@ -147,7 +116,7 @@ export default function Analytics(props) {
     try {
       let records = JSON.parse(localStorage.getItem(localStorageKey)) || [];
       records = records.filter(
-        (record) => record[1].skyflow_vault_response.responses[0].ID !== recordId
+        (record) => record.skyflow_vault_response.ID !== recordId
       );
       localStorage.setItem(localStorageKey, JSON.stringify(records));
       setRecords(getRecords());
@@ -325,18 +294,17 @@ const getRecords = () => {
       { value: 60, risk: "Medium" },
       { value: 71, risk: "Medium" },
     ];
-    // console.log(records);
     records = records.map((record) => {
       const fields = {};
-      record[1].skyflow_vault_response.responses[0].fields.forEach((row) => {
+      record.skyflow_vault_response.fields.forEach((row) => {
         fields[row.name] = row;
       });
       const riskObj = creditScore[Math.floor(Math.random() * creditScore.length)];
 
       return {
-        ID: record[1].skyflow_vault_response.responses[0].ID,
+        ID: record.skyflow_vault_response.ID,
         fields: fields,
-        creditScore: riskObj.value || record[0].credit_score || "0608",
+        creditScore: riskObj.value || record.credit_score || "0608",
         risk: riskObj.risk,
         employementStatus: "Student",
         age: ages[Math.floor(Math.random() * ages.length)],
