@@ -84,7 +84,7 @@ export default function SummaryData({
             <Button
               variant="outlined"
               disabled={loading}
-              onClick={handleOnAcceptOrReject.bind(null, record, true)}
+              onClick={handleOnAcceptOrReject.bind(null, record, false)}
             >
               Decline
             </Button>
@@ -93,7 +93,7 @@ export default function SummaryData({
               color="primary"
               style={{ marginLeft: "18px" }}
               disabled={loading}
-              onClick={handleOnAcceptOrReject.bind(null, record, false)}
+              onClick={handleOnAcceptOrReject.bind(null, record, true)}
             >
               Accept
             </Button>
