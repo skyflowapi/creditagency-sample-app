@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Box } from "@material-ui/core";
 import theme from "../../utils/theme";
 import Element from "../Element";
-import RevelComponent from "../revelComponent";
+import RevealComponent from "../revealComponent";
 
 const useStyles = makeStyles((theme) => ({
   heading: {
@@ -34,7 +34,7 @@ export default function Information({ title, notebook, data: { fields, ID }, ele
               <Typography className={classes.key} variant="h6">
                 {obj.title}
               </Typography>
-              <RevelComponent
+              <RevealComponent
                 element={obj}
                 notebook={notebook}
                 token={fields[obj.options.name].ID}
