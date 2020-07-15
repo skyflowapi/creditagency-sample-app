@@ -18,6 +18,7 @@ import AnalyticsCard from "../../components/AnalyticsCard";
 import SummaryData from "../../components/SummaryData";
 import { localStorageKey } from "../../utils/constants";
 import { useSkyflow } from "../../services";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -75,6 +76,7 @@ export default function Analytics(props) {
   const [records, setRecords] = React.useState(getRecords());
   const { skyflow } = useSkyflow();
   const [notebook] = React.useState(skyflow.notebook());
+  const { enqueueSnackbar } = useSnackbar();
 
   const [record, setRecord] = React.useState("");
 
@@ -91,6 +93,7 @@ export default function Analytics(props) {
 
   const handleOnAcceptOrReject = (record, accept, event) => {
     event.preventDefault();
+
     const recordId = record.ID;
     setLoading(true);
     handleModalClose();
@@ -108,6 +111,17 @@ export default function Analytics(props) {
         console.log(err);
       })
       .finally(() => {
+        if (accept) {
+          enqueueSnackbar(
+            "Credit card is created and the number is stored in the Skyflow vault",
+            { variant: "success" }
+          );
+        } else {
+          enqueueSnackbar(
+            "Application is denied and the record is updated in the Skyflow vault",
+            { variant: "success" }
+          );
+        }
         setLoading(false);
       });
   };
@@ -115,9 +129,7 @@ export default function Analytics(props) {
   const removeRecordFromDB = (recordId) => {
     try {
       let records = JSON.parse(localStorage.getItem(localStorageKey)) || [];
-      records = records.filter(
-        (record) => record.skyflow_vault_response.ID !== recordId
-      );
+      records = records.filter((record) => record.skyflow_vault_response.ID !== recordId);
       localStorage.setItem(localStorageKey, JSON.stringify(records));
       setRecords(getRecords());
     } catch (e) {

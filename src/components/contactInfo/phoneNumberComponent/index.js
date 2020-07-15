@@ -6,7 +6,6 @@ import TextFieldMolecule from "../../textField/textField";
 import Footer from "../../layout/footer";
 import SideNavBar from "../../layout/sideNavBar";
 import theme from "../../../utils/theme";
-import InputMask from "react-input-mask";
 import { TextField } from "@material-ui/core";
 import { useMultipleSkyflowElements, useMultipleSkyflowElementsCustom } from "../../../services/skyflowHooks";
 import { useNextHook } from "../../../App";
