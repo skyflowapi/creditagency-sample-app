@@ -44,6 +44,7 @@ export const YOUR_INFO = {
       name: "first_name",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
+      value: "Roana"
     },
     elementType: "firstName",
   },
@@ -53,6 +54,7 @@ export const YOUR_INFO = {
       name: "last_name",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
+      value: "Rigglesford"
     },
     elementType: "lastName",
   },
@@ -63,6 +65,7 @@ export const YOUR_INFO = {
       validation: ["required", "default"],
       placeholder: "your@email.com",
       ...ELEMENT_STYLES,
+      value: "rrigglesford0@qq.com",
     },
     elementType: "email",
     hide: true,
@@ -73,6 +76,7 @@ export const YOUR_INFO = {
       name: "date_of_birth",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
+      value: "1990-10-09"
     },
     elementType: "dob",
   },
@@ -85,6 +89,7 @@ export const CONTACT_INFO = {
       name: "address_line",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
+      value: "561 Birchwood Alley	"
     },
     elementType: "address",
   },
@@ -94,6 +99,7 @@ export const CONTACT_INFO = {
       name: "address_street",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
+      value: "Mosinee Parkway"
     },
     elementType: "street",
   },
@@ -103,6 +109,7 @@ export const CONTACT_INFO = {
       name: "address_zip_code",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
+      value: "73139"
     },
     elementType: "zipCode",
   },
@@ -112,6 +119,7 @@ export const CONTACT_INFO = {
       name: "address_city",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
+      value: "Oklahoma City"
     },
     elementType: "city",
   },
@@ -121,6 +129,7 @@ export const CONTACT_INFO = {
       name: "address_state",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
+      value: "Oklahoma"
     },
     elementType: "state",
   },
@@ -133,6 +142,7 @@ export const CONTACT_INFO = {
       validation: ["required"],
       ...ELEMENT_STYLES,
       sensitive: true,
+      value: "4056068899"
     },
     elementType: "mobileNumber",
     hide: true,
@@ -152,6 +162,7 @@ export const ACADEMIC_INFO = {
         { text: "PHD", value: "PHD" },
       ],
       ...ELEMENT_STYLES,
+      value: "Masters"
     },
     elementType: "dropdown",
   },
@@ -167,8 +178,8 @@ export const ACADEMIC_INFO = {
         { text: "Virginia", value: "Virginia" },
       ],
       ...ELEMENT_STYLES,
+      value:"Arizona"
     },
-
     elementType: "dropdown",
   },
   SCHOOL_NAME: {
@@ -192,6 +203,7 @@ export const ACADEMIC_INFO = {
         },
       ],
       ...ELEMENT_STYLES,
+      value: "Arizona State university"
     },
     elementType: "dropdown",
   },
@@ -210,6 +222,7 @@ export const ACADEMIC_INFO = {
         { text: "Machine Learning", value: "Machine Learning" },
       ],
       ...ELEMENT_STYLES,
+      value: "Artificial Intelligence"
     },
     elementType: "dropdown",
   },
@@ -224,6 +237,7 @@ export const FINANCIAL_INFO = {
       validation: ["required", "default"],
       // placeholder: "Education and Living Expenses",
       sensitive: true,
+      value: "52752312"
     },
     elementType: "income",
     hide: true,
@@ -242,6 +256,7 @@ export const FINANCIAL_INFO = {
         { text: "Loan", value: "Loan" },
         { text: "Scholarships", value: "Scholarships" },
       ],
+      value: "Personal Funds"
     },
   },
   AVAILABLE_ASSETS: {
@@ -251,6 +266,7 @@ export const FINANCIAL_INFO = {
       // placeholder: "Available Assets",
       name: "available_assets",
       validation: ["required", "default"],
+      value: "26"
     },
     elementType: "income",
     hide: true,
@@ -264,6 +280,7 @@ export const FINANCIAL_INFO = {
       mask: ["XXX-XX-XXXX", { X: "[0-9]" }],
       validation: ["required"],
       sensitive: true,
+      value: "529573023"
     },
     elementType: "ssn",
     hide: true,
