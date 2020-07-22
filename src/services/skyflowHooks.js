@@ -4,25 +4,29 @@ import { useSkyflow } from ".";
 export const useSkyflowElement = (elementType, options) => {
   const { elements } = useSkyflow();
   const [element, setElement] = React.useState(
-    elements.create(elementType, options)
+    elements.getElement(elementType, options.name, options.value)
   );
   const elementRef = React.useRef(null);
 
   const [state, setState] = React.useState({});
 
-  React.useEffect(() => {
-    if (element) {
-      element.mount(elementRef.current);
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (element) {
+  //     element.mount(elementRef.current);
+  //   }
+  // }, [element]);
 
   React.useEffect(() => {
     if (element) {
+      element.mount(elementRef.current);
       element.resetEvents();
       element.on("Change", (data) => {
         setState({ ...state, ...data });
       });
       setState({ ...state, ...element.getState() });
+    } else {
+      console.log("not there");
+      setElement(elements.create(elementType, options));
     }
   }, [element]);
 
@@ -46,25 +50,28 @@ export const useSkyflowElement = (elementType, options) => {
 export const useMultipleSkyflowElements = (groupOptions) => {
   const { elements } = useSkyflow();
   const [element, setElement] = React.useState(
-    elements.createMultipleElement(groupOptions)
+    elements.getElement("group", groupOptions.name)
   );
   const elementRef = React.useRef(null);
 
   const [state, setState] = React.useState({});
 
-  React.useEffect(() => {
-    if (element) {
-      element.mount(elementRef.current);
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (element) {
+  //     element.mount(elementRef.current);
+  //   }
+  // }, []);
 
   React.useEffect(() => {
     if (element) {
+      element.mount(elementRef.current);
       element.resetEvents();
       element.on("Change", (data) => {
         setState({ ...state, ...data });
       });
       setState({ ...state, ...element.getState() });
+    } else {
+      setElement(elements.createMultipleElement(groupOptions));
     }
   }, [element]);
 

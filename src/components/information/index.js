@@ -44,6 +44,7 @@ export default function Information(props) {
               },
             },
             labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+            value: undefined,
           },
         ],
       };
