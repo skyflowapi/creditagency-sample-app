@@ -25,7 +25,6 @@ export const useSkyflowElement = (elementType, options) => {
       });
       setState({ ...state, ...element.getState() });
     } else {
-      console.log("not there");
       setElement(elements.create(elementType, options));
     }
   }, [element]);

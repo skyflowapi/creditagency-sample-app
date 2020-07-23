@@ -8,6 +8,7 @@ const Skyflow = (props) => {
       orgId: properties.orgId,
       vaultId: properties.vaultId,
       appId: properties.appId,
+      production: true,
     })
   );
   const [elements] = React.useState(skyflow.elements({}));
