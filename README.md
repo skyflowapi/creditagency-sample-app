@@ -4,7 +4,23 @@ The app demonstrates secure collection of PII data using skyflow-js. Developing 
 
 ## Demo
 
-You can view the demo of the app [here](https://d1octe4ap2s38q.cloudfront.net/#/)
+You can view the demo of the app [here](https://creditcard-demo.skyflow.app/#/#/)
+
+## Overview
+
+Create secure forms and elements to collect pii data. 
+
+<img src="screenshots/phone-number.png" alt="Secure phone number field" style = "box-shadow: 0 0 0 2px rgba(0,0,0,0.1)" width="610">
+
+The app is an example to integrate skyflow client sdk to your frontend web application. 
+
+|     | Features
+:---: | :---:
+**Create forms with secure fields**| Skyflow sdk lets you create forms with secure fields of primitive types(inputs, selects etc), composite elements(First name, email etc), privacy preserving elements(ssn)
+**Transmit and receive your data over the iframe**| The form data is received and routed over the hosted iframe.
+**Predefined Workflows** | The app demonstrates experian workflows to get credit scores.
+**Reveal the sensitive data only when required**|  Complete control of revealing the data in privacy fields. 
+
 
 ## To run it locally
 
@@ -22,30 +38,8 @@ $ cd creditagency-sample-app
 $ npm i
 ```
 
-```
-$npm start
-```
-
-You will be prompted to enter your skyflow credentials, app id and vault id. You can find them in the Skyflow vault you just created. 
-
-Once you submit your application in the app you should be able to view the data in Data browser section of skyflow. You can play around with metrics in dashboard, 
-
-
-## SDK reference
-
-### Quick start guide
-```
-const skyflow = new Skyflow(<your appId>); 
-const elements = skyflow.elements();
-const element = elements.create("element_type", {
-  name: "vault_field_name",
-});
-
-element.mount("#html_element_selector");
-const promise = elements.tokenize();
+Add your org id, vault id and app id which you will receive once you sign up and create your vault in skyflow studio.
 
 ```
-
-### Documentation 
-
-You can find the detailed documentation in [Documentation section](Documetation.md)
+$ npm start
+```
