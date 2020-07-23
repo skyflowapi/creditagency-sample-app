@@ -10,12 +10,6 @@ export const useSkyflowElement = (elementType, options) => {
 
   const [state, setState] = React.useState({});
 
-  // React.useEffect(() => {
-  //   if (element) {
-  //     element.mount(elementRef.current);
-  //   }
-  // }, [element]);
-
   React.useEffect(() => {
     if (element) {
       element.mount(elementRef.current);
@@ -23,21 +17,16 @@ export const useSkyflowElement = (elementType, options) => {
       element.on("Change", (data) => {
         setState({ ...state, ...data });
       });
+      element.update({
+        label: null,
+        labelStyles: {},
+        styles: options.styles ? { ...options.styles } : undefined,
+      });
       setState({ ...state, ...element.getState() });
     } else {
       setElement(elements.create(elementType, options));
     }
   }, [element]);
-
-  // React.useEffect(() => {
-  //   if (elementRef.current) {
-  //     if (!element) {
-  //       const element = elements.create(elementType, options);
-  //       element.mount(elementRef.current);
-  //       setElement(element);
-  //     }
-  //   }
-  // }, [elementRef]);
 
   return {
     element,
@@ -55,12 +44,6 @@ export const useMultipleSkyflowElements = (groupOptions) => {
 
   const [state, setState] = React.useState({});
 
-  // React.useEffect(() => {
-  //   if (element) {
-  //     element.mount(elementRef.current);
-  //   }
-  // }, []);
-
   React.useEffect(() => {
     if (element) {
       element.mount(elementRef.current);
@@ -74,16 +57,6 @@ export const useMultipleSkyflowElements = (groupOptions) => {
     }
   }, [element]);
 
-  // React.useEffect(() => {
-  //   if (elementRef.current) {
-  //     if (!element) {
-  //       const element = elements.createMultipleElement(groupOptions);
-  //       element.mount(elementRef.current);
-  //       setElement(element);
-  //     }
-  //   }
-  // }, [elementRef]);
-
   return {
     element,
     elementRef,
@@ -95,9 +68,6 @@ export const useMultipleSkyflowElementsCustom = (
   elementObjects,
   isValidCallback = undefined
 ) => {
-  // if (!elementObjects || elementObjects.length === 0) {
-  //   throw new Error("Provide at least 1 element");
-  // }
   const elementsArray = [];
   const [isValid, setIsValid] = React.useState(false);
 
