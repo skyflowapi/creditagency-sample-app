@@ -70,7 +70,7 @@ export default function ThankYouPage(props) {
       <div className={classes.body}>
         <div style={{ textAlign: "center" }}>
           <h2 style={{ color: theme.palette.grey[1] }}>THANK YOU !</h2>
-          <img src={SkyflowLogo} alt="skyflow-logo" />
+          {/* <img src={SkyflowLogo} alt="skyflow-logo" /> */}
           <h2 style={{ color: theme.palette.royalBlue[0] }}>
             Your Application is complete.
           </h2>

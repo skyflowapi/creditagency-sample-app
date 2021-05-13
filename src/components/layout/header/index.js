@@ -53,7 +53,7 @@ export default function Header(props) {
   return (
     <div className={classes.root} style={{ position: props.pos || "absolute" }}>
       <div className={classes.logoWithText}>
-        <img className={classes.logo} src={SkyflowLogo} alt="logo"></img>
+        {/* <img className={classes.logo} src={SkyflowLogo} alt="logo"></img> */}
       </div>
       <Box display="flex" alignItems="center" mr={6}>
         <Tooltip title="View on GitHub">
