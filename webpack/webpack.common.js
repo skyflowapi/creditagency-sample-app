@@ -70,4 +70,7 @@ module.exports = {
       defaultAttribute: "async",
     }),
   ],
+  node:{
+    fs : 'empty'
+  }
 };

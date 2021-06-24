@@ -19,6 +19,7 @@ import SummaryData from "../../components/SummaryData";
 import { localStorageKey } from "../../utils/constants";
 import { useSkyflow } from "../../services";
 import { useSnackbar } from "notistack";
+import { getData } from "../../services/getData";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -90,6 +91,11 @@ export default function Analytics(props) {
   const handleModalClose = () => {
     setRecord("");
   };
+
+  getData((data) => {
+    console.log("data", JSON.stringify(data));
+  });
+
 
   const handleOnAcceptOrReject = (record, accept, event) => {
     event.preventDefault();

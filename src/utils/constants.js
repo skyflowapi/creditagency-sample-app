@@ -44,7 +44,7 @@ export const YOUR_INFO = {
       name: "first_name",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
-      value: "Roana"
+      value: "Roana",
     },
     elementType: "firstName",
   },
@@ -54,7 +54,7 @@ export const YOUR_INFO = {
       name: "last_name",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
-      value: "Rigglesford"
+      value: "Rigglesford",
     },
     elementType: "lastName",
   },
@@ -76,7 +76,7 @@ export const YOUR_INFO = {
       name: "date_of_birth",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
-      value: "1990-10-09"
+      value: "1990-10-09",
     },
     elementType: "dob",
   },
@@ -89,7 +89,7 @@ export const CONTACT_INFO = {
       name: "address_line",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
-      value: "561 Birchwood Alley	"
+      value: "561 Birchwood Alley	",
     },
     elementType: "address",
   },
@@ -99,7 +99,7 @@ export const CONTACT_INFO = {
       name: "address_street",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
-      value: "Mosinee Parkway"
+      value: "Mosinee Parkway",
     },
     elementType: "street",
   },
@@ -109,7 +109,7 @@ export const CONTACT_INFO = {
       name: "address_zip_code",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
-      value: "73139"
+      value: "73139",
     },
     elementType: "zipCode",
   },
@@ -119,7 +119,7 @@ export const CONTACT_INFO = {
       name: "address_city",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
-      value: "Oklahoma City"
+      value: "Oklahoma City",
     },
     elementType: "city",
   },
@@ -129,7 +129,7 @@ export const CONTACT_INFO = {
       name: "address_state",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
-      value: "Oklahoma"
+      value: "Oklahoma",
     },
     elementType: "state",
   },
@@ -142,7 +142,7 @@ export const CONTACT_INFO = {
       validation: ["required"],
       ...ELEMENT_STYLES,
       sensitive: true,
-      value: "4056068899"
+      value: "4056068899",
     },
     elementType: "mobileNumber",
     hide: true,
@@ -162,7 +162,7 @@ export const ACADEMIC_INFO = {
         { text: "PHD", value: "PHD" },
       ],
       ...ELEMENT_STYLES,
-      value: "Masters"
+      value: "Masters",
     },
     elementType: "dropdown",
   },
@@ -178,7 +178,7 @@ export const ACADEMIC_INFO = {
         { text: "Virginia", value: "Virginia" },
       ],
       ...ELEMENT_STYLES,
-      value:"Arizona"
+      value: "Arizona",
     },
     elementType: "dropdown",
   },
@@ -203,7 +203,7 @@ export const ACADEMIC_INFO = {
         },
       ],
       ...ELEMENT_STYLES,
-      value: "Arizona State university"
+      value: "Arizona State university",
     },
     elementType: "dropdown",
   },
@@ -222,7 +222,7 @@ export const ACADEMIC_INFO = {
         { text: "Machine Learning", value: "Machine Learning" },
       ],
       ...ELEMENT_STYLES,
-      value: "Artificial Intelligence"
+      value: "Artificial Intelligence",
     },
     elementType: "dropdown",
   },
@@ -237,7 +237,7 @@ export const FINANCIAL_INFO = {
       validation: ["required", "default"],
       // placeholder: "Education and Living Expenses",
       sensitive: true,
-      value: "52752312"
+      value: "52752312",
     },
     elementType: "income",
     hide: true,
@@ -256,7 +256,7 @@ export const FINANCIAL_INFO = {
         { text: "Loan", value: "Loan" },
         { text: "Scholarships", value: "Scholarships" },
       ],
-      value: "Personal Funds"
+      value: "Personal Funds",
     },
   },
   AVAILABLE_ASSETS: {
@@ -266,7 +266,7 @@ export const FINANCIAL_INFO = {
       // placeholder: "Available Assets",
       name: "available_assets",
       validation: ["required", "default"],
-      value: "26"
+      value: "26",
     },
     elementType: "income",
     hide: true,
@@ -280,7 +280,7 @@ export const FINANCIAL_INFO = {
       mask: ["XXX-XX-XXXX", { X: "[0-9]" }],
       validation: ["required"],
       sensitive: true,
-      value: "529573023"
+      value: "529573023",
     },
     elementType: "ssn",
     hide: true,
@@ -330,4 +330,147 @@ export const REVEAL_ELEMENT_OPTIONS = {
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
     "font-size": "14px",
   },
+};
+
+export const VAULT_PARAMS = {
+  ORG_NAME: "sb",
+  ACCOUNT_NAME: "area51",
+  VAULT_ID: "ie5296a6589d4934b25ce5704177aa04",
+};
+
+export const RECORD = {
+  record:
+    {
+      fields: {
+        addresses: [
+          {
+            full_name: "Rubetta Mortlock",
+            use: "TEMPORARY",
+            line_1: "5250 Eliot Point",
+            line_2: "02 Dennis Trail",
+            city: "Seixo de Manhoses",
+            district: "Pavliš",
+            country: "CAYMAN_ISLANDS",
+            zip_code: "38005",
+            address_type: "BOTH",
+          },
+          {
+            full_name: "Hollis Varker",
+            use: "OLD_INCORRECT",
+            line_1: "173 Green Ridge Trail",
+            line_2: "6209 Prairieview Center",
+            city: "Lembang",
+            district: "Lukou",
+            country: "GUAM",
+            zip_code: "26651",
+            address_type: "POSTAL",
+          },
+        ],
+        phone_numbers: [
+          {
+            value: "46(544)403-1641",
+            type: "OLD",
+          },
+          {
+            value: "62(146)591-4867",
+            type: "TEMP",
+          },
+        ],
+        emails: [
+          {
+            value: "jridout0@joomla.org",
+            type: "OLD",
+          },
+          {
+            value: "jtilt1@about.com",
+            type: "OFFICIAL",
+          },
+        ],
+        name: {
+          prefix: "Honorable",
+          first_name: "Raj",
+          middle_name: "Aimee",
+          last_name: "Pechacek",
+          use: "NICKNAME",
+          suffix: "III",
+        },
+        date_of_birth: "1963-05-08",
+        gender: "OTHER",
+        race: "CREE",
+        ethnicity: "OTHER_ETHNICITY",
+        religion: "EPISCOPALIAN",
+        preferred_language: "CAMBODIAN_LANGUAGE",
+        nationality: "GUINEAN",
+        marital_status: "DOMESTIC_PARTNER",
+      },
+    },  
+};
+
+export const RECORDS = {
+  records:[
+    {
+      fields: {
+        addresses: [
+          {
+            full_name: "Rubetta Mortlock",
+            use: "TEMPORARY",
+            line_1: "5250 Eliot Point",
+            line_2: "02 Dennis Trail",
+            city: "Seixo de Manhoses",
+            district: "Pavliš",
+            country: "CAYMAN_ISLANDS",
+            zip_code: "38005",
+            address_type: "BOTH",
+          },
+          {
+            full_name: "Hollis Varker",
+            use: "OLD_INCORRECT",
+            line_1: "173 Green Ridge Trail",
+            line_2: "6209 Prairieview Center",
+            city: "Lembang",
+            district: "Lukou",
+            country: "GUAM",
+            zip_code: "26651",
+            address_type: "POSTAL",
+          },
+        ],
+        phone_numbers: [
+          {
+            value: "46(544)403-1641",
+            type: "OLD",
+          },
+          {
+            value: "62(146)591-4867",
+            type: "TEMP",
+          },
+        ],
+        emails: [
+          {
+            value: "jridout0@joomla.org",
+            type: "OLD",
+          },
+          {
+            value: "jtilt1@about.com",
+            type: "OFFICIAL",
+          },
+        ],
+        name: {
+          prefix: "Honorable",
+          first_name: "Test name",
+          middle_name: "Aimee",
+          last_name: "Pechacek",
+          use: "NICKNAME",
+          suffix: "III",
+        },
+        date_of_birth: "1963-05-08",
+        gender: "OTHER",
+        race: "CREE",
+        ethnicity: "OTHER_ETHNICITY",
+        religion: "EPISCOPALIAN",
+        preferred_language: "CAMBODIAN_LANGUAGE",
+        nationality: "GUINEAN",
+        marital_status: "DOMESTIC_PARTNER",
+      },
+    },  
+  ]
 };

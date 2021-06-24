@@ -37,7 +37,7 @@ export default function SummaryData({
           <Box pl={2}>
             <Typography variant="h5">Review Your Information</Typography>
             <Typography variant="h6" color="textSecondary">
-              Please review the summary of your application below,then submit to continue.
+              Please review the summary of the applicant, then choose to approve or decline the request.
             </Typography>
           </Box>
         </Box>
@@ -56,7 +56,7 @@ export default function SummaryData({
         <>
           <Box display="flex" justifyContent="space-between" mt={10}>
             <Information
-              title="YOUR INFORMATION"
+              title="PERSONAL INFORMATION"
               data={record}
               elements={YOUR_INFO}
               notebook={notebook}
@@ -68,13 +68,13 @@ export default function SummaryData({
               notebook={notebook}
             />
             <Information
-              title="ACADEMIC INFORMATION"
+              title="FINANCIAL INFORMATION"
               data={record}
               elements={ACADEMIC_INFO}
               notebook={notebook}
             />
             <Information
-              title="FINANCIAL INFORMATION"
+              title="DOCUMENTS VERIFIED"
               data={record}
               elements={FINANCIAL_INFO}
               notebook={notebook}
