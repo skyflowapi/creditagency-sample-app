@@ -6,6 +6,7 @@ const theme = createMuiTheme({
     grey: {
       0: "#fbfbfd",
       1: "#696969",
+      2: "#979da9",
       100: '#f5f8fa',
       200: '#eaf0f6',
       300: '#dfe3eb',
@@ -18,6 +19,7 @@ const theme = createMuiTheme({
     },
     black: {
       0: "#1d1d1d",
+      1: "#344563"
     },
     blue: {
       0: "#1665d8",
@@ -69,6 +71,24 @@ const theme = createMuiTheme({
     //   },
   },
   spacing: 4,
+  shadows: [
+    'none',
+    '0 2px 25px 5px rgba(0, 0, 0, 0.04)',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ],
   typography: {
     fontFamily: "Roboto",
     //add variants here
@@ -98,6 +118,20 @@ const theme = createMuiTheme({
       lineHeight: "1.43",
       letterSpacing: "normal",
     },
+    body1: {
+      fontSize: "14px",
+      fontWeight: "bold",
+      fontStyle: "normal",
+      lineHeight: "normal",
+      letterSpacing: "normal",
+    },
+    body2: {
+      fontSize: "14px",
+      fontWeight: 'normal',
+      fontStyle: 'normal',
+      lineHeight: '21px',
+      letterSpacing: 'normal',
+    },
     caption: {
       fontSize: "12px",
       fontStyle: "normal",
@@ -105,6 +139,7 @@ const theme = createMuiTheme({
       lineHeight: "1.5",
       letterSpacing: "normal",
     },
+
   },
   overrides: {
     //Add global css here

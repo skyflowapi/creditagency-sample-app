@@ -29,6 +29,7 @@ import acme from "../../assets/acme.png";
 import Search from "@material-ui/icons/Search";
 import Filter from "../../assets/filter.svg";
 import FilterCheckbox from "../../components/FilterCheckbox";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -132,6 +133,7 @@ const data = {
 
 export default function Analytics(props) {
   const classes = useStyles();
+  const history = useHistory();
   const [records, setRecords] = React.useState(getRecords());
   const { skyflow } = useSkyflow();
   const [notebook] = React.useState(skyflow.notebook());
@@ -236,7 +238,12 @@ export default function Analytics(props) {
         >
           <img src={acme}></img>
           <Box>
-            <Button className={classes.roleToggleButton}>Customer</Button>
+            <Button
+              className={classes.roleToggleButton}
+              onClick={()=>{history.push("/customer")}}
+            >
+              Customer
+            </Button>
             <Button
               className={classes.roleToggleButton}
               variant="contained"

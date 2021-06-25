@@ -23,6 +23,7 @@ import { SnackbarProvider } from "notistack";
 const Home = React.lazy(() => import("./components/Home/index"));
 const NamePage = React.lazy(() => import("./components/personalInfo/namePage/index"));
 const Analytics = React.lazy(() => import("./pages/Analytics"));
+const CustomerForm = React.lazy(() => import("./components/CustomerForm"));
 
 const Next = React.createContext();
 
@@ -63,6 +64,7 @@ const App = (props) => {
                 </Route>
                 <Route path="/upload" exact component={UploadPage} />
                 <Route path="/analytics" exact component={Analytics} />
+                <Route path="/customer" exact component={CustomerForm} />
                 <Route path="/submit" exact>
                   <ThankYouPage email={email} />
                 </Route>

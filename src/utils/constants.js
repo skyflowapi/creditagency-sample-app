@@ -335,7 +335,7 @@ export const REVEAL_ELEMENT_OPTIONS = {
 export const VAULT_PARAMS = {
   ORG_NAME: "sb",
   ACCOUNT_NAME: "area51",
-  VAULT_ID: "ie5296a6589d4934b25ce5704177aa04",
+  VAULT_ID: "t6e64fcafe67436fb942ad5b8b445307",
 };
 
 export const RECORD = {
@@ -478,7 +478,6 @@ export const RECORDS = {
 export const ANALYST_PLAIN_TEXT_FIELDS = [
   'skyflow_id',
   'name',
-  'age',
   'Employment_Status',
   'Risk_Score',
   'credit_score',
