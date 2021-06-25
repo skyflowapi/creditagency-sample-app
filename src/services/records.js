@@ -2,9 +2,9 @@ import axios from "axios";
 import { call } from "file-loader";
 import { VAULT_PARAMS } from "../utils/constants";
 import { getBaseUrl } from "../utils/helper";
+import Qs from 'qs';
 
 export const bulkGetRecords = (tableName, options, accessToken, callback) => {
-  console.log("vault id", VAULT_PARAMS.VAULT_ID);
   axios
     .get(`/vault/v1/vaults/${VAULT_PARAMS.VAULT_ID}/` + tableName, {
       headers: { Authorization: "Bearer " + accessToken },
@@ -15,6 +15,9 @@ export const bulkGetRecords = (tableName, options, accessToken, callback) => {
         fields: options.fields,
         offset: options.offset,
         limit: options.limit,
+      },
+      paramsSerializer: function (params) {
+        return Qs.stringify(params, {arrayFormat: 'repeat'});
       },
     })
     .then((res) => {
@@ -113,43 +116,5 @@ export const insertRecord = (
         console.log("error", err);
       });
   };
-//     deleteRecord(tableName, recordId, callback) {
-//         return this.callApi(
-//             ({ tableName, recordId }) => {
-//                 return axios.delete(this.vaultUrl + '/' + tableName + '/' + recordId
-//                     , {
-//                         headers: this.defaultHeaders
-//                     })
-//                     .then(res => {
-//                         if (callback) {
-//                             callback(res.data);
-//                         }
-//                         return res.data;
-//                     })
-//                     .catch(err => err && err.response && err.response.data)
-//             }, { tableName, recordId })
-//     },
+  
 
-//     bulkDeleteRecords(tableName,skyflowIds = [], callback) {
-//         return this.callApi(
-//             ({ tableName,skyflowIds }) => {
-//                 return axios.delete(this.vaultUrl + '/' + tableName,
-//                     {
-//                         headers: this.defaultHeaders,
-//                         params : {
-//                             skyflow_ids : skyflowIds,
-//                         }
-//                     })
-//                     .then(res => {
-//                         if (callback) {
-//                             callback(res.data);
-//                         }
-//                         return res.data;
-//                     })
-//                     .catch(err => err && err.response && err.response.data)
-//             }, { tableName,skyflowIds })
-//     }
-
-// }
-
-// export default Records;

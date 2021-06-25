@@ -1,5 +1,11 @@
 import React from "react";
-import { Typography, Box, IconButton, Button, CircularProgress } from "@material-ui/core";
+import {
+  Typography,
+  Box,
+  IconButton,
+  Button,
+  CircularProgress,
+} from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import {
   YOUR_INFO,
@@ -37,7 +43,8 @@ export default function SummaryData({
           <Box pl={2}>
             <Typography variant="h5">Review Your Information</Typography>
             <Typography variant="h6" color="textSecondary">
-              Please review the summary of the applicant, then choose to approve or decline the request.
+              Please review the summary of the applicant, then choose to approve
+              or decline the request.
             </Typography>
           </Box>
         </Box>
@@ -61,7 +68,7 @@ export default function SummaryData({
               elements={YOUR_INFO}
               notebook={notebook}
             />
-            <Information
+            {/*<Information
               title="CONTACT INFORMATION"
               data={record}
               elements={CONTACT_INFO}
@@ -78,7 +85,7 @@ export default function SummaryData({
               data={record}
               elements={FINANCIAL_INFO}
               notebook={notebook}
-            />
+            /> */}
           </Box>
           <Box display="flex" justifyContent="flex-end" mt={8}>
             <Button

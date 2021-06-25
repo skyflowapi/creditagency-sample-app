@@ -12,19 +12,21 @@ export default function AnalyticsCard({
 }) {
   return (
     <Box
-      height="190px"
-      width="255px"
+      height="175px"
+      width="360px"
       boxShadow="0 1px 3px 0 rgba(0, 0, 0, 0.04)"
       border="solid 1px #eaedf3"
       component={Paper}
       pt={6.5}
       pb={4.5}
       px={7.5}
+      borderRadius={"12px"}
+      boxShadow={"0 2px 25px 5px rgba(0, 0, 0, 0.04)"}
       {...rest}
     >
       <Typography variant="caption" color="textSecondary">{title}</Typography>
-      <Box pt={1} pb={3} borderBottom="1px solid #eaedf3" mb={4}>
-        <Typography variant="h1">{count}</Typography>
+      <Box pt={1} pb={3} borderBottom="1px solid #dfe3eb" mb={4}>
+        <Typography variant="h1" style={{fontWeight: '600'}}>{count}</Typography>
       </Box>
       <Typography variant="caption" color="textSecondary">{footerText}</Typography>
       {risk && (

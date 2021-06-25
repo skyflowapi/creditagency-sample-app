@@ -11,15 +11,24 @@ import {
   TableRow,
   Link,
   CircularProgress,
+  Button,
+  InputAdornment,
+  Popover,
 } from "@material-ui/core";
+import FormInputField from "../../components/FormInputField";
 import Modal from "../../components/Modal";
 import Header from "../../components/layout/header";
 import AnalyticsCard from "../../components/AnalyticsCard";
+import ApplicationStatus from "../../components/ApplicationStatus";
 import SummaryData from "../../components/SummaryData";
 import { localStorageKey } from "../../utils/constants";
 import { useSkyflow } from "../../services";
 import { useSnackbar } from "notistack";
 import { getData } from "../../services/getData";
+import acme from "../../assets/acme.png";
+import Search from "@material-ui/icons/Search";
+import Filter from "../../assets/filter.svg";
+import FilterCheckbox from "../../components/FilterCheckbox";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -45,12 +54,61 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#13182021",
     zIndex: "2",
   },
+  roleToggleButton: {
+    fontSize: "14px",
+    textTransform: "none",
+    padding: "1px 16px",
+    borderRadius: "2px",
+    boxShadow: "none",
+  },
+  searchBox: {
+    width: "440px",
+    height: theme.spacing(9),
+    borderRadius: theme.spacing(1),
+    border: `solid 1px ${theme.palette.grey[300]}`,
+    display: "flex",
+    justifyContent: "center",
+    "& .MuiInput-underline:after, & .MuiInput-underline:before": {
+      border: "none !important",
+    },
+  },
+  filterBox: {
+    cursor: "pointer",
+  },
+  popoverContent: {
+    backgroundColor: "white",
+    userSelect: "none",
+    border: `1px solid ${theme.palette.grey[300]}`,
+    borderRadius: "4px",
+    boxShadow: "none",
+  },
 }));
 
 const colors = {
-  Low: "#7ce7ac",
+  Low: "#e50000",
   Medium: "#facf55",
-  High: "#e6492d",
+  High: "#4169e1",
+  Med: "#ffae42",
+  "": "red",
+};
+
+const applicationStatusColors = {
+  Approved: {
+    fontColor: "#3193ff",
+    backgroundColor: "#d6ebff",
+  },
+  Pending: {
+    fontColor: "#ff9514",
+    backgroundColor: "#fff2e0",
+  },
+  Declined: {
+    fontColor: "#ff6c63",
+    backgroundColor: "#ffe0de",
+  },
+  "": {
+    fontColor: "red",
+    backgroundColor: "red",
+  },
 };
 
 const data = {
@@ -83,6 +141,12 @@ export default function Analytics(props) {
 
   const [loading, setLoading] = React.useState(false);
 
+  const [searchTerm, setSearchTerm] = React.useState("");
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const [reviewData, setReviewData] = React.useState(null);
+
   const handleModalOpen = (event, row) => {
     event.preventDefault();
     setRecord(row);
@@ -92,10 +156,20 @@ export default function Analytics(props) {
     setRecord("");
   };
 
-  getData((data) => {
-    console.log("data", JSON.stringify(data));
-  });
+  React.useEffect(() => {
+    getData("analyst", (data) => {
+      console.log("data", JSON.stringify(data));
+      setReviewData(data);
+    });
+  }, []);
 
+  const handlePopoverClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleOnAcceptOrReject = (record, accept, event) => {
     event.preventDefault();
@@ -135,7 +209,9 @@ export default function Analytics(props) {
   const removeRecordFromDB = (recordId) => {
     try {
       let records = JSON.parse(localStorage.getItem(localStorageKey)) || [];
-      records = records.filter((record) => record.skyflow_vault_response.ID !== recordId);
+      records = records.filter(
+        (record) => record.skyflow_vault_response.ID !== recordId
+      );
       localStorage.setItem(localStorageKey, JSON.stringify(records));
       setRecords(getRecords());
     } catch (e) {
@@ -144,181 +220,296 @@ export default function Analytics(props) {
   };
 
   return (
-    <Box bgcolor="#fbfbfd" height={window.innerHeight}>
-      {loading && (
-        <Box className={classes.loader}>
-          <CircularProgress />
-        </Box>
-      )}
-      <Box height="112px" component={Paper} boxShadow="0 1px 0 0 rgba(0, 0, 0, 0.06)">
-        <Header />
-      </Box>
-      <Box width="1110px" mt={7.5} mx="auto">
-        <Box display="flex">
-          <AnalyticsCard
-            title="PENDING REVIEWS"
-            count={data.pendingReviews.count}
-            footerText={data.pendingReviews.rate}
-            mr={7.5}
-          />
-          <AnalyticsCard
-            title="COMPLETED REVIEWS"
-            count={data.completedReviews.count}
-            footerText={data.completedReviews.rate}
-            mr={7.5}
-          />
-          <AnalyticsCard
-            title="MONTHLY REVIEWS"
-            count={data.monthlyReviews.count}
-            footerText={data.monthlyReviews.rate}
-            mr={7.5}
-          />
-          <AnalyticsCard
-            title="CREDIT RISK SCORE"
-            count={data.creditRiskScore.score}
-            footerText="RISK"
-            risk={data.creditRiskScore.rate}
-          />
-        </Box>
-        <Box
-          component={Paper}
-          boxShadow="0 1px 3px 0 rgba(0, 0, 0, 0.04)"
-          border="solid 1px #eaedf3"
-          mt={7.5}
-        >
-          <Box py={4.5} px={7.5} display="flex" alignItems="center">
-            <Box mr={7.5}>
-              <Typography variant="h5">Pending reviews</Typography>
-            </Box>
-            <Box width="1px" height="38px" bgcolor="#eaedf3" mr={7.5}></Box>
-            <Box color="#696969">
-              <Typography variant="h6">{data.length} New requests</Typography>
-            </Box>
+    <>
+      <Box bgcolor="#fbfbfd" height={window.innerHeight}>
+        {loading && (
+          <Box className={classes.loader}>
+            <CircularProgress />
           </Box>
+        )}
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          width="1134px"
+          pt={"26px"}
+          mx="auto"
+        >
+          <img src={acme}></img>
           <Box>
-            <Table aria-label="simple table" className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <Typography variant="caption" color="textSecondary">
-                      NAME
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="caption" color="textSecondary">
-                      AGE
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="caption" color="textSecondary">
-                      EMPLOYMENT STATUS
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="caption" color="textSecondary">
-                      CREDIT SCORE
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="caption" color="textSecondary">
-                      RISK
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="caption" color="textSecondary">
-                      ACTIONS
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {records.data.map((row) => (
-                  <TableRow key={row.ID}>
-                    <TableCell component="th" scope="row">
-                      <Link
-                        variant="h6"
-                        style={{ cursor: "pointer" }}
+            <Button className={classes.roleToggleButton}>Customer</Button>
+            <Button
+              className={classes.roleToggleButton}
+              variant="contained"
+              color="primary"
+            >
+              Analyst
+            </Button>
+          </Box>
+        </Box>
+        <Box width="1134px" mt={7.5} mx="auto">
+          <Box display="flex" justifyContent="space-between">
+            <AnalyticsCard
+              title="REVIEWS PENDING"
+              count={24}
+              footerText={"13% Increase"}
+            />
+            <AnalyticsCard
+              title="REVIEWS COMPLETED"
+              count={47}
+              footerText={"5% Increase"}
+            />
+            <AnalyticsCard
+              title="MONTHLY REVIEWS"
+              count={115}
+              footerText={"21% Decrease"}
+            />
+          </Box>
+          <Box
+            component={Paper}
+            boxShadow="0 1px 3px 0 rgba(0, 0, 0, 0.04)"
+            border="solid 1px #eaedf3"
+            mt={7.5}
+            borderRadius={"12px"}
+            boxShadow={"0 2px 25px 5px rgba(0, 0, 0, 0.04)"}
+          >
+            <Box
+              py={4.5}
+              px={7.5}
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Box mr={7.5}>
+                <Typography variant="h5" style={{ fontWeight: 600 }}>
+                  APPLICANTS
+                </Typography>
+              </Box>
+              <FormInputField
+                id="search"
+                placeholder={"Search applicants"}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                }}
+                value={searchTerm}
+                autoComplete={"off"}
+                inputProps={{ "data-testid": "search" }}
+                className={classes.searchBox}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start" disablePointerEvents>
+                      <Search />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <>
+                      <Box
+                        height={"24px"}
+                        width={"1px"}
+                        bgcolor={"#dfe3eb"}
+                      ></Box>
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        width={"56px"}
+                        height={"21px"}
+                        mx={3}
                         onClick={(e) => {
-                          handleModalOpen(e, row);
+                          handlePopoverClick(e);
+                        }}
+                        className={classes.filterBox}
+                      >
+                        <img src={Filter} style={{ marginRight: "2px" }}></img>
+                        <Typography variant="h6">Filter</Typography>
+                      </Box>
+                      <Popover
+                        open={Boolean(anchorEl)}
+                        anchorEl={anchorEl}
+                        onClose={handlePopoverClose}
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "right",
+                        }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        elevation={1}
+                        classes={{
+                          paper: `${classes.popoverContent}`,
                         }}
                       >
-                        {row.fields.first_name.dlp}
-                      </Link>
+                        <FilterCheckbox></FilterCheckbox>
+                      </Popover>
+                    </>
+                  ),
+                }}
+              />
+            </Box>
+            <Box>
+              <Table aria-label="simple table" className={classes.table}>
+                <TableHead>
+                  <TableRow style={{ backgroundColor: "#f5f8fa" }}>
+                    <TableCell>
+                      <Typography variant="caption" color="textSecondary">
+                        NAME
+                      </Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography variant="h6">{row.age}</Typography>
+                      <Typography variant="caption" color="textSecondary">
+                        AGE
+                      </Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography variant="h6">{row.employementStatus}</Typography>
+                      <Typography variant="caption" color="textSecondary">
+                        EMPLOYMENT STATUS
+                      </Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography variant="h6">{row.creditScore}</Typography>
+                      <Typography variant="caption" color="textSecondary">
+                        CREDIT SCORE
+                      </Typography>
                     </TableCell>
                     <TableCell>
-                      <Box display="flex" alignItems="center">
-                        <Box
-                          mr={2}
-                          width="10px"
-                          height="10px"
-                          borderRadius="5px"
-                          bgcolor={colors[row.risk]}
-                        ></Box>
-                        <Typography variant="h6">{row.risk}</Typography>
-                      </Box>
+                      <Typography variant="caption" color="textSecondary">
+                        RISK SCORE
+                      </Typography>
                     </TableCell>
-                    <TableCell>
-                      <Link
-                        variant="h6"
-                        style={{ cursor: "pointer" }}
-                        onClick={handleOnAcceptOrReject.bind(null, row, true)}
-                      >
-                        Accept
-                      </Link>
-                      <Link
-                        variant="h6"
-                        style={{ cursor: "pointer", marginLeft: "30px" }}
-                        onClick={handleOnAcceptOrReject.bind(null, row, false)}
-                      >
-                        Decline
-                      </Link>
+                    <TableCell style={{ textAlign: "center" }}>
+                      <Typography variant="caption" color="textSecondary">
+                        APPLICATION STATUS
+                      </Typography>
                     </TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHead>
+                <TableBody>
+                  {reviewData &&
+                    reviewData.records &&
+                    reviewData.records.map((row) => (
+                      <TableRow key={row.ID}>
+                        <TableCell component="th" scope="row">
+                          <Link
+                            variant="h6"
+                            style={{ cursor: "pointer" }}
+                            onClick={(e) => {
+                              handleModalOpen(e, row);
+                            }}
+                          >
+                            {row &&
+                            row.fields &&
+                            row.fields.name &&
+                            row.fields.name.first_name
+                              ? row.fields.name.first_name
+                              : ""}
+                          </Link>
+                        </TableCell>
+                        <TableCell>
+                          <Typography variant="h6">
+                            {row && row.fields && row.fields.age
+                              ? row.fields.age
+                              : ""}
+                          </Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Typography variant="h6">
+                            {row && row.fields && row.fields.Employment_Status
+                              ? row.fields.Employment_Status
+                              : ""}
+                          </Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Typography variant="h6">
+                            {row && row.fields && row.fields.credit_score
+                              ? row.fields.credit_score
+                              : ""}
+                          </Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Box display="flex" alignItems="center">
+                            <Box
+                              mr={2}
+                              width="10px"
+                              height="10px"
+                              borderRadius="5px"
+                              bgcolor={
+                                // colors[
+                                //   row && row.fields && row.fields.Risk_Score
+                                //     ? row.fields.Risk_Score
+                                //     : ""
+                                // ]
+                                colors["High"]
+                              }
+                            ></Box>
+                            <Typography variant="h6">
+                              {row && row.fields && row.fields.Risk_Score
+                                ? row.fields.Risk_Score
+                                : ""}
+                            </Typography>
+                          </Box>
+                        </TableCell>
+                        <TableCell>
+                          <ApplicationStatus
+                            applicationStatus={
+                              row && row.fields && row.fields.Application_Status
+                                ? row.fields.Application_Status
+                                : ""
+                            }
+                            color={
+                              // applicationStatusColors[
+                              //   row &&
+                              //   row.fields &&
+                              //   row.fields.Application_Status
+                              //     ? row.fields.Application_Status
+                              //     : ""
+                              // ]
+                              applicationStatusColors["Approved"]
+                            }
+                          ></ApplicationStatus>
+                        </TableCell>
+                        <TableCell></TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            </Box>
           </Box>
         </Box>
+        <Modal open={!!record}>
+          <SummaryData
+            handleClose={handleModalClose}
+            record={record}
+            notebook={notebook}
+            handleOnAcceptOrReject={handleOnAcceptOrReject}
+            loading={loading}
+          />
+        </Modal>
       </Box>
-      <Modal open={!!record}>
-        <SummaryData
-          handleClose={handleModalClose}
-          record={record}
-          notebook={notebook}
-          handleOnAcceptOrReject={handleOnAcceptOrReject}
-          loading={loading}
-        />
-      </Modal>
-    </Box>
+    </>
   );
 }
 
 const getRecords = () => {
   try {
-    let records = (JSON.parse(localStorage.getItem(localStorageKey)) || []).reverse();
+    let records = (
+      JSON.parse(localStorage.getItem(localStorageKey)) || []
+    ).reverse();
     const ages = [24, 45, 36, 52];
     const creditScore = [
       { value: 36, risk: "High" },
       { value: 95, risk: "Low" },
-      { value: 60, risk: "Medium" },
-      { value: 71, risk: "Medium" },
+      { value: 60, risk: "Med" },
+      { value: 71, risk: "Med" },
     ];
+    const applicationStatus = ["Pending", "Approved", "Declined"];
     records = records.map((record) => {
       const fields = {};
       record.skyflow_vault_response.fields.forEach((row) => {
         fields[row.name] = row;
       });
-      const riskObj = creditScore[Math.floor(Math.random() * creditScore.length)];
-
+      const riskObj =
+        creditScore[Math.floor(Math.random() * creditScore.length)];
+      const currApplicationStatus =
+        applicationStatus[Math.floor(Math.random() * applicationStatus.length)];
       return {
         ID: record.skyflow_vault_response.ID,
         fields: fields,
@@ -326,6 +517,7 @@ const getRecords = () => {
         risk: riskObj.risk,
         employementStatus: "Student",
         age: ages[Math.floor(Math.random() * ages.length)],
+        applicationStatus: currApplicationStatus,
       };
     });
     return { data: records };

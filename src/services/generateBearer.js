@@ -17,13 +17,9 @@ const getBearerToken = async (signedJWT, creds) => {
     });
     console.log("res", response);
     return response.json();
-    // return r.text;
 };
 
-const getSignedJWT = async (callback, creds) => {
-    // const file = require(filePath);
-    // const data = await fetch(file);
-    // const creds = JSON.parse(data);
+const getSignedJWT = async (creds, callback) => {
     const claims = {
         iss: creds["clientID"],
         key: creds["keyID"],

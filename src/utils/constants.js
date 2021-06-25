@@ -41,7 +41,7 @@ export const YOUR_INFO = {
   FIRST_NAME: {
     title: "First Name",
     options: {
-      name: "first_name",
+      name: "name.first_name",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
       value: "Roana",
@@ -51,35 +51,35 @@ export const YOUR_INFO = {
   LAST_NAME: {
     title: "Last Name",
     options: {
-      name: "last_name",
+      name: "name.last_name",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
       value: "Rigglesford",
     },
     elementType: "lastName",
   },
-  EMAIL: {
-    title: "Email",
-    options: {
-      name: "email_address",
-      validation: ["required", "default"],
-      placeholder: "your@email.com",
-      ...ELEMENT_STYLES,
-      value: "rrigglesford0@qq.com",
-    },
-    elementType: "email",
-    hide: true,
-  },
-  DOB: {
-    title: "Date Of Birth",
-    options: {
-      name: "date_of_birth",
-      validation: ["required", "default"],
-      ...ELEMENT_STYLES,
-      value: "1990-10-09",
-    },
-    elementType: "dob",
-  },
+  // EMAIL: {
+  //   title: "Email",
+  //   options: {
+  //     name: "email_address",
+  //     validation: ["required", "default"],
+  //     placeholder: "your@email.com",
+  //     ...ELEMENT_STYLES,
+  //     value: "rrigglesford0@qq.com",
+  //   },
+  //   elementType: "email",
+  //   hide: true,
+  // },
+  // DOB: {
+  //   title: "Date Of Birth",
+  //   options: {
+  //     name: "date_of_birth",
+  //     validation: ["required", "default"],
+  //     ...ELEMENT_STYLES,
+  //     value: "1990-10-09",
+  //   },
+  //   elementType: "dob",
+  // },
 };
 
 export const CONTACT_INFO = {
@@ -474,3 +474,13 @@ export const RECORDS = {
     },  
   ]
 };
+
+export const ANALYST_PLAIN_TEXT_FIELDS = [
+  'skyflow_id',
+  'name',
+  'age',
+  'Employment_Status',
+  'Risk_Score',
+  'credit_score',
+  'Application_Status'
+];

@@ -6,6 +6,15 @@ const theme = createMuiTheme({
     grey: {
       0: "#fbfbfd",
       1: "#696969",
+      100: '#f5f8fa',
+      200: '#eaf0f6',
+      300: '#dfe3eb',
+      400: '#cbd6e2',
+      500: '#99acc2',
+      600: '#7c98b6',
+      700: '#516f90',
+      800: '#425b76',
+      900: '#2d3e50',
     },
     black: {
       0: "#1d1d1d",
@@ -43,11 +52,11 @@ const theme = createMuiTheme({
       default: "#fff",
     },
     primary:{
-      main:'#1665d8'
+      main:'#4169e1'
     },
     text: {
-      primary: "#1d1d1d",
-      secondary: "#696969",
+      primary: "#344563",
+      secondary: "#5e6c84",
     },
     // text : {
     //add primary secondary etc here
