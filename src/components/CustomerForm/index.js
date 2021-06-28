@@ -113,7 +113,7 @@ export default function CustomerForm() {
   const history = useHistory();
 
   return (
-    <Box bgcolor="#fbfbfd" height={window.innerHeight}>
+    <Box bgcolor="#f9fafd" height={"100%"}>
       <Box
         display="flex"
         justifyContent="space-between"

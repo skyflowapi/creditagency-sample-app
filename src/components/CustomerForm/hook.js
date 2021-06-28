@@ -1,6 +1,7 @@
 import React from "react";
 import getAccessToken from "../../services/authentication";
 import { insertRecord } from "../../services/records";
+import { useHistory } from "react-router-dom";
 
 export const default_state = {
   firstName: "",
@@ -38,10 +39,18 @@ export const useCustomerForm = (default_state, trim = true) => {
   const [disabled, setDisabled] = React.useState(true);
   const [form, setForm] = React.useState(default_state);
   const [formErrors, setFormErrors] = React.useState(default_errors);
-  
+  const [recordId, setRecordId] = React.useState("");
+  const history = useHistory();
+
   React.useEffect(() => {
     setDisabled(!isFormValid(form));
   }, [form]);
+
+  React.useEffect(() => {
+    if (recordId) {
+      history.push("/confirmation");
+    }
+  }, [recordId]);
 
   const handleFormChange = (event) => {
     const value = (event.currentTarget.value
@@ -97,7 +106,7 @@ export const useCustomerForm = (default_state, trim = true) => {
 
   const isFormValid = (formState) => {
     let flag = true;
-    for (let field of Object.keys(formState)) {
+    for (const field of Object.keys(formState)) {
       if (fieldValidationError(formState[field], regexObj[field])) {
         flag = false;
       } else {
@@ -155,7 +164,9 @@ export const useCustomerForm = (default_state, trim = true) => {
 
     getAccessToken("user")
       .then((token) => {
-        insertRecord("persons", data, token, () => {});
+        insertRecord("persons", data, token, (res) => {
+          setRecordId(res.records[0].skyflow_id);
+        });
       })
       .catch((err) => console.log(err));
   };

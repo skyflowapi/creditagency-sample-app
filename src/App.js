@@ -14,6 +14,7 @@ import DobPage from "./components/personalInfo/dobPage/index";
 import MailPage from "./components/personalInfo/emailPage/index";
 import Summary from "./components/summary";
 import ThankYouPage from "./components/thankyouPage";
+import ConfirmationPage from "./pages/ConfirmationPage";
 import UploadPage from "./components/uploadDocs";
 import theme from "./utils/theme";
 import defaultData from "./utils/TokenizedDataSample.json";
@@ -59,6 +60,7 @@ const App = (props) => {
               <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/done" exact component={FinalPage} />
+                <Route path="/confirmation" exact component={ConfirmationPage} />
                 <Route path="/summary" exact>
                   <Summary setEmail={setEmail} />
                 </Route>

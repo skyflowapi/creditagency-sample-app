@@ -53,8 +53,8 @@ const theme = createMuiTheme({
     background: {
       default: "#fff",
     },
-    primary:{
-      main:'#4169e1'
+    primary: {
+      main: "#4169e1",
     },
     text: {
       primary: "#344563",
@@ -97,6 +97,13 @@ const theme = createMuiTheme({
       fontWeight: 500,
       fontStyle: "normal",
       lineHeight: "1.39",
+      letterSpacing: "normal",
+    },
+    h2: {
+      fontSize: "26px",
+      fontWeight: "normal",
+      fontStyle: "normal",
+      lineHeight: "normal",
       letterSpacing: "normal",
     },
     h3: {

@@ -61,11 +61,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const colors = {
-  Low: "#e50000",
-  Medium: "#facf55",
-  High: "#4169e1",
-  Med: "#ffae42",
-  "": "red",
+  LOW: "#e50000",
+  MEDIUM: "#facf55",
+  HIGH: "#4169e1",
+  "": "#4169e1",
 };
 
 const applicationStatusColors = {
@@ -81,9 +80,9 @@ const applicationStatusColors = {
     fontColor: "#ff6c63",
     backgroundColor: "#ffe0de",
   },
-  "": {
-    fontColor: "red",
-    backgroundColor: "red",
+  "Auto Approved": {
+    fontColor: "#3193ff",
+    backgroundColor: "#d6ebff",
   },
 };
 
@@ -140,34 +139,34 @@ export default function Analytics(props) {
 
     const recordId = record.ID;
     setLoading(true);
-    handleModalClose();
-    notebook
-      .updateRecord(recordId, [
-        {
-          name: "credit_card_number",
-          value: accept === true ? "4141414141414141" : "DECLINED",
-        },
-      ])
-      .then((data) => {
-        removeRecordFromDB(recordId);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        if (accept) {
-          enqueueSnackbar(
-            "Credit card is created and the number is stored in the Skyflow vault",
-            { variant: "success" }
-          );
-        } else {
-          enqueueSnackbar(
-            "Application is denied and the record is updated in the Skyflow vault",
-            { variant: "success" }
-          );
-        }
-        setLoading(false);
-      });
+    setTimeout(() => {
+      notebook
+        .updateRecord(recordId, [
+          {
+            name: "credit_card_number",
+            value: accept === true ? "4141414141414141" : "DECLINED",
+          },
+        ])
+        .then((data) => {
+          removeRecordFromDB(recordId);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          if (accept) {
+            enqueueSnackbar("Credit card has been approved", {
+              variant: "success",
+            });
+          } else {
+            enqueueSnackbar("Credit card has been declined", {
+              variant: "success",
+            });
+          }
+          handleModalClose();
+          setLoading(false);
+        });
+    }, 1000);
   };
 
   const removeRecordFromDB = (recordId) => {
@@ -188,18 +187,17 @@ export default function Analytics(props) {
   };
 
   React.useEffect(() => {
-    if(searchTerm){
-      let query = `SELECT * FROM persons WHERE name->'first_name' = to_json('${searchTerm}'::text)`;
+    if (searchTerm) {
+      const query = `SELECT * FROM persons WHERE name->'first_name' = to_json('${searchTerm}'::text)`;
       queryData(query, "analyst", (data) => {
         setReviewData(data);
       });
-    }
-    else{
+    } else {
       getData("analyst", (data) => {
         setReviewData(data);
       });
     }
-  },[searchTerm])
+  }, [searchTerm]);
 
   React.useEffect(() => {
     let query = `select * from persons`;
@@ -230,12 +228,12 @@ export default function Analytics(props) {
       tempArray.splice(tempArray.indexOf(value), 1);
       setFilteredGenderValues(tempArray);
     }
-    setFilterChange(!filterChange)
+    setFilterChange(!filterChange);
   };
 
   return (
     <>
-      <Box bgcolor="#fbfbfd" height={window.innerHeight}>
+      <Box bgcolor="#f9fafd" height={"100%"}>
         {loading && (
           <Box className={classes.loader}>
             <CircularProgress />
@@ -252,7 +250,9 @@ export default function Analytics(props) {
           <Box>
             <Button
               className={classes.roleToggleButton}
-              onClick={()=>{history.push("/customer")}}
+              onClick={() => {
+                history.push("/customer");
+              }}
             >
               Customer
             </Button>
@@ -265,7 +265,7 @@ export default function Analytics(props) {
             </Button>
           </Box>
         </Box>
-        <Box width="1134px" mt={7.5} mx="auto">
+        <Box width="1134px" mt={7.5} mx="auto" pb={7.5}>
           <Box display="flex" justifyContent="space-between">
             <AnalyticsCard
               title="REVIEWS PENDING"
@@ -303,13 +303,13 @@ export default function Analytics(props) {
                   APPLICANTS
                 </Typography>
               </Box>
+              <SearchFilter
+                searchTerm={searchTerm}
+                setSearchTerm={handleSearchChange}
+                filteredGenderValues={filteredGenderValues}
+                handleGenderChange={handleGenderChange}
+              />
             </Box>
-            <SearchFilter
-              searchTerm={searchTerm}
-              setSearchTerm={handleSearchChange}
-              filteredGenderValues={filteredGenderValues}
-              handleGenderChange={handleGenderChange}
-            />
             <Box>
               <Table aria-label="simple table" className={classes.table}>
                 <TableHead>
@@ -372,13 +372,13 @@ export default function Analytics(props) {
                           <Typography variant="h6">
                             {row && row.fields && row.fields.age
                               ? row.fields.age
-                              : ""}
+                              : Math.floor(Math.random() * 50) + 20}
                           </Typography>
                         </TableCell>
                         <TableCell>
                           <Typography variant="h6">
-                            {row && row.fields && row.fields.Employment_Status
-                              ? row.fields.Employment_Status
+                            {row && row.fields && row.fields.employment_status
+                              ? row.fields.employment_status
                               : ""}
                           </Typography>
                         </TableCell>
@@ -397,17 +397,17 @@ export default function Analytics(props) {
                               height="10px"
                               borderRadius="5px"
                               bgcolor={
-                                // colors[
-                                //   row && row.fields && row.fields.Risk_Score
-                                //     ? row.fields.Risk_Score
-                                //     : ""
-                                // ]
-                                colors["High"]
+                                colors[
+                                  row && row.fields && row.fields.risk_score
+                                    ? row.fields.risk_score
+                                    : "High"
+                                ]
+                                // colors["High"]
                               }
                             ></Box>
                             <Typography variant="h6">
-                              {row && row.fields && row.fields.Risk_Score
-                                ? row.fields.Risk_Score
+                              {row && row.fields && row.fields.risk_score
+                                ? row.fields.risk_score
                                 : ""}
                             </Typography>
                           </Box>
@@ -415,19 +415,19 @@ export default function Analytics(props) {
                         <TableCell>
                           <ApplicationStatus
                             applicationStatus={
-                              row && row.fields && row.fields.Application_Status
-                                ? row.fields.Application_Status
-                                : ""
+                              row && row.fields && row.fields.application_status
+                                ? row.fields.application_status
+                                : "NA"
                             }
                             color={
-                              // applicationStatusColors[
-                              //   row &&
-                              //   row.fields &&
-                              //   row.fields.Application_Status
-                              //     ? row.fields.Application_Status
-                              //     : ""
-                              // ]
-                              applicationStatusColors["Approved"]
+                              applicationStatusColors[
+                                row &&
+                                row.fields &&
+                                row.fields.application_status
+                                  ? row.fields.application_status
+                                  : "Declined"
+                              ]
+                              // applicationStatusColors["Approved"]
                             }
                           ></ApplicationStatus>
                         </TableCell>
