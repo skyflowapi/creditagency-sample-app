@@ -219,7 +219,7 @@ export default function CustomerForm() {
                     DOB
                   </Typography>
                   <FormInputField
-                    placeholder="yyyy-mm-dd"
+                    type="date"
                     id="dob"
                     value={form.dob}
                     onChange={handleFormChange}
