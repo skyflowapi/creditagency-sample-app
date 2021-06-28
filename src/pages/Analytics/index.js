@@ -15,21 +15,17 @@ import {
   InputAdornment,
   Popover,
 } from "@material-ui/core";
-import FormInputField from "../../components/FormInputField";
 import Modal from "../../components/Modal";
-import Header from "../../components/layout/header";
 import AnalyticsCard from "../../components/AnalyticsCard";
 import ApplicationStatus from "../../components/ApplicationStatus";
 import SummaryData from "../../components/SummaryData";
 import { localStorageKey } from "../../utils/constants";
 import { useSkyflow } from "../../services";
 import { useSnackbar } from "notistack";
-import { getData } from "../../services/getData";
+import { getData, queryData } from "../../services/getData";
 import acme from "../../assets/acme.png";
-import Search from "@material-ui/icons/Search";
-import Filter from "../../assets/filter.svg";
-import FilterCheckbox from "../../components/FilterCheckbox";
 import { useHistory } from "react-router-dom";
+import SearchFilter from "../../molecules/searchWithFilter";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -60,27 +56,6 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
     padding: "1px 16px",
     borderRadius: "2px",
-    boxShadow: "none",
-  },
-  searchBox: {
-    width: "440px",
-    height: theme.spacing(9),
-    borderRadius: theme.spacing(1),
-    border: `solid 1px ${theme.palette.grey[300]}`,
-    display: "flex",
-    justifyContent: "center",
-    "& .MuiInput-underline:after, & .MuiInput-underline:before": {
-      border: "none !important",
-    },
-  },
-  filterBox: {
-    cursor: "pointer",
-  },
-  popoverContent: {
-    backgroundColor: "white",
-    userSelect: "none",
-    border: `1px solid ${theme.palette.grey[300]}`,
-    borderRadius: "4px",
     boxShadow: "none",
   },
 }));
@@ -145,7 +120,9 @@ export default function Analytics(props) {
 
   const [searchTerm, setSearchTerm] = React.useState("");
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [filteredGenderValues, setFilteredGenderValues] = React.useState([]);
+
+  const [filterChange, setFilterChange] = React.useState(false);
 
   const [reviewData, setReviewData] = React.useState(null);
 
@@ -156,21 +133,6 @@ export default function Analytics(props) {
 
   const handleModalClose = () => {
     setRecord("");
-  };
-
-  React.useEffect(() => {
-    getData("analyst", (data) => {
-      console.log("data", JSON.stringify(data));
-      setReviewData(data);
-    });
-  }, []);
-
-  const handlePopoverClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
   };
 
   const handleOnAcceptOrReject = (record, accept, event) => {
@@ -219,6 +181,56 @@ export default function Analytics(props) {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const handleSearchChange = (value) => {
+    setSearchTerm(value);
+  };
+
+  React.useEffect(() => {
+    if(searchTerm){
+      let query = `SELECT * FROM persons WHERE name->'first_name' = to_json('${searchTerm}'::text)`;
+      queryData(query, "analyst", (data) => {
+        setReviewData(data);
+      });
+    }
+    else{
+      getData("analyst", (data) => {
+        setReviewData(data);
+      });
+    }
+  },[searchTerm])
+
+  React.useEffect(() => {
+    let query = `select * from persons`;
+    if (!filteredGenderValues.length) {
+      getData("analyst", (data) => {
+        setReviewData(data);
+      });
+    } else {
+      filteredGenderValues.forEach((item, index) => {
+        const temp = item.toUpperCase();
+        if (index === 0) {
+          query += ` where gender = \'${temp}\'`;
+        } else {
+          query += ` or gender = \'${temp}\'`;
+        }
+      });
+      queryData(query, "analyst", (data) => {
+        setReviewData(data);
+      });
+    }
+  }, [filterChange]);
+
+  const handleGenderChange = (checked, value) => {
+    if (checked) {
+      setFilteredGenderValues([...filteredGenderValues, value]);
+    } else {
+      const tempArray = [...filteredGenderValues];
+      tempArray.splice(tempArray.indexOf(value), 1);
+      setFilteredGenderValues(tempArray);
+    }
+    setFilterChange(!filterChange)
   };
 
   return (
@@ -291,67 +303,13 @@ export default function Analytics(props) {
                   APPLICANTS
                 </Typography>
               </Box>
-              <FormInputField
-                id="search"
-                placeholder={"Search applicants"}
-                onChange={(e) => {
-                  setSearchTerm(e.target.value);
-                }}
-                value={searchTerm}
-                autoComplete={"off"}
-                inputProps={{ "data-testid": "search" }}
-                className={classes.searchBox}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start" disablePointerEvents>
-                      <Search />
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <>
-                      <Box
-                        height={"24px"}
-                        width={"1px"}
-                        bgcolor={"#dfe3eb"}
-                      ></Box>
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        width={"56px"}
-                        height={"21px"}
-                        mx={3}
-                        onClick={(e) => {
-                          handlePopoverClick(e);
-                        }}
-                        className={classes.filterBox}
-                      >
-                        <img src={Filter} style={{ marginRight: "2px" }}></img>
-                        <Typography variant="h6">Filter</Typography>
-                      </Box>
-                      <Popover
-                        open={Boolean(anchorEl)}
-                        anchorEl={anchorEl}
-                        onClose={handlePopoverClose}
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "right",
-                        }}
-                        transformOrigin={{
-                          vertical: "top",
-                          horizontal: "right",
-                        }}
-                        elevation={1}
-                        classes={{
-                          paper: `${classes.popoverContent}`,
-                        }}
-                      >
-                        <FilterCheckbox></FilterCheckbox>
-                      </Popover>
-                    </>
-                  ),
-                }}
-              />
             </Box>
+            <SearchFilter
+              searchTerm={searchTerm}
+              setSearchTerm={handleSearchChange}
+              filteredGenderValues={filteredGenderValues}
+              handleGenderChange={handleGenderChange}
+            />
             <Box>
               <Table aria-label="simple table" className={classes.table}>
                 <TableHead>
@@ -529,7 +487,6 @@ const getRecords = () => {
     });
     return { data: records };
   } catch (e) {
-    console.log(e);
     return { error: e, data: [] };
   }
 };

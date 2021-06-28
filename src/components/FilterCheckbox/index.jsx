@@ -8,18 +8,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FilterCheckbox = () => {
+const FilterCheckbox = (props) => {
   const classes = useStyles();
+
+
   return (
     <Box width={"223px"} height={"100%"} mt={3} mb={4}>
       <Box ml={4} mt={3.5} height={"14px"} display="flex" alignItems="center">
         <Typography variant="caption" color="textSecondary">
-          Gender
+          {props.title}
         </Typography>
       </Box>
-      <Checkbox value={"Male"}></Checkbox>
-      <Checkbox value={"Female"}></Checkbox>
-      <Checkbox value={"Others"}></Checkbox>
+      {props.values.map((value) => {
+        return <Checkbox value={value} checked = {props.filteredValues.includes(value)} handleChange = {props.handleChange}/>;
+      }
+      )
+      }
     </Box>
   );
 };

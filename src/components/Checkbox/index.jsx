@@ -20,17 +20,16 @@ const useStyles = makeStyles((theme) => ({
 const Checkbox = (props) => {
   const classes = useStyles();
 
-  const [checked, setChecked] = React.useState(true);
-
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
+  const [checkedState, setCheckedState] = React.useState(props.checked);
 
   return (
     <Box display="flex" justifyContent="flex-start" alignItems="center" mt={2}>
       <MuiCheckbox
-        checked={checked}
-        onChange={handleChange}
+        checked={checkedState}
+        onChange={(event) => {
+          setCheckedState(event.target.checked);
+          props.handleChange(event.target.checked, props.value);
+        }}
         color="primary"
         className={classes.checkbox}
       ></MuiCheckbox>

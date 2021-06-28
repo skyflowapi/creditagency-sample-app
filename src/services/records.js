@@ -116,5 +116,63 @@ export const insertRecord = (
         console.log("error", err);
       });
   };
-  
+
+  export const searchQuery = (query, accessToken, callback) => {
+    console.log("vault id", VAULT_PARAMS.VAULT_ID);
+    axios
+      .post(
+        `/vault/v1/vaults/${VAULT_PARAMS.VAULT_ID}/query`,
+        query,
+        {
+          headers: { Authorization: "Bearer " + accessToken },
+        }
+      )
+      .then((res) => {
+        console.log("record", res.data);
+        if (callback) {
+          callback(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  };
+//     deleteRecord(tableName, recordId, callback) {
+//         return this.callApi(
+//             ({ tableName, recordId }) => {
+//                 return axios.delete(this.vaultUrl + '/' + tableName + '/' + recordId
+//                     , {
+//                         headers: this.defaultHeaders
+//                     })
+//                     .then(res => {
+//                         if (callback) {
+//                             callback(res.data);
+//                         }
+//                         return res.data;
+//                     })
+//                     .catch(err => err && err.response && err.response.data)
+//             }, { tableName, recordId })
+//     },
+
+//     bulkDeleteRecords(tableName,skyflowIds = [], callback) {
+//         return this.callApi(
+//             ({ tableName,skyflowIds }) => {
+//                 return axios.delete(this.vaultUrl + '/' + tableName,
+//                     {
+//                         headers: this.defaultHeaders,
+//                         params : {
+//                             skyflow_ids : skyflowIds,
+//                         }
+//                     })
+//                     .then(res => {
+//                         if (callback) {
+//                             callback(res.data);
+//                         }
+//                         return res.data;
+//                     })
+//                     .catch(err => err && err.response && err.response.data)
+//             }, { tableName,skyflowIds })
+//     }
+
+// }
 

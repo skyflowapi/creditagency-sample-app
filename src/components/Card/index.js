@@ -13,6 +13,7 @@ import { useState } from "react";
 import theme from "../../utils/theme";
 import { useHistory } from "react-router-dom";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -49,11 +50,7 @@ export default function CardComp({ type, text, handlePage }) {
     setShow(true);
   };
   const handleRadioChange = (e) => {
-    // setValue(e.target.value);
-    // if (e.target.value === "from abroad") {
-      // console.log(value);
       history.push("/personalInformation");
-    // }
   };
   return (
     <Grid container className={classes.root} spacing={0}>
