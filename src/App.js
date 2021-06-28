@@ -2,7 +2,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/styles";
 import React, { Fragment, Suspense } from "react";
 import { Step, Steps, Wizard } from "react-albus";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import EmpComponent from "./components/academicInfo/jobStatus";
 import AddressComponent from "./components/contactInfo/addressComponent";
 import PhoneNumberComponent from "./components/contactInfo/phoneNumberComponent";
@@ -58,7 +58,7 @@ const App = (props) => {
             <Suspense fallback={<div>Loading...</div>}>
               {/* <BrowserRouter> */}
               <Switch>
-                <Route path="/" exact component={Home} />
+                {/* <Route path="/" exact component={Home} /> */}
                 <Route path="/done" exact component={FinalPage} />
                 <Route path="/confirmation" exact component={ConfirmationPage} />
                 <Route path="/summary" exact>
@@ -77,14 +77,15 @@ const App = (props) => {
                     return null;
                   }}
                 />
-                <Route
+                <Redirect to="/customer"/>
+                {/* <Route
                   render={({ history }) => (
                     <Wizard history={history}>
                       <Next.Provider value={{ next, setNext }}>
                         <Steps>
-                          {/* <Step id="Home">
+                          <Step id="Home">
                         <Home/>
-                        </Step> */}
+                        </Step>
                           <Step id="personalInformation">
                             <MailPage />
                           </Step>
@@ -106,9 +107,9 @@ const App = (props) => {
                           <Step id="financialInformation">
                             <IncomeInfo />
                           </Step>
-                          {/* <Step id="financialInformation/residence">
+                          <Step id="financialInformation/residence">
                         <ResidenceInfo />
-                      </Step> */}
+                      </Step>
                           <Step id="SSNInfo">
                             <SSNInfo />
                           </Step>
@@ -117,7 +118,7 @@ const App = (props) => {
                       </Next.Provider>
                     </Wizard>
                   )}
-                />
+                /> */}
                 {/* <Route path="/personalInformation" exact component={WizardSteps} /> */}
                 {/* <Route path="/personalInformation/dob" exact component={DobPage} />
             <Route path="/contactInformation" exact component={PhoneNumberComponent} />

@@ -7,6 +7,7 @@ import {
   InputAdornment,
   Checkbox,
   Button,
+  CircularProgress
 } from "@material-ui/core";
 import FormInputField from "./../FormOutlinedInputField";
 import CustomerInfoImg from "./../../assets/customerInfo.png";
@@ -94,6 +95,23 @@ const countryProps = {
   ],
 };
 
+const genderProps = {
+  list: [
+    {
+      label: "Male",
+      value: "MALE",
+    },
+    {
+      label: "Female",
+      value: "FEMALE",
+    },
+    {
+      label: "Other",
+      value: "OTHER",
+    },
+  ],
+};
+
 export default function CustomerForm() {
   const classes = useStyles();
 
@@ -107,6 +125,7 @@ export default function CustomerForm() {
     handleCheckBox,
     handleSelectChange,
     handleSelectBlur,
+    loading,
     isFormValid,
   } = useCustomerForm(default_state);
 
@@ -222,6 +241,21 @@ export default function CustomerForm() {
                     inputProps={{ className: classes.input }}
                     errorText={formErrors.ssn}
                   />
+                </Box>
+              </Box>
+              <Box display="flex" justifyContent="space-between" pt={7}>
+                <Box>
+                  <Typography variant="caption" className={classes.inputField}>
+                    GENDER
+                  </Typography>
+                  <Select
+                    {...genderProps}
+                    value={form.gender}
+                    inputProps={{ className: classes.select }}
+                    onChange={(event) => handleSelectChange(event, "gender")}
+                    onBlur={(event) => handleSelectBlur(event, "gender")}
+                    errorText={formErrors.state}
+                  ></Select>
                 </Box>
               </Box>
             </Box>
@@ -409,7 +443,12 @@ export default function CustomerForm() {
             color="primary"
             className={classes.button}
             onClick={handleSubmit}
-            disabled={disabled}
+            disabled={disabled || loading}
+            startIcon={
+              loading ? (
+                <CircularProgress color="inherit" size={20} />
+              ) : undefined
+            }
           >
             Continue
           </Button>

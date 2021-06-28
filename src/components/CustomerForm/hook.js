@@ -8,6 +8,7 @@ export const default_state = {
   lastName: "",
   dob: "",
   ssn: "",
+  gender: "",
   address: "",
   city: "",
   state: "",
@@ -24,6 +25,7 @@ export const default_errors = {
   lastName: "",
   dob: "",
   ssn: "",
+  gender: "",
   address: "",
   city: "",
   state: "",
@@ -40,6 +42,7 @@ export const useCustomerForm = (default_state, trim = true) => {
   const [form, setForm] = React.useState(default_state);
   const [formErrors, setFormErrors] = React.useState(default_errors);
   const [recordId, setRecordId] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
   const history = useHistory();
 
   React.useEffect(() => {
@@ -48,15 +51,23 @@ export const useCustomerForm = (default_state, trim = true) => {
 
   React.useEffect(() => {
     if (recordId) {
+      setLoading(false);
       history.push("/confirmation");
     }
   }, [recordId]);
 
   const handleFormChange = (event) => {
-    const value = (event.currentTarget.value
+    let value = (event.currentTarget.value
       ? event.currentTarget.value
       : ""
     ).trimLeft();
+
+    if (event.target.id && event.target.id == "ssn") {
+      if (value.length == 3 || value.length == 6) {
+        value = value + "-";
+      }
+    }
+
     event.target.id &&
       setForm({
         ...form,
@@ -120,7 +131,6 @@ export const useCustomerForm = (default_state, trim = true) => {
   };
 
   const handleSubmit = () => {
-    console.log(form);
     const data = {
       records: [
         {
@@ -131,6 +141,7 @@ export const useCustomerForm = (default_state, trim = true) => {
             },
             ssn: form.ssn,
             date_of_birth: form.dob,
+            gender: form.gender,
             addresses: [
               {
                 line_1: form.address,
@@ -148,20 +159,23 @@ export const useCustomerForm = (default_state, trim = true) => {
             ],
             annual_income: parseInt(form.annualIncome),
             mortagage: parseInt(form.rentPayment),
-            application_status: "Auto Approved",
+            application_status: "Pending",
             employment_status: "Employed",
             credit_score: 500,
             risk_score: "LOW",
             ...(form.annualIncome > 100000
-              ? { AML: true, KYC: true, credits: true }
+              ? {
+                  AML: true,
+                  KYC: true,
+                  credits: true,
+                  application_status: "Auto Approved",
+                }
               : {}),
           },
         },
       ],
     };
-
-    console.log(data);
-
+    setLoading(true);
     getAccessToken("user")
       .then((token) => {
         insertRecord("persons", data, token, (res) => {
@@ -176,6 +190,7 @@ export const useCustomerForm = (default_state, trim = true) => {
     form,
     formErrors,
     setForm,
+    loading,
     isFormValid,
     handleFormChange,
     handleFormBlur,
