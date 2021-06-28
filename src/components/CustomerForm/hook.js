@@ -2,6 +2,7 @@ import React from "react";
 import getAccessToken from "../../services/authentication";
 import { insertRecord } from "../../services/records";
 import { useHistory } from "react-router-dom";
+import { getAge } from "../../utils/helper";
 
 export const default_state = {
   firstName: "",
@@ -141,6 +142,7 @@ export const useCustomerForm = (default_state, trim = true) => {
             },
             ssn: form.ssn,
             date_of_birth: form.dob,
+            age: getAge(form.dob),
             gender: form.gender,
             addresses: [
               {
