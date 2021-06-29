@@ -15,7 +15,6 @@ const getBearerToken = async (signedJWT, creds) => {
         mode: 'cors'
         // headers: { "Content-Type": "text/plain"},
     });
-    console.log("res", response);
     return response.json();
 };
 

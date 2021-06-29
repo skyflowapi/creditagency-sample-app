@@ -19,7 +19,7 @@ import Modal from "../../components/Modal";
 import AnalyticsCard from "../../components/AnalyticsCard";
 import ApplicationStatus from "../../components/ApplicationStatus";
 import SummaryData from "../../components/SummaryData";
-import { localStorageKey } from "../../utils/constants";
+import { localStorageKey, QUERY_COLUMNS } from "../../utils/constants";
 import { useSkyflow } from "../../services";
 import { useSnackbar } from "notistack";
 import {
@@ -213,7 +213,7 @@ export default function Analytics(props) {
 
   React.useEffect(() => {
     if (searchTerm) {
-      const query = `SELECT * FROM persons WHERE name->'first_name' = to_json('${searchTerm}'::text)`;
+      const query = `SELECT ${QUERY_COLUMNS} FROM persons WHERE persons.first_name = '${searchTerm}'`;
       queryData(query, "analyst", (data) => {
         setReviewData(data);
       });
@@ -225,14 +225,13 @@ export default function Analytics(props) {
   }, [searchTerm]);
 
   React.useEffect(() => {
-    console.log("reviewData", reviewData);
     if (reviewData && reviewData.records) {
       setTableLoading(false);
     }
   }, [reviewData]);
 
   React.useEffect(() => {
-    let query = `select * from persons`;
+    let query = `SELECT ${QUERY_COLUMNS} FROM persons`;
     if (!filteredGenderValues.length) {
       getData("analyst", (data) => {
         setReviewData(data);
@@ -357,7 +356,7 @@ export default function Analytics(props) {
         aml: true,
         credits: true,
       };
-      // setReviewData(temp);
+      setReviewData(temp);
     }
   };
 
@@ -377,7 +376,7 @@ export default function Analytics(props) {
           mx="auto"
         >
           <img src={acme}></img>
-          <Box>
+          {/* <Box>
             <Button
               className={classes.roleToggleButton}
               onClick={() => {
@@ -393,7 +392,7 @@ export default function Analytics(props) {
             >
               Analyst
             </Button>
-          </Box>
+          </Box> */}
         </Box>
         <Box width="1134px" mt={7.5} mx="auto" pb={7.5}>
           <Box display="flex" justifyContent="space-between">
@@ -505,11 +504,8 @@ export default function Analytics(props) {
                               handleModalOpen(e, row);
                             }}
                           >
-                            {row &&
-                            row.fields &&
-                            row.fields.name &&
-                            row.fields.name.first_name
-                              ? row.fields.name.first_name
+                            {row && row.fields && row.fields.first_name
+                              ? row.fields.first_name
                               : ""}
                           </Link>
                         </TableCell>

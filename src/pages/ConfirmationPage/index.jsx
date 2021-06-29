@@ -50,7 +50,7 @@ const ConfirmationPage = (props) => {
         mx="auto"
       >
         <img src={acme}></img>
-        <Box>
+        {/* <Box>
           <Button
             variant="contained"
             color="primary"
@@ -64,12 +64,12 @@ const ConfirmationPage = (props) => {
           <Button
             className={classes.roleToggleButton}
             onClick={() => {
-              history.push("/analytics");
+              history.push("/analyst");
             }}
           >
             Analyst
           </Button>
-        </Box>
+        </Box> */}
       </Box>
       <Box
         // width="100vw"

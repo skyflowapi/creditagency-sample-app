@@ -41,7 +41,7 @@ export const YOUR_INFO = {
   FIRST_NAME: {
     title: "First Name",
     options: {
-      name: "name.first_name",
+      name: "first_name",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
       value: "Roana",
@@ -51,7 +51,7 @@ export const YOUR_INFO = {
   LAST_NAME: {
     title: "Last Name",
     options: {
-      name: "name.last_name",
+      name: "last_name",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
       value: "Rigglesford",
@@ -96,7 +96,7 @@ export const CONTACT_INFO = {
   ADDRESS: {
     title: "Address",
     options: {
-      name: "addresses.0.line_1",
+      name: "address",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
       value: "561 Birchwood Alley	",
@@ -106,7 +106,7 @@ export const CONTACT_INFO = {
   CITY: {
     title: "City",
     options: {
-      name: "addresses.0.city",
+      name: "city",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
       value: "Oklahoma City",
@@ -116,7 +116,7 @@ export const CONTACT_INFO = {
   STATE: {
     title: "State",
     options: {
-      name: "addresses.0.state",
+      name: "state",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
       value: "Oklahoma",
@@ -126,7 +126,7 @@ export const CONTACT_INFO = {
   COUNTRY: {
     title: "Country",
     options: {
-      name: "addresses.0.country",
+      name: "country",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
       value: "Oklahoma",
@@ -146,7 +146,7 @@ export const CONTACT_INFO = {
   ZIP_CODE: {
     title: "Zip Code",
     options: {
-      name: "addresses.0.zip_code",
+      name: "zipcode",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
       value: "73139",
@@ -157,8 +157,8 @@ export const CONTACT_INFO = {
   PHONE_NUMBER: {
     title: "Phone Number",
     options: {
-      parentPath: "phone_numbers",
-      name: "phone_numbers.0.value",
+      parentPath: "phone_number",
+      name: "phone_number",
       placeholder: "+1 (XXX) XXX-XX-XX",
       mask: ["+1 (XXX) XXX-XX-XX", { X: "[0-9]" }],
       validation: ["required"],
@@ -175,7 +175,7 @@ export const FINANCIAL_INFO = {
   MORTGAGE: {
     title: "Monthly Mortgage/ Rent Payment",
     options: {
-      name: "mortagage",
+      name: "mortgage",
       placeholder: "+1 (XXX) XXX-XX-XX",
       mask: ["+1 (XXX) XXX-XX-XX", { X: "[0-9]" }],
       validation: ["required"],
@@ -433,7 +433,7 @@ export const REVEAL_ELEMENT_OPTIONS = {
 export const VAULT_PARAMS = {
   ORG_NAME: "sb",
   ACCOUNT_NAME: "area51",
-  VAULT_ID: "t6e64fcafe67436fb942ad5b8b445307",
+  VAULT_ID: "d3d2ff60834e4958b35addac8f657a72",
 };
 
 export const RECORD = {
@@ -572,44 +572,30 @@ export const RECORDS = {
   ],
 };
 
-// export const ANALYST_PLAIN_TEXT_FIELDS = [
-//   "skyflow_id",
-//   "date_of_birth",
-//   "name",
-//   "age",
-//   "Employment_Status",
-//   "Risk_Score",
-//   "credit_score",
-//   "Application_Status",
-//   "addresses",
-//   "phone_numbers",
-//   "AML_CHECK",
-//   "KYC_CHECK"
-// ];
-
 export const ANALYST_PLAIN_TEXT_FIELDS = [
   "skyflow_id",
   "date_of_birth",
-  "name",
   "employment_status",
   "risk_score",
   "credit_score",
   "application_status",
-  "addresses",
-  // "phone_numbers",
   "aml",
   "kyc",
   "credits",
   "credit_score",
   "risk_score",
-  // "mortagage",
-  // "annual_income",
   "gender",
   "age",
+  "first_name",
+  "last_name",
+  "address",
+  "city",
+  "country",
+  "state",
+  "zipcode",
 ];
 
-export const ANALYST_REDACTED_TEXT_FIELDS = [
-  "phone_numbers",
-  // "mortagage",
-  // "annual_income",
-];
+export const ANALYST_REDACTED_TEXT_FIELDS = ["phone_numbers"];
+
+export const QUERY_COLUMNS =
+  "persons.address, persons.age, persons.aml, persons.application_status, persons.city, persons.country, persons.credit_score, persons.credits, persons.date_of_birth, persons.employment_status, persons.first_name, persons.gender, persons.kyc, persons.last_name, persons.risk_score, persons.state, persons.zipcode, persons.phone_number, persons.skyflow_id";

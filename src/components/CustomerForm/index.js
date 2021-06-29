@@ -129,8 +129,6 @@ export default function CustomerForm() {
     isFormValid,
   } = useCustomerForm(default_state);
 
-  const history = useHistory();
-
   return (
     <Box bgcolor="#f9fafd" height={"100%"} minHeight={"100vh"} pb={"1px"}>
       <Box
@@ -141,7 +139,7 @@ export default function CustomerForm() {
         mx="auto"
       >
         <img src={acme}></img>
-        <Box>
+        {/* <Box>
           <Button
             variant="contained"
             color="primary"
@@ -155,12 +153,12 @@ export default function CustomerForm() {
           <Button
             className={classes.roleToggleButton}
             onClick={() => {
-              history.push("/analytics");
+              history.push("/analyst");
             }}
           >
             Analyst
           </Button>
-        </Box>
+        </Box> */}
       </Box>
       <Box
         width="1134px"

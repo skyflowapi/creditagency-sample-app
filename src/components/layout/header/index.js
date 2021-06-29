@@ -125,7 +125,7 @@ export default function Header(props) {
               px={2}
               alignItems="center"
               style={{ cursor: "pointer" }}
-              onClick={() => history.push("/analytics")}
+              onClick={() => history.push("/analyst")}
             >
               <Typography variant="caption">Analyst</Typography>
               {!isCustomer && (

@@ -56,14 +56,6 @@ export default function SearchFilter({searchTerm, setSearchTerm, filteredGenderV
     setAnchorEl(null);
   };
 
-  console.log("filtered values", filteredGenderValues);
-
-//   const handleGenderChange = (event, value) => {
-//       console.log("event", event);
-//       if(event.target.checked){
-//           setGenderFilters()
-//       }
-//   }
   return (
     <FormInputField
       id="search"

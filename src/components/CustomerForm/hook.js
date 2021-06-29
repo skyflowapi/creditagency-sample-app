@@ -140,36 +140,25 @@ export const useCustomerForm = (default_state, trim = true) => {
       records: [
         {
           fields: {
-            name: {
-              first_name: form.firstName,
-              last_name: form.lastName,
-            },
+            first_name: form.firstName,
+            last_name: form.lastName,
             ssn: form.ssn,
             date_of_birth: form.dob,
             age: getAge(form.dob),
             gender: form.gender,
-            addresses: [
-              {
-                line_1: form.address,
-                city: form.city,
-                state: form.state,
-                country: form.country,
-                zip_code: form.zip,
-              },
-            ],
-            phone_numbers: [
-              {
-                type: "TEMP",
-                value: form.phone,
-              },
-            ],
+            address: form.address,
+            city: form.city,
+            state: form.state,
+            country: form.country,
+            zipcode: form.zip,
+            phone_number: form.phone,
             annual_income: parseInt(form.annualIncome),
-            mortagage: parseInt(form.rentPayment),
+            mortgage: parseInt(form.rentPayment),
             application_status: "Pending",
             employment_status: "Employed",
             credit_score: 500,
             risk_score: "LOW",
-            ...(form.annualIncome > 100000
+            ...(form.annualIncome >= 100000
               ? {
                   AML: true,
                   KYC: true,
