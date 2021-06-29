@@ -67,7 +67,7 @@ const App = (props) => {
                   <Summary setEmail={setEmail} />
                 </Route>
                 <Route path="/upload" exact component={UploadPage} />
-                <Route path="/analytics" exact component={Analytics} />
+                <Route path="/analyst" exact component={Analytics} />
                 <Route path="/customer" exact component={CustomerForm} />
                 <Route path="/submit" exact>
                   <ThankYouPage email={email} />

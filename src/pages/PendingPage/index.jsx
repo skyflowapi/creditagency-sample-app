@@ -2,7 +2,6 @@ import React from "react";
 import { Typography, Box, Grid, makeStyles, Button } from "@material-ui/core";
 import confirmation_image from "../../assets/confirmation_image.jpg";
 import acme from "../../assets/acme.png";
-import { useHistory, useLocation } from "react-router-dom";
 import FormInputField from "../../components/FormOutlinedInputField";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,14 +29,6 @@ const useStyles = makeStyles((theme) => ({
 
 const PendingPage = (props) => {
   const classes = useStyles();
-  const history = useHistory();
-  const { location } = useLocation();
-  // console.log("location", location);
-  console.log("props", props);
-
-  React.useEffect(() => {
-    console.log("location", location);
-  }, [location]);
 
   return (
     <Box
@@ -57,7 +48,7 @@ const PendingPage = (props) => {
         mx="auto"
       >
         <img src={acme}></img>
-        <Box>
+        {/* <Box>
           <Button
             variant="contained"
             color="primary"
@@ -71,12 +62,12 @@ const PendingPage = (props) => {
           <Button
             className={classes.roleToggleButton}
             onClick={() => {
-              history.push("/analytics");
+              history.push("/analyst");
             }}
           >
             Analyst
           </Button>
-        </Box>
+        </Box> */}
       </Box>
       <Box
         // width="100vw"
