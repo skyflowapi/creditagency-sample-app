@@ -9,7 +9,7 @@ const getBearerToken = async (signedJWT, creds) => {
         assertion: signedJWT,
     };
     const tokenURI = creds["tokenURI"];
-    const response = await fetch('v1/auth/sa/oauth/token', {
+    const response = await fetch('https://manage.skyflowapis.com/v1/auth/sa/oauth/token', {
         method: "post",
         body: JSON.stringify(body),
         mode: 'cors'
