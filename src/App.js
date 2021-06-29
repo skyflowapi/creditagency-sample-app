@@ -2,7 +2,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/styles";
 import React, { Fragment, Suspense } from "react";
 import { Step, Steps, Wizard } from "react-albus";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import EmpComponent from "./components/academicInfo/jobStatus";
 import AddressComponent from "./components/contactInfo/addressComponent";
 import PhoneNumberComponent from "./components/contactInfo/phoneNumberComponent";
@@ -14,6 +14,8 @@ import DobPage from "./components/personalInfo/dobPage/index";
 import MailPage from "./components/personalInfo/emailPage/index";
 import Summary from "./components/summary";
 import ThankYouPage from "./components/thankyouPage";
+import ConfirmationPage from "./pages/ConfirmationPage";
+import PendingPage from "./pages/PendingPage";
 import UploadPage from "./components/uploadDocs";
 import theme from "./utils/theme";
 import defaultData from "./utils/TokenizedDataSample.json";
@@ -23,6 +25,7 @@ import { SnackbarProvider } from "notistack";
 const Home = React.lazy(() => import("./components/Home/index"));
 const NamePage = React.lazy(() => import("./components/personalInfo/namePage/index"));
 const Analytics = React.lazy(() => import("./pages/Analytics"));
+const CustomerForm = React.lazy(() => import("./components/CustomerForm"));
 
 const Next = React.createContext();
 
@@ -56,13 +59,16 @@ const App = (props) => {
             <Suspense fallback={<div>Loading...</div>}>
               {/* <BrowserRouter> */}
               <Switch>
-                <Route path="/" exact component={Home} />
+                {/* <Route path="/" exact component={Home} /> */}
                 <Route path="/done" exact component={FinalPage} />
+                <Route path="/confirmation" exact component={ConfirmationPage} />
+                <Route path="/pending" exact component={PendingPage} />
                 <Route path="/summary" exact>
                   <Summary setEmail={setEmail} />
                 </Route>
                 <Route path="/upload" exact component={UploadPage} />
                 <Route path="/analytics" exact component={Analytics} />
+                <Route path="/customer" exact component={CustomerForm} />
                 <Route path="/submit" exact>
                   <ThankYouPage email={email} />
                 </Route>
@@ -73,14 +79,15 @@ const App = (props) => {
                     return null;
                   }}
                 />
-                <Route
+                <Redirect to="/customer"/>
+                {/* <Route
                   render={({ history }) => (
                     <Wizard history={history}>
                       <Next.Provider value={{ next, setNext }}>
                         <Steps>
-                          {/* <Step id="Home">
+                          <Step id="Home">
                         <Home/>
-                        </Step> */}
+                        </Step>
                           <Step id="personalInformation">
                             <MailPage />
                           </Step>
@@ -102,9 +109,9 @@ const App = (props) => {
                           <Step id="financialInformation">
                             <IncomeInfo />
                           </Step>
-                          {/* <Step id="financialInformation/residence">
+                          <Step id="financialInformation/residence">
                         <ResidenceInfo />
-                      </Step> */}
+                      </Step>
                           <Step id="SSNInfo">
                             <SSNInfo />
                           </Step>
@@ -113,7 +120,7 @@ const App = (props) => {
                       </Next.Provider>
                     </Wizard>
                   )}
-                />
+                /> */}
                 {/* <Route path="/personalInformation" exact component={WizardSteps} /> */}
                 {/* <Route path="/personalInformation/dob" exact component={DobPage} />
             <Route path="/contactInformation" exact component={PhoneNumberComponent} />

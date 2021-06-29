@@ -6,9 +6,20 @@ const theme = createMuiTheme({
     grey: {
       0: "#fbfbfd",
       1: "#696969",
+      2: "#979da9",
+      100: '#f5f8fa',
+      200: '#eaf0f6',
+      300: '#dfe3eb',
+      400: '#cbd6e2',
+      500: '#99acc2',
+      600: '#7c98b6',
+      700: '#516f90',
+      800: '#425b76',
+      900: '#2d3e50',
     },
     black: {
       0: "#1d1d1d",
+      1: "#344563"
     },
     blue: {
       0: "#1665d8",
@@ -42,12 +53,12 @@ const theme = createMuiTheme({
     background: {
       default: "#fff",
     },
-    primary:{
-      main:'#1665d8'
+    primary: {
+      main: "#4169e1",
     },
     text: {
-      primary: "#1d1d1d",
-      secondary: "#696969",
+      primary: "#344563",
+      secondary: "#5e6c84",
     },
     // text : {
     //add primary secondary etc here
@@ -60,6 +71,24 @@ const theme = createMuiTheme({
     //   },
   },
   spacing: 4,
+  shadows: [
+    'none',
+    '0 2px 25px 5px rgba(0, 0, 0, 0.04)',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ],
   typography: {
     fontFamily: "Roboto",
     //add variants here
@@ -68,6 +97,13 @@ const theme = createMuiTheme({
       fontWeight: 500,
       fontStyle: "normal",
       lineHeight: "1.39",
+      letterSpacing: "normal",
+    },
+    h2: {
+      fontSize: "26px",
+      fontWeight: "normal",
+      fontStyle: "normal",
+      lineHeight: "normal",
       letterSpacing: "normal",
     },
     h3: {
@@ -89,6 +125,20 @@ const theme = createMuiTheme({
       lineHeight: "1.43",
       letterSpacing: "normal",
     },
+    body1: {
+      fontSize: "14px",
+      fontWeight: "bold",
+      fontStyle: "normal",
+      lineHeight: "normal",
+      letterSpacing: "normal",
+    },
+    body2: {
+      fontSize: "14px",
+      fontWeight: 'normal',
+      fontStyle: 'normal',
+      lineHeight: '21px',
+      letterSpacing: 'normal',
+    },
     caption: {
       fontSize: "12px",
       fontStyle: "normal",
@@ -96,6 +146,7 @@ const theme = createMuiTheme({
       lineHeight: "1.5",
       letterSpacing: "normal",
     },
+
   },
   overrides: {
     //Add global css here

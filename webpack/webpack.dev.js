@@ -8,7 +8,7 @@ module.exports = {
   output: {
     filename: "[name].js",
     path: commonPaths.outputPath,
-    chunkFilename: "[name].js"
+    chunkFilename: "[name].js",
   },
   module: {
     rules: [
@@ -22,18 +22,38 @@ module.exports = {
               sourceMap: true,
               modules: true,
               camelCase: true,
-              localIdentName: "[local]___[hash:base64:5]"
-            }
+              localIdentName: "[local]___[hash:base64:5]",
+            },
           },
-          "sass-loader"
-        ]
-      }
-    ]
+          "sass-loader",
+        ],
+      },
+    ],
   },
   devServer: {
+    proxy: {
+      "/v1": {
+        target: "https://manage.skyflowapis.dev",
+        pathRewrite: { "^/v1": "/v1" },
+        secure: false,
+        changeOrigin: true,
+      },
+      "/vault": {
+        target: "https://sb.area51.vault.skyflowapis.dev",
+        pathRewrite: { "^/vault": "" },
+        secure: false,
+        changeOrigin: true,
+      },
+    },
     contentBase: commonPaths.outputPath,
     compress: true,
-    hot: true
+    hot: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers":
+        "X-Requested-With, content-type, Authorization",
+    },
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()]
+  plugins: [new webpack.HotModuleReplacementPlugin()],
 };
