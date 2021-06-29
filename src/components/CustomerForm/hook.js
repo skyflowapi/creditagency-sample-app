@@ -53,7 +53,11 @@ export const useCustomerForm = (default_state, trim = true) => {
   React.useEffect(() => {
     if (recordId) {
       setLoading(false);
-      history.push("/confirmation");
+      if (form.annualIncome >= 100000) {
+        history.push("/confirmation", { status: form.application_status });
+      } else {
+        history.push("/pending", { status: form.application_status });
+      }
     }
   }, [recordId]);
 
@@ -63,8 +67,8 @@ export const useCustomerForm = (default_state, trim = true) => {
       : ""
     ).trimLeft();
 
-    if (event.target.id && event.target.id == "ssn") {
-      if (value.length == 3 || value.length == 6) {
+    if (event.target.id && event.target.id === "ssn") {
+      if (value.length === 3 || value.length === 6) {
         value = value + "-";
       }
     }

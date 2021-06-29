@@ -5,6 +5,8 @@ import theme from "../../utils/theme";
 import Element from "../Element";
 import RevealComponent from "../revealComponent";
 import flatten from "flat";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 
 const useStyles = makeStyles((theme) => ({
   heading: {
@@ -30,6 +32,13 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     color: theme.palette.primary.main,
   },
+  revealIcon: {
+    color: "#99acc2",
+    cursor: "pointer",
+  },
+  revealIconDisabled: {
+    color: "#99acc2",
+  },
 }));
 
 export default function Information({
@@ -37,11 +46,14 @@ export default function Information({
   notebook,
   data: { fields, ID },
   elements,
+  handleRevealClick,
+  handleHideClick,
+  checks,
+  handleChecks
 }) {
   const classes = useStyles();
 
   const flatFields = flatten(fields);
-
   return (
     <div>
       <Typography variant="h6" className={classes.heading}>
@@ -59,10 +71,13 @@ export default function Information({
                 alignItems="center"
               >
                 <Checkbox
-                  checked={true}
-                  onChange={() => {}}
+                  checked={checks[obj.options.name]}
+                  onChange={(event) => {
+                    handleChecks(event.target.checked, obj.options.name);
+                  }}
                   color="primary"
                   className={classes.checkbox}
+                  disabled={flatFields["application_status"] !== "Pending"}
                 ></Checkbox>
                 <Typography
                   className={classes.checkboxKey}
@@ -72,6 +87,46 @@ export default function Information({
                   {obj.title}
                 </Typography>
               </Box>
+            );
+          } else if (obj.elementType === "reveal") {
+            return (
+              <div key={obj.title}>
+                <Typography
+                  className={classes.key}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  {obj.title}
+                </Typography>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  className={classes.value}
+                  height="24px"
+                >
+                  <Typography variant="h6" style={{ marginRight: "8px" }}>
+                    {flatFields[obj.options.name] || "xxxxxxxxxx"}
+                  </Typography>
+                  {!flatFields[obj.options.name] ? (
+                    <VisibilityIcon
+                      className={classes.revealIcon}
+                      onClick={() => {
+                        handleRevealClick(
+                          obj.options.parentPath,
+                          flatFields.skyflow_id
+                        );
+                      }}
+                    />
+                  ) : (
+                    <VisibilityOffIcon
+                      className={classes.revealIcon}
+                      onClick={() => {
+                        handleHideClick(obj.options.parentPath);
+                      }}
+                    />
+                  )}
+                </Box>
+              </div>
             );
           } else {
             return (
@@ -84,7 +139,7 @@ export default function Information({
                   {obj.title}
                 </Typography>
                 <Typography className={classes.value} variant="h6">
-                  {flatFields[obj.options.name]}
+                  {flatFields[obj.options.name] || "xxxxxxxxxx"}
                 </Typography>
                 {/* <RevealComponent
                 element={obj}

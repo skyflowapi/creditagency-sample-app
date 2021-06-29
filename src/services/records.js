@@ -50,6 +50,9 @@ export const getRecord = (
           tokenization: options.tokenization,
           fields: options.fields,
         },
+        paramsSerializer: function (params) {
+          return Qs.stringify(params, {arrayFormat: 'repeat'});
+        },
       }
     )
     .then((res) => {
@@ -68,7 +71,8 @@ export const updateRecord = (
   recordId,
   record,
   accessToken,
-  callback
+  callback,
+  errorCallback
 ) => {
   console.log("vault id", VAULT_PARAMS.VAULT_ID);
   axios
@@ -86,6 +90,9 @@ export const updateRecord = (
       }
     })
     .catch((err) => {
+      if(errorCallback){
+        errorCallback(err);
+      }
       console.log("error", err);
     });
 };

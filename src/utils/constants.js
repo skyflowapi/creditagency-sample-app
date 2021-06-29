@@ -83,7 +83,7 @@ export const YOUR_INFO = {
   SSN: {
     title: "SSN",
     options: {
-      name: "date_of_birth",
+      name: "ssn",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
       value: "1990-10-09",
@@ -157,6 +157,7 @@ export const CONTACT_INFO = {
   PHONE_NUMBER: {
     title: "Phone Number",
     options: {
+      parentPath: "phone_numbers",
       name: "phone_numbers.0.value",
       placeholder: "+1 (XXX) XXX-XX-XX",
       mask: ["+1 (XXX) XXX-XX-XX", { X: "[0-9]" }],
@@ -165,7 +166,7 @@ export const CONTACT_INFO = {
       sensitive: true,
       value: "4056068899",
     },
-    elementType: "mobileNumber",
+    elementType: "reveal",
     hide: true,
   },
 };
@@ -284,7 +285,7 @@ export const DOCUMENT_INFO = {
   AML: {
     title: "AML",
     options: {
-      name: "AML_CHECK",
+      name: "aml",
       placeholder: "+1 (XXX) XXX-XX-XX",
       mask: ["+1 (XXX) XXX-XX-XX", { X: "[0-9]" }],
       validation: ["required"],
@@ -298,7 +299,7 @@ export const DOCUMENT_INFO = {
   KYC: {
     title: "KYC",
     options: {
-      name: "KYC_CHECK",
+      name: "kyc",
       placeholder: "+1 (XXX) XXX-XX-XX",
       mask: ["+1 (XXX) XXX-XX-XX", { X: "[0-9]" }],
       validation: ["required"],
@@ -312,7 +313,7 @@ export const DOCUMENT_INFO = {
   CREDITS: {
     title: "Credits",
     options: {
-      name: "KYC_CHECK",
+      name: "credits",
       placeholder: "+1 (XXX) XXX-XX-XX",
       mask: ["+1 (XXX) XXX-XX-XX", { X: "[0-9]" }],
       validation: ["required"],
@@ -595,12 +596,20 @@ export const ANALYST_PLAIN_TEXT_FIELDS = [
   "credit_score",
   "application_status",
   "addresses",
-  "phone_numbers",
+  // "phone_numbers",
   "aml",
   "kyc",
   "credits",
   "credit_score",
   "risk_score",
-  "mortagage",
-  "annual_income",
+  // "mortagage",
+  // "annual_income",
+  "gender",
+  "age"
+];
+
+export const ANALYST_REDACTED_TEXT_FIELDS = [
+  "phone_numbers",
+  // "mortagage",
+  // "annual_income",
 ];

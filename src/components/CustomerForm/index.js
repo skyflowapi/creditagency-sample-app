@@ -7,7 +7,7 @@ import {
   InputAdornment,
   Checkbox,
   Button,
-  CircularProgress
+  CircularProgress,
 } from "@material-ui/core";
 import FormInputField from "./../FormOutlinedInputField";
 import CustomerInfoImg from "./../../assets/customerInfo.png";
@@ -132,7 +132,7 @@ export default function CustomerForm() {
   const history = useHistory();
 
   return (
-    <Box bgcolor="#f9fafd" height={"100%"}>
+    <Box bgcolor="#f9fafd" height={"100%"} minHeight={"100vh"} pb={"1px"}>
       <Box
         display="flex"
         justifyContent="space-between"
@@ -146,6 +146,9 @@ export default function CustomerForm() {
             variant="contained"
             color="primary"
             className={classes.roleToggleButton}
+            onClick={() => {
+              history.push("/customer");
+            }}
           >
             Customer
           </Button>
@@ -447,7 +450,9 @@ export default function CustomerForm() {
             startIcon={
               loading ? (
                 <CircularProgress color="inherit" size={20} />
-              ) : undefined
+              ) : (
+                undefined
+              )
             }
           >
             Continue

@@ -32,6 +32,18 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "none",
     padding: "8px 30px",
     fontWeight: "400",
+    borderRadius: "6px",
+    boxShadow: "0 1px 3px 0 rgba(48, 49, 51, 0.1)",
+  },
+  declineButton: {
+    "&.MuiButton-contained": {
+      backgroundColor: "#e50000",
+      color: "#fff",
+    },
+    "&.MuiButton-contained.Mui-disabled": {
+      color: "rgba(0, 0, 0, 0.26)",
+      backgroundColor: "rgba(0, 0, 0, 0.12)",
+    },
   },
   goBack: {
     cursor: "pointer",
@@ -44,6 +56,13 @@ export default function SummaryData({
   notebook,
   handleOnAcceptOrReject,
   loading,
+  handleRevealClick,
+  handleHideClick,
+  checks,
+  handleChecks,
+  handleApproveOrDecline,
+  approvedLoading,
+  declinedLoading,
 }) {
   const classes = useStyles();
   // const { notebook, data, loading, error } = useAnalystSummary();
@@ -92,48 +111,105 @@ export default function SummaryData({
               data={record}
               elements={YOUR_INFO}
               notebook={notebook}
+              handleRevealClick={handleRevealClick}
+              handleHideClick={handleHideClick}
+              checks={checks}
+              handleChecks={handleChecks}
             />
             <Information
               title="CONTACT INFORMATION"
               data={record}
               elements={CONTACT_INFO}
               notebook={notebook}
+              handleRevealClick={handleRevealClick}
+              handleHideClick={handleHideClick}
+              checks={checks}
+              handleChecks={handleChecks}
             />
             <Information
               title="FINANCIAL INFORMATION"
               data={record}
               elements={FINANCIAL_INFO}
               notebook={notebook}
+              handleRevealClick={handleRevealClick}
+              handleHideClick={handleHideClick}
+              checks={checks}
+              handleChecks={handleChecks}
             />
             <Information
               title="DOCUMENTS VERIFIED"
               data={record}
               elements={DOCUMENT_INFO}
               notebook={notebook}
+              handleRevealClick={handleRevealClick}
+              handleHideClick={handleHideClick}
+              checks={checks}
+              handleChecks={handleChecks}
             />
           </Box>
-          <Box height={"2px"} width={"100%"} className={classes.divider}></Box>
-          <Box display="flex" justifyContent="flex-start" mt={8}>
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginRight: "20px" }}
-              disabled={loading}
-              className={classes.button}
-              onClick={handleOnAcceptOrReject.bind(null, record, true)}
-            >
-              Approve
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              disabled={loading}
-              className={classes.button}
-              onClick={handleOnAcceptOrReject.bind(null, record, false)}
-            >
-              Decline
-            </Button>
-          </Box>{" "}
+          {record.fields.application_status === "Pending" && (
+            <>
+              <Box
+                height={"2px"}
+                width={"100%"}
+                className={classes.divider}
+              ></Box>
+              <Box display="flex" justifyContent="flex-start" mt={8}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ marginRight: "20px" }}
+                  disabled={
+                    approvedLoading ||
+                    declinedLoading ||
+                    !checks["kyc"] ||
+                    !checks["aml"] ||
+                    !checks["credits"]
+                  }
+                  className={classes.button}
+                  // onClick={handleOnAcceptOrReject.bind(null, record, true)}
+                  onClick={() =>
+                    handleApproveOrDecline(record.fields.skyflow_id, "Approved")
+                  }
+                  startIcon={
+                    approvedLoading ? (
+                      <CircularProgress color="inherit" size={20} />
+                    ) : (
+                      undefined
+                    )
+                  }
+                >
+                  Approve
+                </Button>
+                <Button
+                  variant="contained"
+                  // color="secondary"
+                  disabled={
+                    approvedLoading ||
+                    declinedLoading ||
+                    !checks["kyc"] ||
+                    !checks["aml"] ||
+                    !checks["credits"]
+                  }
+                  className={classes.button + " " + classes.declineButton}
+                  // style={{ backgroundColor: "#e50000", color: "#fff" }}
+                  // onClick={handleOnAcceptOrReject.bind(null, record, false)}
+                  onClick={() =>
+                    handleApproveOrDecline(record.fields.skyflow_id, "Declined")
+                  }
+                  startIcon={
+                    declinedLoading ? (
+                      <CircularProgress color="inherit" size={20} />
+                    ) : (
+                      undefined
+                    )
+                  }
+                >
+                  Decline
+                </Button>
+              </Box>
+            </>
+          )}
         </>
       )}
       {/* {error && (

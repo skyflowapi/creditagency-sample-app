@@ -47,6 +47,7 @@
     "flat": "^5.0.2",
     "font-awesome": "^4.7.0",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "node-fetch": "^2.6.1",
     "notistack": "^0.9.17",
     "react": "16.8.6",

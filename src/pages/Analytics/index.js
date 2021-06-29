@@ -22,10 +22,16 @@ import SummaryData from "../../components/SummaryData";
 import { localStorageKey } from "../../utils/constants";
 import { useSkyflow } from "../../services";
 import { useSnackbar } from "notistack";
-import { getData, queryData } from "../../services/getData";
+import {
+  getData,
+  queryData,
+  revealData,
+  updateRecordData,
+} from "../../services/getData";
 import acme from "../../assets/acme.png";
 import { useHistory } from "react-router-dom";
 import SearchFilter from "../../molecules/searchWithFilter";
+import _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -50,6 +56,16 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     backgroundColor: "#13182021",
     zIndex: "2",
+  },
+  tableLoader: {
+    border: "1px solid #eaedf3",
+    position: "absolute",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomLeftRadius: "12px",
+    borderBottomRightRadius: "12px",
+    // boxShadow: "0 2px 25px 5px rgba(0, 0, 0, 0.04)",
   },
   roleToggleButton: {
     fontSize: "14px",
@@ -116,6 +132,9 @@ export default function Analytics(props) {
   const [record, setRecord] = React.useState("");
 
   const [loading, setLoading] = React.useState(false);
+  const [approvedLoading, setApprovedLoading] = React.useState(false);
+  const [declinedLoading, setDeclinedLoading] = React.useState(false);
+  const [tableLoading, setTableLoading] = React.useState(true);
 
   const [searchTerm, setSearchTerm] = React.useState("");
 
@@ -123,7 +142,13 @@ export default function Analytics(props) {
 
   const [filterChange, setFilterChange] = React.useState(false);
 
-  const [reviewData, setReviewData] = React.useState(null);
+  const [reviewData, setReviewData] = React.useState({});
+
+  const [checks, setChecks] = React.useState({
+    kyc: false,
+    aml: false,
+    credits: false,
+  });
 
   const handleModalOpen = (event, row) => {
     event.preventDefault();
@@ -155,11 +180,11 @@ export default function Analytics(props) {
         })
         .finally(() => {
           if (accept) {
-            enqueueSnackbar("Credit card has been approved", {
+            enqueueSnackbar("Credit card application has been approved", {
               variant: "success",
             });
           } else {
-            enqueueSnackbar("Credit card has been declined", {
+            enqueueSnackbar("Credit card application has been declined", {
               variant: "success",
             });
           }
@@ -200,6 +225,13 @@ export default function Analytics(props) {
   }, [searchTerm]);
 
   React.useEffect(() => {
+    console.log("reviewData", reviewData);
+    if (reviewData && reviewData.records) {
+      setTableLoading(false);
+    }
+  }, [reviewData]);
+
+  React.useEffect(() => {
     let query = `select * from persons`;
     if (!filteredGenderValues.length) {
       getData("analyst", (data) => {
@@ -218,7 +250,7 @@ export default function Analytics(props) {
         setReviewData(data);
       });
     }
-  }, [filterChange]);
+  }, [filteredGenderValues]);
 
   const handleGenderChange = (checked, value) => {
     if (checked) {
@@ -228,17 +260,115 @@ export default function Analytics(props) {
       tempArray.splice(tempArray.indexOf(value), 1);
       setFilteredGenderValues(tempArray);
     }
-    setFilterChange(!filterChange);
+  };
+
+  const handleRevealClick = (key, recordId) => {
+    revealData(key, recordId, "analyst", (data) => {
+      setRecord({
+        fields: {
+          ...record.fields,
+          [key]: data.fields[key],
+        },
+      });
+    });
+  };
+
+  const handleHideClick = (key) => {
+    setRecord({
+      fields: {
+        ...record.fields,
+        [key]: null,
+      },
+    });
+  };
+
+  const handleChecks = (checked, key) => {
+    setChecks({ ...checks, [key]: checked });
+  };
+
+  React.useEffect(() => {
+    if (record) {
+      setChecks({
+        kyc: record.fields.kyc,
+        aml: record.fields.aml,
+        credits: record.fields.credits,
+      });
+    }
+  }, [record]);
+
+  const handleApproveOrDecline = (recordId, status) => {
+    // setLoading(true);
+    status === "Approved" ? setApprovedLoading(true) : setDeclinedLoading(true);
+
+    updateRecordData(
+      recordId,
+      {
+        record: {
+          fields: {
+            application_status: status,
+            kyc: true,
+            aml: true,
+            credits: true,
+          },
+        },
+      },
+      "analyst",
+      (data) => {
+        enqueueSnackbar(
+          status === "Approved"
+            ? "Credit card application has been approved"
+            : "Credit card application has been declined",
+          {
+            variant: "success",
+          }
+        );
+        handleModalClose();
+        updateReviewDataStatus(recordId, status);
+        // setLoading(false);
+        status === "Approved"
+          ? setApprovedLoading(false)
+          : setDeclinedLoading(false);
+      },
+      (data) => {
+        enqueueSnackbar("Sorry, something went wrong", {
+          variant: "error",
+        });
+        // setLoading(false);
+        status === "Approved"
+          ? setApprovedLoading(false)
+          : setDeclinedLoading(false);
+      }
+    );
+  };
+
+  const updateReviewDataStatus = (recordId, status) => {
+    if (reviewData) {
+      const temp = _.cloneDeep(reviewData);
+      let index = 0;
+      temp.records.forEach((item, i) => {
+        if (item.fields.skyflow_id === recordId) {
+          index = i;
+        }
+      });
+      temp.records[index].fields = {
+        ...temp.records[index].fields,
+        application_status: status,
+        kyc: true,
+        aml: true,
+        credits: true,
+      };
+      // setReviewData(temp);
+    }
   };
 
   return (
     <>
-      <Box bgcolor="#f9fafd" height={"100%"}>
-        {loading && (
+      <Box bgcolor="#f9fafd" height={"100%"} minHeight={"100vh"}>
+        {/* {tableLoading && (
           <Box className={classes.loader}>
             <CircularProgress />
           </Box>
-        )}
+        )} */}
         <Box
           display="flex"
           justifyContent="space-between"
@@ -285,7 +415,7 @@ export default function Analytics(props) {
           </Box>
           <Box
             component={Paper}
-            boxShadow="0 1px 3px 0 rgba(0, 0, 0, 0.04)"
+            // boxShadow="0 1px 3px 0 rgba(0, 0, 0, 0.04)"
             border="solid 1px #eaedf3"
             mt={7.5}
             borderRadius={"12px"}
@@ -326,6 +456,11 @@ export default function Analytics(props) {
                     </TableCell>
                     <TableCell>
                       <Typography variant="caption" color="textSecondary">
+                        GENDER
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="caption" color="textSecondary">
                         EMPLOYMENT STATUS
                       </Typography>
                     </TableCell>
@@ -347,6 +482,16 @@ export default function Analytics(props) {
                     <TableCell></TableCell>
                   </TableRow>
                 </TableHead>
+                {tableLoading && (
+                  <Box
+                    className={classes.tableLoader}
+                    width="1134px"
+                    height="352px"
+                    bgcolor="#fff"
+                  >
+                    <CircularProgress />
+                  </Box>
+                )}
                 <TableBody>
                   {reviewData &&
                     reviewData.records &&
@@ -373,6 +518,13 @@ export default function Analytics(props) {
                             {row && row.fields && row.fields.age
                               ? row.fields.age
                               : Math.floor(Math.random() * 50) + 20}
+                          </Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Typography variant="h6">
+                            {row && row.fields && row.fields.gender
+                              ? row.fields.gender
+                              : "NA"}
                           </Typography>
                         </TableCell>
                         <TableCell>
@@ -446,6 +598,13 @@ export default function Analytics(props) {
             notebook={notebook}
             handleOnAcceptOrReject={handleOnAcceptOrReject}
             loading={loading}
+            handleRevealClick={handleRevealClick}
+            handleHideClick={handleHideClick}
+            checks={checks}
+            handleChecks={handleChecks}
+            handleApproveOrDecline={handleApproveOrDecline}
+            approvedLoading={approvedLoading}
+            declinedLoading={declinedLoading}
           />
         </Modal>
       </Box>

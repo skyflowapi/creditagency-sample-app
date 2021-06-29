@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, Box, Grid, makeStyles, Button } from "@material-ui/core";
 import confirmation_image from "../../assets/confirmation_image.jpg";
 import acme from "../../assets/acme.png";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import FormInputField from "../../components/FormOutlinedInputField";
 
 const useStyles = makeStyles((theme) => ({
@@ -21,10 +21,14 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     width: "300px",
+    background: "#f9fafd",
+    color: "#344563",
+    border: "solid 1px #dfe3eb",
+    borderRadius: "4px",
   },
 }));
 
-const ConfirmationPage = () => {
+const ConfirmationPage = (props) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -36,6 +40,7 @@ const ConfirmationPage = () => {
       flexDirection="column"
       alignItems="center"
       height={"100%"}
+      minHeight={"100vh"}
     >
       <Box
         display="flex"
@@ -104,7 +109,7 @@ const ConfirmationPage = () => {
                 variant="h5"
                 style={{ width: "644px", lineHeight: "normal" }}
               >
-                You can always find a full list of benifits here. Once you have
+                You can always find a full list of benefits here. Once you have
                 your new card in hand, you’ll be able to log in and experience
                 the full site.
               </Typography>

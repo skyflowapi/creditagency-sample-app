@@ -15,6 +15,7 @@ import MailPage from "./components/personalInfo/emailPage/index";
 import Summary from "./components/summary";
 import ThankYouPage from "./components/thankyouPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
+import PendingPage from "./pages/PendingPage";
 import UploadPage from "./components/uploadDocs";
 import theme from "./utils/theme";
 import defaultData from "./utils/TokenizedDataSample.json";
@@ -61,6 +62,7 @@ const App = (props) => {
                 {/* <Route path="/" exact component={Home} /> */}
                 <Route path="/done" exact component={FinalPage} />
                 <Route path="/confirmation" exact component={ConfirmationPage} />
+                <Route path="/pending" exact component={PendingPage} />
                 <Route path="/summary" exact>
                   <Summary setEmail={setEmail} />
                 </Route>
