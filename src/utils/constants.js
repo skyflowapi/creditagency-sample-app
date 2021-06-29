@@ -605,7 +605,7 @@ export const ANALYST_PLAIN_TEXT_FIELDS = [
   // "mortagage",
   // "annual_income",
   "gender",
-  "age"
+  "age",
 ];
 
 export const ANALYST_REDACTED_TEXT_FIELDS = [
