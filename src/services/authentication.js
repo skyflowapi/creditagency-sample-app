@@ -1,8 +1,8 @@
 // var auth = require('./generateBearer')
 import getSignedJWT from "./generateBearer";
 // import file from '/home/zadmin/Work/skyflow-dev-exp/creditagency-sample-app/src/credentials.json';
-import userJson from "../credentials/credentials_user_dev.json";
-import analystJson from "../credentials/credentials_analyst_dev.json";
+import userJson from "../credentials/credentials_user.json";
+import analystJson from "../credentials/credentials_analyst.json";
 
 const accessTokens = {};
 let globalRoleName = null;
