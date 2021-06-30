@@ -1,5 +1,9 @@
-export const getBaseUrl = (orgName, accountName) => {
-  return `https://${orgName}.${accountName}.vault.skyflowapis.com`;
+import properties from '../utils/properties'
+
+
+export const getBaseUrl = () => {
+  return process.env.NODE_ENV === 'production' ? `https://${properties.ORG_NAME}.${properites.ACCOUNT_NAME}.vault.skyflowapis.dev/v1/vaults/${properties.VAULT_ID}/` : 
+  `/vault/v1/vaults/${properties.VAULT_ID}/`;
 };
 
 export function getAge(dateString) {

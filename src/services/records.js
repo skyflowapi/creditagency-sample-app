@@ -1,12 +1,11 @@
 import axios from "axios";
 import { call } from "file-loader";
-import { VAULT_PARAMS } from "../utils/constants";
 import { getBaseUrl } from "../utils/helper";
 import Qs from "qs";
 
 export const bulkGetRecords = (tableName, options, accessToken, callback) => {
   axios
-    .get(`https://sb.area51.vault.skyflowapis.dev/v1/vaults/${VAULT_PARAMS.VAULT_ID}/` + tableName, {
+    .get(getBaseUrl() + tableName, {
       headers: { Authorization: "Bearer " + accessToken },
       params: {
         skyflow_ids: options.skyflowIds,
@@ -40,7 +39,7 @@ export const getRecord = (
 ) => {
   axios
     .get(
-      `https://sb.area51.vault.skyflowapis.dev/v1/vaults/${VAULT_PARAMS.VAULT_ID}/` + tableName + `/${recordId}`,
+      getBaseUrl() + tableName + `/${recordId}`,
       {
         headers: { Authorization: "Bearer " + accessToken },
         params: {
@@ -73,7 +72,7 @@ export const updateRecord = (
 ) => {
   axios
     .put(
-      `https://sb.area51.vault.skyflowapis.dev/v1/vaults/${VAULT_PARAMS.VAULT_ID}/` + tableName + `/${recordId}`,
+      getBaseUrl() + tableName + `/${recordId}`,
       record,
       {
         headers: { Authorization: "Bearer " + accessToken },
@@ -94,7 +93,7 @@ export const updateRecord = (
 
 export const insertRecord = (tableName, records, accessToken, callback) => {
   axios
-    .post(`https://sb.area51.vault.skyflowapis.dev/v1/vaults/${VAULT_PARAMS.VAULT_ID}/` + tableName, records, {
+    .post(getBaseUrl() + tableName, records, {
       headers: { Authorization: "Bearer " + accessToken },
     })
     .then((res) => {
@@ -109,7 +108,7 @@ export const insertRecord = (tableName, records, accessToken, callback) => {
 
 export const searchQuery = (query, accessToken, callback) => {
   axios
-    .post(`https://sb.area51.vault.skyflowapis.dev/v1/vaults/${VAULT_PARAMS.VAULT_ID}/query`, query, {
+    .post(`${getBaseUrl()}/query`, query, {
       headers: { Authorization: "Bearer " + accessToken },
     })
     .then((res) => {
