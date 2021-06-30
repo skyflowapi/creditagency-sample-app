@@ -145,8 +145,8 @@ export default function Analytics(props) {
   const [reviewData, setReviewData] = React.useState({});
 
   const [checks, setChecks] = React.useState({
-    kyc: false,
-    aml: false,
+    KYC: false,
+    AML: false,
     credits: false,
   });
 
@@ -288,8 +288,8 @@ export default function Analytics(props) {
   React.useEffect(() => {
     if (record) {
       setChecks({
-        kyc: record.fields.kyc,
-        aml: record.fields.aml,
+        KYC: record.fields.KYC,
+        AML: record.fields.AML,
         credits: record.fields.credits,
       });
     }
@@ -352,8 +352,8 @@ export default function Analytics(props) {
       temp.records[index].fields = {
         ...temp.records[index].fields,
         application_status: status,
-        kyc: true,
-        aml: true,
+        KYC: true,
+        AML: true,
         credits: true,
       };
       setReviewData(temp);

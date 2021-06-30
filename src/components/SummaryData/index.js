@@ -162,8 +162,8 @@ export default function SummaryData({
                   disabled={
                     approvedLoading ||
                     declinedLoading ||
-                    !checks["kyc"] ||
-                    !checks["aml"] ||
+                    !checks["KYC"] ||
+                    !checks["AML"] ||
                     !checks["credits"]
                   }
                   className={classes.button}
@@ -187,8 +187,8 @@ export default function SummaryData({
                   disabled={
                     approvedLoading ||
                     declinedLoading ||
-                    !checks["kyc"] ||
-                    !checks["aml"] ||
+                    !checks["KYC"] ||
+                    !checks["AML"] ||
                     !checks["credits"]
                   }
                   className={classes.button + " " + classes.declineButton}

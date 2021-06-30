@@ -285,7 +285,7 @@ export const DOCUMENT_INFO = {
   AML: {
     title: "AML",
     options: {
-      name: "aml",
+      name: "AML",
       placeholder: "+1 (XXX) XXX-XX-XX",
       mask: ["+1 (XXX) XXX-XX-XX", { X: "[0-9]" }],
       validation: ["required"],
@@ -299,7 +299,7 @@ export const DOCUMENT_INFO = {
   KYC: {
     title: "KYC",
     options: {
-      name: "kyc",
+      name: "KYC",
       placeholder: "+1 (XXX) XXX-XX-XX",
       mask: ["+1 (XXX) XXX-XX-XX", { X: "[0-9]" }],
       validation: ["required"],
@@ -433,7 +433,8 @@ export const REVEAL_ELEMENT_OPTIONS = {
 export const VAULT_PARAMS = {
   ORG_NAME: "sb",
   ACCOUNT_NAME: "area51",
-  VAULT_ID: "d3d2ff60834e4958b35addac8f657a72",
+  // VAULT_ID: "d3d2ff60834e4958b35addac8f657a72",
+  VAULT_ID: "t6e64fcafe67436fb942ad5b8b445307"
 };
 
 export const RECORD = {
