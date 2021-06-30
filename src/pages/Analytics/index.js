@@ -145,6 +145,8 @@ export default function Analytics(props) {
 
   const [reviewData, setReviewData] = React.useState({});
 
+  const [revealLoading, setRevealLoading] = React.useState(false);
+
   const [checks, setChecks] = React.useState({
     KYC: false,
     AML: false,
@@ -262,6 +264,7 @@ export default function Analytics(props) {
   };
 
   const handleRevealClick = (key, recordId) => {
+    setRevealLoading(true);
     revealData(key, recordId, "analyst", (data) => {
       setRecord({
         fields: {
@@ -269,6 +272,7 @@ export default function Analytics(props) {
           [key]: data.fields[key],
         },
       });
+      setRevealLoading(false);
     });
   };
 
@@ -601,6 +605,7 @@ export default function Analytics(props) {
             handleApproveOrDecline={handleApproveOrDecline}
             approvedLoading={approvedLoading}
             declinedLoading={declinedLoading}
+            revealLoading = {revealLoading}
           />
         </Modal>
       </Box>
