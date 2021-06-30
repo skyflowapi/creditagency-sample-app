@@ -33,13 +33,13 @@ module.exports = {
   devServer: {
     proxy: {
       "/v1": {
-        target: "https://manage.skyflowapis.com",
+        target: "https://manage.skyflowapis.dev",
         pathRewrite: { "^/v1": "/v1" },
         secure: false,
         changeOrigin: true,
       },
       "/vault": {
-        target: "https://sb.area51.vault.skyflowapis.com",
+        target: "https://sb.area51.vault.skyflowapis.dev",
         pathRewrite: { "^/vault": "" },
         secure: false,
         changeOrigin: true,
