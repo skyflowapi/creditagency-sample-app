@@ -430,13 +430,6 @@ export const REVEAL_ELEMENT_OPTIONS = {
   },
 };
 
-export const VAULT_PARAMS = {
-  ORG_NAME: "sb",
-  ACCOUNT_NAME: "area51",
-  // VAULT_ID: "d3d2ff60834e4958b35addac8f657a72",
-  VAULT_ID: "t6e64fcafe67436fb942ad5b8b445307"
-};
-
 export const RECORD = {
   record: {
     fields: {
