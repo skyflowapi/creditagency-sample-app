@@ -17,10 +17,11 @@ import Search from "@material-ui/icons/Search";
 import Filter from "../../assets/filter.svg";
 import FilterCheckbox from "../../components/FilterCheckbox";
 import FormInputField from "../../components/FormInputField";
+import Chip from "../../components/Chip";
 
 const useStyles = makeStyles((theme) => ({
   searchBox: {
-    width: "440px",
+    width: "500px",
     height: theme.spacing(9),
     borderRadius: theme.spacing(1),
     border: `solid 1px ${theme.palette.grey[300]}`,
@@ -42,11 +43,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchFilter({searchTerm, setSearchTerm, filteredGenderValues, handleGenderChange}) {
+export default function SearchFilter({
+  searchTerm,
+  setSearchTerm,
+  filteredGenderValues,
+  handleGenderChange,
+}) {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-
 
   const handlePopoverClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -69,8 +74,15 @@ export default function SearchFilter({searchTerm, setSearchTerm, filteredGenderV
       className={classes.searchBox}
       InputProps={{
         startAdornment: (
-          <InputAdornment position="start" disablePointerEvents>
-            <Search />
+          <InputAdornment position="start">
+            <Box display="flex" alignItems="center">
+              <Search />
+              {filteredGenderValues.length
+                ? filteredGenderValues.map((item) => {
+                    return <Chip value={item} handleGenderChange={handleGenderChange}></Chip>;
+                  })
+                : null}
+            </Box>
           </InputAdornment>
         ),
         endAdornment: (
@@ -107,7 +119,12 @@ export default function SearchFilter({searchTerm, setSearchTerm, filteredGenderV
                 paper: `${classes.popoverContent}`,
               }}
             >
-              <FilterCheckbox title = {"Gender"} values = {["Male", "Female", "Other"]} filteredValues={filteredGenderValues} handleChange={handleGenderChange}></FilterCheckbox>
+              <FilterCheckbox
+                title={"Gender"}
+                values={["Male", "Female", "Other"]}
+                filteredValues={filteredGenderValues}
+                handleChange={handleGenderChange}
+              ></FilterCheckbox>
             </Popover>
           </>
         ),

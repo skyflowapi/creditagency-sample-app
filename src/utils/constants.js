@@ -592,4 +592,4 @@ export const ANALYST_PLAIN_TEXT_FIELDS = [
 export const ANALYST_REDACTED_TEXT_FIELDS = ["phone_numbers"];
 
 export const QUERY_COLUMNS =
-  "persons.address, persons.age, persons.aml, persons.application_status, persons.city, persons.country, persons.credit_score, persons.credits, persons.date_of_birth, persons.employment_status, persons.first_name, persons.gender, persons.kyc, persons.last_name, persons.risk_score, persons.state, persons.zipcode, persons.phone_number, persons.skyflow_id";
+  "persons.address, persons.age, persons.aml, persons.application_status, persons.city, persons.country, persons.credit_score, persons.credits, persons.date_of_birth, persons.employment_status, persons.first_name, persons.gender, persons.kyc, persons.last_name, persons.risk_score, persons.state, persons.zipCode, persons.skyflow_id";

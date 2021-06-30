@@ -32,6 +32,7 @@ import acme from "../../assets/acme.png";
 import { useHistory } from "react-router-dom";
 import SearchFilter from "../../molecules/searchWithFilter";
 import _ from "lodash";
+import useDebounce from "../../hooks/useDebounce";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -212,44 +213,43 @@ export default function Analytics(props) {
   };
 
   React.useEffect(() => {
-    if (searchTerm) {
-      const query = `SELECT ${QUERY_COLUMNS} FROM persons WHERE persons.first_name = '${searchTerm}'`;
-      queryData(query, "analyst", (data) => {
-        setReviewData(data);
-      });
-    } else {
-      getData("analyst", (data) => {
-        setReviewData(data);
-      });
-    }
-  }, [searchTerm]);
-
-  React.useEffect(() => {
     if (reviewData && reviewData.records) {
       setTableLoading(false);
     }
   }, [reviewData]);
 
-  React.useEffect(() => {
+  useDebounce([filteredGenderValues, searchTerm], () => {
     let query = `SELECT ${QUERY_COLUMNS} FROM persons`;
-    if (!filteredGenderValues.length) {
-      getData("analyst", (data) => {
-        setReviewData(data);
-      });
-    } else {
+    if (searchTerm) {
+      query += ` WHERE persons.first_name = '${searchTerm}'`;
+    }
+    if (filteredGenderValues.length) {
       filteredGenderValues.forEach((item, index) => {
         const temp = item.toUpperCase();
         if (index === 0) {
-          query += ` where gender = \'${temp}\'`;
+          if (searchTerm) {
+            query += ` and ( gender = \'${temp}\'`;
+          } else {
+            query += ` where gender = \'${temp}\'`;
+          }
         } else {
           query += ` or gender = \'${temp}\'`;
         }
       });
+      if (searchTerm) {
+        query += ")";
+      }
+    }
+    if (searchTerm || filteredGenderValues.length) {
       queryData(query, "analyst", (data) => {
         setReviewData(data);
       });
+    } else {
+      getData("analyst", (data) => {
+        setReviewData(data);
+      });
     }
-  }, [filteredGenderValues]);
+  });
 
   const handleGenderChange = (checked, value) => {
     if (checked) {
