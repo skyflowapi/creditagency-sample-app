@@ -1,4 +1,4 @@
-import properties from '../utils/properties'
+import properties from '../utils/properties';
 
 
 export const getBaseUrl = () => {

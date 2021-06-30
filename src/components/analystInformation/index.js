@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Box, Checkbox } from "@material-ui/core";
+import { Typography, Box, Checkbox, CircularProgress} from "@material-ui/core";
 import theme from "../../utils/theme";
 import Element from "../Element";
 import RevealComponent from "../revealComponent";
@@ -49,7 +49,8 @@ export default function Information({
   handleRevealClick,
   handleHideClick,
   checks,
-  handleChecks
+  handleChecks,
+  revealLoading,
 }) {
   const classes = useStyles();
 
@@ -108,6 +109,7 @@ export default function Information({
                     {flatFields[obj.options.name] || "xxxxxxxxxx"}
                   </Typography>
                   {!flatFields[obj.options.name] ? (
+                    !revealLoading ? 
                     <VisibilityIcon
                       className={classes.revealIcon}
                       onClick={() => {
@@ -116,7 +118,8 @@ export default function Information({
                           flatFields.skyflow_id
                         );
                       }}
-                    />
+                    /> : 
+                   <CircularProgress size={16}/>
                   ) : (
                     <VisibilityOffIcon
                       className={classes.revealIcon}

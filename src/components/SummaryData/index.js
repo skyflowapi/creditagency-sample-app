@@ -63,6 +63,7 @@ export default function SummaryData({
   handleApproveOrDecline,
   approvedLoading,
   declinedLoading,
+  revealLoading,
 }) {
   const classes = useStyles();
   // const { notebook, data, loading, error } = useAnalystSummary();
@@ -125,6 +126,7 @@ export default function SummaryData({
               handleHideClick={handleHideClick}
               checks={checks}
               handleChecks={handleChecks}
+              revealLoading = {revealLoading}
             />
             <Information
               title="FINANCIAL INFORMATION"
