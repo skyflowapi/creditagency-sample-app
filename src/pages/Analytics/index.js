@@ -32,6 +32,7 @@ import acme from "../../assets/acme.png";
 import { useHistory } from "react-router-dom";
 import SearchFilter from "../../molecules/searchWithFilter";
 import _ from "lodash";
+import useDebounce from "../../hooks/useDebounce";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -211,14 +212,13 @@ export default function Analytics(props) {
     setSearchTerm(value);
   };
 
-
   React.useEffect(() => {
     if (reviewData && reviewData.records) {
       setTableLoading(false);
     }
   }, [reviewData]);
 
-  React.useEffect(() => {
+  useDebounce([filteredGenderValues, searchTerm], () => {
     let query = `SELECT ${QUERY_COLUMNS} FROM persons`;
     if (searchTerm) {
       query += ` WHERE persons.first_name = '${searchTerm}'`;
@@ -249,7 +249,7 @@ export default function Analytics(props) {
         setReviewData(data);
       });
     }
-  }, [filteredGenderValues, searchTerm]);
+  });
 
   const handleGenderChange = (checked, value) => {
     if (checked) {
