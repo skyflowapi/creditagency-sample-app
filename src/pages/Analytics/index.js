@@ -149,6 +149,8 @@ export default function Analytics(props) {
 
   const [noRecords, setNoRecords] = React.useState(false);
 
+  const [isModal, setIsModal] = React.useState(false);
+
   const [checks, setChecks] = React.useState({
     kyc: false,
     aml: false,
@@ -158,10 +160,12 @@ export default function Analytics(props) {
   const handleModalOpen = (event, row) => {
     event.preventDefault();
     setRecord(row);
+    setIsModal(true);
   };
 
   const handleModalClose = () => {
     setRecord("");
+    setIsModal(false);
   };
 
   const handleOnAcceptOrReject = (record, accept, event) => {
@@ -268,10 +272,10 @@ export default function Analytics(props) {
     800
   );
 
-    React.useEffect(() => {
-      setNoRecords(false);
-      setTableLoading(true);
-    },[searchTerm]);
+  React.useEffect(() => {
+    setNoRecords(false);
+    setTableLoading(true);
+  }, [searchTerm]);
 
   const handleGenderChange = (checked, value) => {
     if (checked) {
@@ -286,12 +290,14 @@ export default function Analytics(props) {
   const handleRevealClick = (key, recordId) => {
     setRevealLoading(true);
     revealData(key, recordId, "analyst", (data) => {
-      setRecord({
-        fields: {
-          ...record.fields,
-          [key]: data.fields[key],
-        },
-      });
+      if (isModal) {
+        setRecord({
+          fields: {
+            ...record.fields,
+            [key]: data.fields[key],
+          },
+        });
+      }
       setRevealLoading(false);
     });
   };
@@ -623,7 +629,7 @@ export default function Analytics(props) {
             </Box>
           </Box>
         </Box>
-        <Modal open={!!record}>
+        <Modal open={!!record && isModal}>
           <SummaryData
             handleClose={handleModalClose}
             record={record}
