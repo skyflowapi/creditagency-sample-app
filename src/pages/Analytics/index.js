@@ -147,6 +147,8 @@ export default function Analytics(props) {
 
   const [revealLoading, setRevealLoading] = React.useState(false);
 
+  const [noRecords, setNoRecords] = React.useState(false);
+
   const [checks, setChecks] = React.useState({
     kyc: false,
     aml: false,
@@ -220,38 +222,56 @@ export default function Analytics(props) {
     }
   }, [reviewData]);
 
-  useDebounce([filteredGenderValues, searchTerm], () => {
-    let query = `SELECT ${QUERY_COLUMNS} FROM persons`;
-    if (searchTerm) {
-      query += ` WHERE persons.first_name = '${searchTerm}'`;
-    }
-    if (filteredGenderValues.length) {
-      filteredGenderValues.forEach((item, index) => {
-        const temp = item.toUpperCase();
-        if (index === 0) {
-          if (searchTerm) {
-            query += ` and ( gender = \'${temp}\'`;
-          } else {
-            query += ` where gender = \'${temp}\'`;
-          }
-        } else {
-          query += ` or gender = \'${temp}\'`;
-        }
-      });
+  useDebounce(
+    [filteredGenderValues, searchTerm],
+    () => {
+      setReviewData(null);
+      setTableLoading(true);
+      let query = `SELECT ${QUERY_COLUMNS} FROM persons`;
       if (searchTerm) {
-        query += ")";
+        query += ` WHERE persons.first_name = '${searchTerm}'`;
       }
-    }
-    if (searchTerm || filteredGenderValues.length) {
-      queryData(query, "analyst", (data) => {
-        setReviewData(data);
-      });
-    } else {
-      getData("analyst", (data) => {
-        setReviewData(data);
-      });
-    }
-  }, 500);
+      if (filteredGenderValues.length) {
+        filteredGenderValues.forEach((item, index) => {
+          const temp = item.toUpperCase();
+          if (index === 0) {
+            if (searchTerm) {
+              query += ` and ( gender = \'${temp}\'`;
+            } else {
+              query += ` where gender = \'${temp}\'`;
+            }
+          } else {
+            query += ` or gender = \'${temp}\'`;
+          }
+        });
+        if (searchTerm) {
+          query += ")";
+        }
+      }
+      if (searchTerm || filteredGenderValues.length) {
+        queryData(query, "analyst", (data) => {
+          setReviewData(data);
+          setTableLoading(false);
+          if (!data || (data && data.records && !data.records.length)) {
+            setNoRecords(true);
+          } else {
+            setNoRecords(false);
+          }
+        });
+      } else {
+        getData("analyst", (data) => {
+          setReviewData(data);
+          setTableLoading(false);
+        });
+      }
+    },
+    800
+  );
+
+    React.useEffect(() => {
+      setNoRecords(false);
+      setTableLoading(true);
+    },[searchTerm]);
 
   const handleGenderChange = (checked, value) => {
     if (checked) {
@@ -495,6 +515,18 @@ export default function Analytics(props) {
                     <CircularProgress />
                   </Box>
                 )}
+                {noRecords && (
+                  <Box
+                    className={classes.tableLoader}
+                    width="1134px"
+                    height="352px"
+                    bgcolor="#fff"
+                  >
+                    <Typography variant="h5">
+                      No results found for <b>{searchTerm}</b>.
+                    </Typography>
+                  </Box>
+                )}
                 <TableBody>
                   {reviewData &&
                     reviewData.records &&
@@ -605,7 +637,7 @@ export default function Analytics(props) {
             handleApproveOrDecline={handleApproveOrDecline}
             approvedLoading={approvedLoading}
             declinedLoading={declinedLoading}
-            revealLoading = {revealLoading}
+            revealLoading={revealLoading}
           />
         </Modal>
       </Box>

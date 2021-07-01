@@ -2,7 +2,7 @@ import properties from '../utils/properties';
 
 
 export const getBaseUrl = () => {
-  return process.env.NODE_ENV === 'production' ? `https://${properties.ORG_NAME}.${properties.ACCOUNT_NAME}.vault.skyflowapis.dev/v1/vaults/${properties.VAULT_ID}/` : 
+  return process.env.NODE_ENV === 'production' ? `https://${properties.ORG_NAME}.${properties.ACCOUNT_NAME}.vault.skyflowapis.com/v1/vaults/${properties.VAULT_ID}/` : 
   `/vault/v1/vaults/${properties.VAULT_ID}/`;
 };
 
