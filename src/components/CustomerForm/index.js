@@ -126,7 +126,6 @@ export default function CustomerForm() {
     handleSelectChange,
     handleSelectBlur,
     loading,
-    isFormValid,
   } = useCustomerForm(default_state);
 
   return (
@@ -225,7 +224,10 @@ export default function CustomerForm() {
                     value={form.dob}
                     onChange={handleFormChange}
                     onBlur={handleFormBlur}
-                    inputProps={{ className: classes.input }}
+                    inputProps={{
+                      className: classes.input,
+                      max: new Date().toISOString().split("T")[0],
+                    }}
                     errorText={formErrors.dob}
                   />
                 </Box>
