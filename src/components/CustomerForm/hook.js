@@ -215,7 +215,8 @@ const regexObj = {
   phone: new RegExp("^[+]?[0-9]{0,3}s*[(]{0,1}[0-9]{1,4}[)]{0,1}[-s./0-9]*$"),
   checkBox: new RegExp("^(true)$"),
   rentPayment : new RegExp("[0-9]+"),
-  annualIncome: new RegExp("[0-9]+")
+  annualIncome: new RegExp("[0-9]+"),
+  zip : new RegExp("[0-9]+")
 };
 
 // ssn - ^$|^([0-9]{3}-?[0-9]{2}-?[0-9]{4})$
