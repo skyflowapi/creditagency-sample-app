@@ -70,8 +70,16 @@ export const useCustomerForm = (default_state, trim = true) => {
     ).trimLeft();
 
     if (event.target.id && event.target.id === "ssn") {
-      if (value.length === 3 || value.length === 6) {
-        value = value + "-";
+      if (form.ssn.slice(0, form.ssn.length - 1) !== event.target.value) {
+        const chars = value
+          .split("-")
+          .join("")
+          .split("");
+
+        if (chars.length > 2) chars.splice(3, 0, "-");
+        if (chars.length > 5) chars.splice(6, 0, "-");
+
+        value = chars.join("").slice(0, 11);
       }
     }
 
