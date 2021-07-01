@@ -3,6 +3,7 @@ import getAccessToken from "../../services/authentication";
 import { insertRecord } from "../../services/records";
 import { useHistory } from "react-router-dom";
 import { getAge } from "../../utils/helper";
+import { useSnackbar } from "notistack";
 
 export const default_state = {
   firstName: "",
@@ -45,6 +46,7 @@ export const useCustomerForm = (default_state, trim = true) => {
   const [recordId, setRecordId] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
 
   React.useEffect(() => {
     setDisabled(!isFormValid(form));
@@ -173,9 +175,21 @@ export const useCustomerForm = (default_state, trim = true) => {
     setLoading(true);
     getAccessToken("user")
       .then((token) => {
-        insertRecord("persons", data, token, (res) => {
-          setRecordId(res.records[0].skyflow_id);
-        });
+        insertRecord(
+          "persons",
+          data,
+          token,
+          (res) => {
+            setRecordId(res.records[0].skyflow_id);
+          },
+          (err) => {
+            console.log(err);
+            enqueueSnackbar("Sorry, something went wrong", {
+              variant: "error",
+            });
+            setLoading(false);
+          }
+        );
       })
       .catch((err) => console.log(err));
   };
