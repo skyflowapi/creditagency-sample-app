@@ -146,7 +146,7 @@ export const CONTACT_INFO = {
   ZIP_CODE: {
     title: "Zip Code",
     options: {
-      name: "zipcode",
+      name: "zipCode",
       validation: ["required", "default"],
       ...ELEMENT_STYLES,
       value: "73139",
@@ -285,7 +285,7 @@ export const DOCUMENT_INFO = {
   AML: {
     title: "AML",
     options: {
-      name: "AML",
+      name: "aml",
       placeholder: "+1 (XXX) XXX-XX-XX",
       mask: ["+1 (XXX) XXX-XX-XX", { X: "[0-9]" }],
       validation: ["required"],
@@ -299,7 +299,7 @@ export const DOCUMENT_INFO = {
   KYC: {
     title: "KYC",
     options: {
-      name: "KYC",
+      name: "kyc",
       placeholder: "+1 (XXX) XXX-XX-XX",
       mask: ["+1 (XXX) XXX-XX-XX", { X: "[0-9]" }],
       validation: ["required"],
@@ -586,7 +586,7 @@ export const ANALYST_PLAIN_TEXT_FIELDS = [
   "city",
   "country",
   "state",
-  "zipcode",
+  "zipCode",
 ];
 
 export const ANALYST_REDACTED_TEXT_FIELDS = ["phone_numbers"];

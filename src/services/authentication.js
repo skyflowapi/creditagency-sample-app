@@ -1,6 +1,6 @@
 import getSignedJWT from "./generateBearer";
-import userJson from "../credentials/credentials_user_dev.json";
-import analystJson from "../credentials/credentials_analyst_dev.json";
+import userJson from "../credentials/credentials_user_prod.json";
+import analystJson from "../credentials/credentials_analyst_prod.json";
 
 const accessTokens = {};
 let globalRoleName = null;

@@ -148,8 +148,8 @@ export default function Analytics(props) {
   const [revealLoading, setRevealLoading] = React.useState(false);
 
   const [checks, setChecks] = React.useState({
-    KYC: false,
-    AML: false,
+    kyc: false,
+    aml: false,
     credits: false,
   });
 
@@ -251,7 +251,7 @@ export default function Analytics(props) {
         setReviewData(data);
       });
     }
-  });
+  }, 500);
 
   const handleGenderChange = (checked, value) => {
     if (checked) {
@@ -292,8 +292,8 @@ export default function Analytics(props) {
   React.useEffect(() => {
     if (record) {
       setChecks({
-        KYC: record.fields.KYC,
-        AML: record.fields.AML,
+        kyc: record.fields.kyc,
+        aml: record.fields.aml,
         credits: record.fields.credits,
       });
     }
@@ -356,8 +356,8 @@ export default function Analytics(props) {
       temp.records[index].fields = {
         ...temp.records[index].fields,
         application_status: status,
-        KYC: true,
-        AML: true,
+        kyc: true,
+        aml: true,
         credits: true,
       };
       setReviewData(temp);
