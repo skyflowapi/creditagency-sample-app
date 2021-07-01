@@ -255,7 +255,7 @@ export default function CustomerForm() {
                     inputProps={{ className: classes.select }}
                     onChange={(event) => handleSelectChange(event, "gender")}
                     onBlur={(event) => handleSelectBlur(event, "gender")}
-                    errorText={formErrors.state}
+                    errorText={formErrors.gender}
                   ></Select>
                 </Box>
               </Box>
@@ -283,14 +283,14 @@ export default function CustomerForm() {
                   <Typography variant="caption" className={classes.inputField}>
                     CITY
                   </Typography>
-                  <Select
-                    {...cityProps}
+                  <FormInputField
+                    id="city"
                     value={form.city}
-                    inputProps={{ className: classes.select }}
-                    onChange={(event) => handleSelectChange(event, "city")}
-                    onBlur={(event) => handleSelectBlur(event, "city")}
+                    onChange={handleFormChange}
+                    onBlur={handleFormBlur}
+                    inputProps={{ className: classes.input }}
                     errorText={formErrors.city}
-                  ></Select>
+                  />
                 </Box>
               </Box>
               <Box display="flex" justifyContent="space-between" pt={7}>
@@ -298,27 +298,27 @@ export default function CustomerForm() {
                   <Typography variant="caption" className={classes.inputField}>
                     STATE
                   </Typography>
-                  <Select
-                    {...stateProps}
+                  <FormInputField
+                    id="state"
                     value={form.state}
-                    inputProps={{ className: classes.select }}
-                    onChange={(event) => handleSelectChange(event, "state")}
-                    onBlur={(event) => handleSelectBlur(event, "state")}
+                    onChange={handleFormChange}
+                    onBlur={handleFormBlur}
+                    inputProps={{ className: classes.input }}
                     errorText={formErrors.state}
-                  ></Select>
+                  />
                 </Box>
                 <Box>
                   <Typography variant="caption" className={classes.inputField}>
                     COUNTRY
                   </Typography>
-                  <Select
-                    {...countryProps}
+                  <FormInputField
+                    id="country"
                     value={form.country}
-                    inputProps={{ className: classes.select }}
-                    onChange={(event) => handleSelectChange(event, "country")}
-                    onBlur={(event) => handleSelectBlur(event, "country")}
+                    onChange={handleFormChange}
+                    onBlur={handleFormBlur}
+                    inputProps={{ className: classes.input }}
                     errorText={formErrors.country}
-                  ></Select>
+                  />
                 </Box>
               </Box>
               <Box display="flex" justifyContent="space-between" pt={7}>
@@ -352,12 +352,12 @@ export default function CustomerForm() {
             </Box>
             <Box mt={10}>
               <Typography variant="body1" className={classes.subtitle}>
-                FINANCIAL Information
+                Financial Information
               </Typography>
               <Box display="flex" justifyContent="space-between" pt={4}>
                 <Box>
                   <Typography variant="caption" className={classes.inputField}>
-                    MONTHLY MORTAGE/RENTPAYMENT
+                    MONTHLY MORTGAGE/RENT PAYMENT
                   </Typography>
                   <FormInputField
                     value={form.rentPayment}

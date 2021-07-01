@@ -91,7 +91,7 @@ export const updateRecord = (
     });
 };
 
-export const insertRecord = (tableName, records, accessToken, callback) => {
+export const insertRecord = (tableName, records, accessToken, callback, errorCallback) => {
   axios
     .post(getBaseUrl() + tableName, records, {
       headers: { Authorization: "Bearer " + accessToken },
@@ -103,6 +103,9 @@ export const insertRecord = (tableName, records, accessToken, callback) => {
     })
     .catch((err) => {
       console.log("error", err);
+      if(errorCallback) {
+        errorCallback(err);
+      }
     });
 };
 
