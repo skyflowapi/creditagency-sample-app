@@ -76,8 +76,12 @@ export const useCustomerForm = (default_state, trim = true) => {
           .join("")
           .split("");
 
-        if (chars.length > 2) chars.splice(3, 0, "-");
-        if (chars.length > 5) chars.splice(6, 0, "-");
+        if (chars.length > 2) {
+          chars.splice(3, 0, "-");
+        }
+        if (chars.length > 5) {
+          chars.splice(6, 0, "-");
+        }
 
         value = chars.join("").slice(0, 11);
       }
@@ -86,7 +90,15 @@ export const useCustomerForm = (default_state, trim = true) => {
     event.target.id &&
       setForm({
         ...form,
-        [event.target.id]: event.target.id ==="address" || event.target.id ==="state" || event.target.id ==="city" || event.target.id ==="country" ? value : trim ? value.trim() : value
+        [event.target.id]:
+          event.target.id === "address" ||
+          event.target.id === "state" ||
+          event.target.id === "city" ||
+          event.target.id === "country"
+            ? value
+            : trim
+            ? value.trim()
+            : value,
       });
     setFormErrors({
       ...formErrors,
@@ -240,9 +252,9 @@ const regexObj = {
   ),
   phone: new RegExp("^[+]?[0-9]{0,3}s*[(]{0,1}[0-9]{1,4}[)]{0,1}[-s./0-9]*$"),
   checkBox: new RegExp("^(true)$"),
-  rentPayment : new RegExp("[0-9]+"),
+  rentPayment: new RegExp("[0-9]+"),
   annualIncome: new RegExp("[0-9]+"),
-  zip : new RegExp("[0-9]+")
+  zip: new RegExp("[0-9]+"),
 };
 
 // ssn - ^$|^([0-9]{3}-?[0-9]{2}-?[0-9]{4})$
