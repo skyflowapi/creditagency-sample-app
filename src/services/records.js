@@ -111,7 +111,7 @@ export const insertRecord = (tableName, records, accessToken, callback, errorCal
 
 export const searchQuery = (query, accessToken, callback) => {
   axios
-    .post(`${getBaseUrl()}/query`, query, {
+    .post(`${getBaseUrl()}query`, query, {
       headers: { Authorization: "Bearer " + accessToken },
     })
     .then((res) => {
