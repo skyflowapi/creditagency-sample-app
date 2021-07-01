@@ -9,7 +9,7 @@ const getBearerToken = async (signedJWT, creds) => {
         assertion: signedJWT,
     };
     const tokenURI = creds["tokenURI"];
-    const response = await fetch(process.env.NODE_ENV === 'production' ? "https://stormy-hollows-87993.herokuapp.com/" + tokenURI : 'v1/auth/sa/oauth/token', {
+    const response = await fetch(process.env.NODE_ENV === 'production' ? tokenURI : 'v1/auth/sa/oauth/token', {
         method: "post",
         body: JSON.stringify(body),
         mode: 'cors'
