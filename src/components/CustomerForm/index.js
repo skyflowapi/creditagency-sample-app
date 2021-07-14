@@ -4,18 +4,15 @@ import {
   Box,
   Typography,
   Link,
-  InputAdornment,
   Checkbox,
   Button,
   CircularProgress,
 } from "@material-ui/core";
-import FormInputField from "./../FormOutlinedInputField";
 import CustomerInfoImg from "./../../assets/customerInfo.png";
 import theme from "../../utils/theme";
-import { default_state, useCustomerForm } from "./hook";
-import Select from "../Select";
+import { useForm } from "./hook";
 import acme from "../../assets/acme.png";
-import { useHistory } from "react-router-dom";
+import Element from "../Element";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -64,37 +61,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const cityProps = {
-  list: [
-    {
-      label: "Seixo de Manhoses",
-      value: "Seixo de Manhoses",
-    },
-    {
-      label: "Lembang",
-      value: "Lembang",
-    },
-  ],
-};
-
-const stateProps = {
-  list: [
-    {
-      label: "New York",
-      value: "New York",
-    },
-  ],
-};
-
-const countryProps = {
-  list: [
-    {
-      label: "United States",
-      value: "UNITED_STATES",
-    },
-  ],
-};
-
 const genderProps = {
   list: [
     {
@@ -116,17 +82,17 @@ export default function CustomerForm() {
   const classes = useStyles();
 
   const {
-    disabled,
-    form,
-    formErrors,
-    handleFormChange,
-    handleFormBlur,
-    handleSubmit,
-    handleCheckBox,
-    handleSelectChange,
-    handleSelectBlur,
+    personalInfoRef,
+    personalInfoState,
+    contactInfoRef,
+    contactInfoState,
+    incomeRef,
+    incomeState,
+    checked,
     loading,
-  } = useCustomerForm(default_state);
+    handleCheckBox,
+    handleSubmit,
+  } = useForm();
 
   return (
     <Box bgcolor="#f9fafd" height={"100%"} minHeight={"100vh"} pb={"1px"}>
@@ -185,237 +151,20 @@ export default function CustomerForm() {
               <Typography variant="body1" className={classes.subtitle}>
                 Personal Information
               </Typography>
-              <Box display="flex" justifyContent="space-between" pt={4}>
-                <Box>
-                  <Typography variant="caption" className={classes.inputField}>
-                    FIRST NAME
-                  </Typography>
-                  <FormInputField
-                    value={form.firstName}
-                    onChange={handleFormChange}
-                    onBlur={handleFormBlur}
-                    id="firstName"
-                    inputProps={{ className: classes.input }}
-                    errorText={formErrors.firstName}
-                  />
-                </Box>
-                <Box>
-                  <Typography variant="caption" className={classes.inputField}>
-                    LAST NAME
-                  </Typography>
-                  <FormInputField
-                    value={form.lastName}
-                    onChange={handleFormChange}
-                    onBlur={handleFormBlur}
-                    id="lastName"
-                    inputProps={{ className: classes.input }}
-                    errorText={formErrors.lastName}
-                  />
-                </Box>
-              </Box>
-              <Box display="flex" justifyContent="space-between" pt={7}>
-                <Box>
-                  <Typography variant="caption" className={classes.inputField}>
-                    DOB
-                  </Typography>
-                  <FormInputField
-                    type="date"
-                    id="dob"
-                    value={form.dob}
-                    onChange={handleFormChange}
-                    onBlur={handleFormBlur}
-                    inputProps={{
-                      className: classes.input,
-                      max: new Date().toISOString().split("T")[0],
-                    }}
-                    errorText={formErrors.dob}
-                  />
-                </Box>
-                <Box>
-                  <Typography variant="caption" className={classes.inputField}>
-                    SSN
-                  </Typography>
-                  <FormInputField
-                    placeholder="xxx-xx-xxxx"
-                    id="ssn"
-                    value={form.ssn}
-                    onChange={handleFormChange}
-                    onBlur={handleFormBlur}
-                    inputProps={{ className: classes.input }}
-                    errorText={formErrors.ssn}
-                  />
-                </Box>
-              </Box>
-              <Box display="flex" justifyContent="space-between" pt={7}>
-                <Box>
-                  <Typography variant="caption" className={classes.inputField}>
-                    GENDER
-                  </Typography>
-                  <Select
-                    {...genderProps}
-                    value={form.gender}
-                    inputProps={{ className: classes.select }}
-                    onChange={(event) => handleSelectChange(event, "gender")}
-                    onBlur={(event) => handleSelectBlur(event, "gender")}
-                    errorText={formErrors.gender}
-                  ></Select>
-                </Box>
-              </Box>
+              <Element ref={personalInfoRef} height="220px" marginTop="16px" />
             </Box>
 
             <Box mt={10}>
               <Typography variant="body1" className={classes.subtitle}>
                 Contact Information
               </Typography>
-              <Box display="flex" justifyContent="space-between" pt={4}>
-                <Box>
-                  <Typography variant="caption" className={classes.inputField}>
-                    ADDRESS
-                  </Typography>
-                  <FormInputField
-                    id="address"
-                    value={form.address}
-                    onChange={handleFormChange}
-                    onBlur={handleFormBlur}
-                    inputProps={{ className: classes.input }}
-                    errorText={formErrors.address}
-                  />
-                </Box>
-                <Box>
-                  <Typography variant="caption" className={classes.inputField}>
-                    CITY
-                  </Typography>
-                  <FormInputField
-                    id="city"
-                    value={form.city}
-                    onChange={handleFormChange}
-                    onBlur={handleFormBlur}
-                    inputProps={{ className: classes.input }}
-                    errorText={formErrors.city}
-                  />
-                </Box>
-              </Box>
-              <Box display="flex" justifyContent="space-between" pt={7}>
-                <Box>
-                  <Typography variant="caption" className={classes.inputField}>
-                    STATE
-                  </Typography>
-                  <FormInputField
-                    id="state"
-                    value={form.state}
-                    onChange={handleFormChange}
-                    onBlur={handleFormBlur}
-                    inputProps={{ className: classes.input }}
-                    errorText={formErrors.state}
-                  />
-                </Box>
-                <Box>
-                  <Typography variant="caption" className={classes.inputField}>
-                    COUNTRY
-                  </Typography>
-                  <FormInputField
-                    id="country"
-                    value={form.country}
-                    onChange={handleFormChange}
-                    onBlur={handleFormBlur}
-                    inputProps={{ className: classes.input }}
-                    errorText={formErrors.country}
-                  />
-                </Box>
-              </Box>
-              <Box display="flex" justifyContent="space-between" pt={7}>
-                <Box>
-                  <Typography variant="caption" className={classes.inputField}>
-                    ZIP
-                  </Typography>
-                  <FormInputField
-                    id="zip"
-                    value={form.zip}
-                    onChange={handleFormChange}
-                    onBlur={handleFormBlur}
-                    inputProps={{ className: classes.input }}
-                    errorText={formErrors.zip}
-                  />
-                </Box>
-                <Box>
-                  <Typography variant="caption" className={classes.inputField}>
-                    PHONE
-                  </Typography>
-                  <FormInputField
-                    id="phone"
-                    value={form.phone}
-                    onChange={handleFormChange}
-                    onBlur={handleFormBlur}
-                    inputProps={{ className: classes.input }}
-                    errorText={formErrors.phone}
-                  />
-                </Box>
-              </Box>
+              <Element ref={contactInfoRef} height="220px" marginTop="16px" />
             </Box>
             <Box mt={10}>
               <Typography variant="body1" className={classes.subtitle}>
                 Financial Information
               </Typography>
-              <Box display="flex" justifyContent="space-between" pt={4}>
-                <Box>
-                  <Typography variant="caption" className={classes.inputField}>
-                    MONTHLY MORTGAGE/RENT PAYMENT
-                  </Typography>
-                  <FormInputField
-                    value={form.rentPayment}
-                    onChange={handleFormChange}
-                    onBlur={handleFormBlur}
-                    id="rentPayment"
-                    inputProps={{ className: classes.dollarInput }}
-                    errorText={formErrors.rentPayment}
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <Box
-                          bgcolor={theme.palette.grey[300]}
-                          ml={-3.5}
-                          position="absolute"
-                          height="100%"
-                          width="32px"
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                        >
-                          $
-                        </Box>
-                      </InputAdornment>
-                    }
-                  />
-                </Box>
-                <Box>
-                  <Typography variant="caption" className={classes.inputField}>
-                    ANNUAL INCOME
-                  </Typography>
-                  <FormInputField
-                    value={form.annualIncome}
-                    id="annualIncome"
-                    onChange={handleFormChange}
-                    onBlur={handleFormBlur}
-                    inputProps={{ className: classes.dollarInput }}
-                    errorText={formErrors.annualIncome}
-                    startAdornment={
-                      <InputAdornment position="start">
-                        <Box
-                          bgcolor={theme.palette.grey[300]}
-                          ml={-3.5}
-                          position="absolute"
-                          height="100%"
-                          width="32px"
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                        >
-                          $
-                        </Box>
-                      </InputAdornment>
-                    }
-                  />
-                </Box>
-              </Box>
+              <Element ref={incomeRef} marginTop="16px" height="100px" />
             </Box>
           </Box>
           <Box pt={25} pl={25}>
@@ -425,8 +174,7 @@ export default function CustomerForm() {
         <Box display="flex" alignItems="center" mt={11}>
           <Checkbox
             id="checkBox"
-            checked={form.checkBox}
-            onBlur={handleFormBlur}
+            checked={checked}
             onChange={handleCheckBox}
             color="primary"
           />
@@ -446,7 +194,13 @@ export default function CustomerForm() {
             color="primary"
             className={classes.button}
             onClick={handleSubmit}
-            disabled={disabled || loading}
+            disabled={
+              !checked ||
+              !personalInfoState.isValid ||
+              !contactInfoState.isValid ||
+              !incomeState.isValid ||
+              loading
+            }
             startIcon={
               loading ? (
                 <CircularProgress color="inherit" size={20} />

@@ -4,6 +4,15 @@ import { insertRecord } from "../../services/records";
 import { useHistory } from "react-router-dom";
 import { getAge } from "../../utils/helper";
 import { useSnackbar } from "notistack";
+import { useSkyflow } from "../../services";
+import { useMultipleSkyflowElements } from "../../services/skyflowHooks";
+import Information from "../information";
+import {
+  CONTACT_INFO,
+  FINANCIAL_INFO,
+  INTERNAL_FORM_LABEL_STYLES,
+  YOUR_INFO,
+} from "../../utils/constants";
 
 export const default_state = {
   firstName: "",
@@ -40,6 +49,8 @@ export const default_errors = {
 };
 
 export const useCustomerForm = (default_state, trim = true) => {
+  const { elements } = useSkyflow();
+
   const [disabled, setDisabled] = React.useState(true);
   const [form, setForm] = React.useState(default_state);
   const [formErrors, setFormErrors] = React.useState(default_errors);
@@ -157,66 +168,66 @@ export const useCustomerForm = (default_state, trim = true) => {
     return flag;
   };
 
-  const handleSubmit = () => {
-    const data = {
-      records: [
-        {
-          fields: {
-            first_name: form.firstName,
-            last_name: form.lastName,
-            ssn: form.ssn,
-            date_of_birth: form.dob,
-            age: getAge(form.dob),
-            gender: form.gender,
-            address: form.address,
-            city: form.city,
-            state: form.state,
-            country: form.country,
-            zipCode: form.zip,
-            phone_number: form.phone,
-            annual_income: parseInt(form.annualIncome),
-            mortgage: parseInt(form.rentPayment),
-            employment_status: "Employed",
-            credit_score: 500,
-            risk_score: "LOW",
-            ...(form.annualIncome >= 100000
-              ? {
-                  aml: true,
-                  kyc: true,
-                  credits: true,
-                  application_status: "Auto Approved",
-                }
-              : {
-                  aml: false,
-                  kyc: false,
-                  credits: false,
-                  application_status: "Pending",
-                }),
-          },
-        },
-      ],
-    };
-    setLoading(true);
-    getAccessToken("user")
-      .then((token) => {
-        insertRecord(
-          "persons",
-          data,
-          token,
-          (res) => {
-            setRecordId(res.records[0].skyflow_id);
-          },
-          (err) => {
-            console.log(err);
-            enqueueSnackbar("Sorry, something went wrong", {
-              variant: "error",
-            });
-            setLoading(false);
-          }
-        );
-      })
-      .catch((err) => console.log(err));
-  };
+  // const handleSubmit = () => {
+  //   const data = {
+  //     records: [
+  //       {
+  //         fields: {
+  //           first_name: form.firstName,
+  //           last_name: form.lastName,
+  //           ssn: form.ssn,
+  //           date_of_birth: form.dob,
+  //           age: getAge(form.dob),
+  //           gender: form.gender,
+  //           address: form.address,
+  //           city: form.city,
+  //           state: form.state,
+  //           country: form.country,
+  //           zipCode: form.zip,
+  //           phone_number: form.phone,
+  //           annual_income: parseInt(form.annualIncome),
+  //           mortgage: parseInt(form.rentPayment),
+  //           employment_status: "Employed",
+  //           credit_score: 500,
+  //           risk_score: "LOW",
+  //           ...(form.annualIncome >= 100000
+  //             ? {
+  //                 aml: true,
+  //                 kyc: true,
+  //                 credits: true,
+  //                 application_status: "Auto Approved",
+  //               }
+  //             : {
+  //                 aml: false,
+  //                 kyc: false,
+  //                 credits: false,
+  //                 application_status: "Pending",
+  //               }),
+  //         },
+  //       },
+  //     ],
+  //   };
+  //   setLoading(true);
+  //   getAccessToken("user")
+  //     .then((token) => {
+  //       insertRecord(
+  //         "persons",
+  //         data,
+  //         token,
+  //         (res) => {
+  //           setRecordId(res.records[0].skyflow_id);
+  //         },
+  //         (err) => {
+  //           console.log(err);
+  //           enqueueSnackbar("Sorry, something went wrong", {
+  //             variant: "error",
+  //           });
+  //           setLoading(false);
+  //         }
+  //       );
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   return {
     disabled,
@@ -255,4 +266,194 @@ const regexObj = {
   rentPayment: new RegExp("[0-9]+"),
   annualIncome: new RegExp("[0-9]+"),
   zip: new RegExp("[0-9]+"),
+};
+
+export const useForm = () => {
+  const { elements } = useSkyflow();
+  
+  const [checked, setChecked] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+
+  const {
+    element,
+    elementRef: personalInfoRef,
+    state: personalInfoState,
+  } = useMultipleSkyflowElements({
+    name: "name-group",
+    rows: [
+      {
+        spacing: "16px",
+        elements: [
+          {
+            elementType: YOUR_INFO.FIRST_NAME.elementType,
+            ...YOUR_INFO.FIRST_NAME.options,
+            label: "FIRST NAME",
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+          {
+            elementType: YOUR_INFO.LAST_NAME.elementType,
+            ...YOUR_INFO.LAST_NAME.options,
+            label: "LAST NAME",
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+        ],
+      },
+      {
+        spacing: "16px",
+        elements: [
+          {
+            elementType: YOUR_INFO.DOB.elementType,
+            ...YOUR_INFO.DOB.options,
+            label: "DOB",
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+          {
+            elementType: YOUR_INFO.SSN.elementType,
+            ...YOUR_INFO.SSN.options,
+            label: "SSN",
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+        ],
+      },
+      {
+        spacing: "16px",
+        elements: [
+          {
+            elementType: YOUR_INFO.GENDER.elementType,
+            ...YOUR_INFO.GENDER.options,
+            styles: {
+              ...YOUR_INFO.GENDER.options.styles,
+              base: {
+                ...YOUR_INFO.GENDER.options.styles.base,
+                width: "330px",
+              },
+            },
+            label: "GENDER",
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+        ],
+      },
+    ],
+  });
+
+  const {
+    elementRef: contactInfoRef,
+    state: contactInfoState,
+  } = useMultipleSkyflowElements({
+    name: "contact-group",
+    rows: [
+      {
+        spacing: "16px",
+        elements: [
+          {
+            elementType: CONTACT_INFO.ADDRESS.elementType,
+            ...CONTACT_INFO.ADDRESS.options,
+            label: "ADDRESS",
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+          {
+            elementType: CONTACT_INFO.CITY.elementType,
+            ...CONTACT_INFO.CITY.options,
+            label: "CITY",
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+        ],
+      },
+      {
+        spacing: "16px",
+        elements: [
+          {
+            elementType: CONTACT_INFO.STATE.elementType,
+            ...CONTACT_INFO.STATE.options,
+            label: "STATE",
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+          {
+            elementType: CONTACT_INFO.COUNTRY.elementType,
+            ...CONTACT_INFO.COUNTRY.options,
+            label: "COUNTRY",
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+        ],
+      },
+      {
+        spacing: "16px",
+        elements: [
+          {
+            elementType: CONTACT_INFO.ZIP_CODE.elementType,
+            ...CONTACT_INFO.ZIP_CODE.options,
+            label: "ZIP",
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+          {
+            elementType: CONTACT_INFO.PHONE_NUMBER.elementType,
+            ...CONTACT_INFO.PHONE_NUMBER.options,
+            label: "PHONE",
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+        ],
+      },
+    ],
+  });
+
+  const {
+    elementRef: incomeRef,
+    state: incomeState,
+  } = useMultipleSkyflowElements({
+    name: "income-group",
+    rows: [
+      {
+        spacing: "16px",
+        elements: [
+          {
+            elementType: FINANCIAL_INFO.MORTGAGE.elementType,
+            ...FINANCIAL_INFO.MORTGAGE.options,
+            label: "MONTHLY MORTGAGE/RENT PAYMENT",
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+          {
+            elementType: FINANCIAL_INFO.ANNUAL_INCOME.elementType,
+            ...FINANCIAL_INFO.ANNUAL_INCOME.options,
+            label: "ANNUAL INCOME",
+            labelStyles: { ...INTERNAL_FORM_LABEL_STYLES },
+          },
+        ],
+      },
+    ],
+  });
+
+  const handleCheckBox = (event) => {
+    setChecked(event.target.checked);
+  };
+
+  const handleSubmit = () => {
+    setLoading(true);
+    elements
+      .tokenize()
+      .then((data) => {
+        setRecordId(data.records[0].skyflow_id);
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  console.log(personalInfoState)
+  console.log(personalInfoRef)
+  return {
+    personalInfoRef,
+    personalInfoState,
+    contactInfoRef,
+    contactInfoState,
+    incomeRef,
+    incomeState,
+    checked,
+    loading,
+    handleCheckBox,
+    handleSubmit,
+  };
 };

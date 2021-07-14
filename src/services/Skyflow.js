@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import SkyflowContext from ".";
 import properties from "../utils/properties";
@@ -5,10 +6,13 @@ import properties from "../utils/properties";
 const Skyflow = (props) => {
   const [skyflow] = React.useState(
     new window.Skyflow({
-      orgId: properties.orgId,
       vaultId: properties.vaultId,
-      appId: properties.appId,
-      production: true,
+      production: false,
+      getAccessToken: () => {
+        return axios
+          .get("http://localhost:8000/js/userToken")
+          .then((res) => res.data.accessToken);
+      },
     })
   );
   const [elements] = React.useState(skyflow.elements({}));
